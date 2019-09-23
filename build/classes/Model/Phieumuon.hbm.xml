@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 23, 2019 3:42:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Phieumuon" table="phieumuon" catalog="thuvien" optimistic-lock="version">
+        <id name="maPhieuMuon" type="java.lang.Integer">
+            <column name="MaPhieuMuon" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="khachhang" class="Model.Khachhang" fetch="select">
+            <column name="MaKH" not-null="true" />
+        </many-to-one>
+        <many-to-one name="nhanvien" class="Model.Nhanvien" fetch="select">
+            <column name="MaNV" not-null="true" />
+        </many-to-one>
+        <many-to-one name="sach" class="Model.Sach" fetch="select">
+            <column name="MaSach" not-null="true" />
+        </many-to-one>
+        <property name="ngayMuon" type="date">
+            <column name="NgayMuon" length="0" />
+        </property>
+        <property name="hanTra" type="date">
+            <column name="HanTra" length="0" />
+        </property>
+        <property name="ngayTra" type="date">
+            <column name="NgayTra" length="0" />
+        </property>
+        <property name="soLuongMuon" type="int">
+            <column name="SoLuongMuon" not-null="true" />
+        </property>
+        <property name="tienBoiThuong" type="string">
+            <column name="TienBoiThuong" length="45" />
+        </property>
+        <property name="tienPhat" type="string">
+            <column name="TienPhat" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>

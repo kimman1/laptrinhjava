@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 23, 2019 3:42:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Khachhang" table="khachhang" catalog="thuvien" optimistic-lock="version">
+        <id name="maKh" type="java.lang.Integer">
+            <column name="MaKH" />
+            <generator class="identity" />
+        </id>
+        <property name="tenKh" type="string">
+            <column name="TenKH" length="45" not-null="true" />
+        </property>
+        <property name="sdtkh" type="string">
+            <column name="SDTKH" length="45" not-null="true" />
+        </property>
+        <property name="diaChi" type="string">
+            <column name="DiaChi" length="45" />
+        </property>
+        <property name="accountKh" type="string">
+            <column name="AccountKH" length="45" not-null="true" />
+        </property>
+        <property name="passwordKh" type="string">
+            <column name="PasswordKH" length="45" not-null="true" />
+        </property>
+        <set name="phieumuons" table="phieumuon" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="MaKH" not-null="true" />
+            </key>
+            <one-to-many class="Model.Phieumuon" />
+        </set>
+    </class>
+</hibernate-mapping>

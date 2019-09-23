@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 23, 2019 3:29:06 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="qltv.Sach" table="sach" catalog="thuvien" optimistic-lock="version">
+        <id name="maSach" type="java.lang.Integer">
+            <column name="MaSach" />
+            <generator class="identity" />
+        </id>
+        <property name="tenSach" type="string">
+            <column name="TenSach" length="45" not-null="true" />
+        </property>
+        <property name="tenTacGia" type="string">
+            <column name="TenTacGia" length="45" not-null="true" />
+        </property>
+        <property name="nxb" type="string">
+            <column name="NXB" length="45" />
+        </property>
+        <property name="soLuong" type="int">
+            <column name="SoLuong" not-null="true" />
+        </property>
+        <property name="giaSach" type="string">
+            <column name="GiaSach" length="45" not-null="true" />
+        </property>
+        <set name="phieumuons" table="phieumuon" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="MaSach" not-null="true" />
+            </key>
+            <one-to-many class="qltv.Phieumuon" />
+        </set>
+    </class>
+</hibernate-mapping>
