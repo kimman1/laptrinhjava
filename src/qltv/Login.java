@@ -20,6 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
@@ -53,7 +54,7 @@ public class Login implements Initializable {
         List<Nhanvien> Staff = staff.staffLogin(txtUserName.getText().toLowerCase());
          if(quantri.isEmpty() && Staff.isEmpty())
             {
-                System.out.println("List rong");
+                AlertMissingAccountName();
             }
         else
             {
@@ -61,7 +62,7 @@ public class Login implements Initializable {
                 {
                     if(quantri.isEmpty())
                     {
-                        System.out.println("Tài khoản không tồn tại");
+                              AlertMissingAccountName();
                     }
                     else
                     {
@@ -70,6 +71,7 @@ public class Login implements Initializable {
 
                             if(txtUserName.getText().trim().toLowerCase().equals(s.getAccountAdmin().trim()) && txtPassword.getText().trim().toLowerCase().equals(s.getPasswordAdmin().trim()))
                             {
+                               
                                  Stage loginStage = (Stage) txtUserName.getScene().getWindow();
                                     loginStage.hide();
                                     FXMLLoader fxmloader = new FXMLLoader(getClass().getResource("AdminApp.fxml"));
@@ -81,7 +83,7 @@ public class Login implements Initializable {
                             }
                             else
                             {
-                                System.out.println("Sai mật khẩu");
+                                AlertWrongPassword();
                             }
                         }
                     }
@@ -90,7 +92,7 @@ public class Login implements Initializable {
                 {
                     if(Staff.isEmpty())
                     {
-                        System.out.println("Tài khoản không tồn tại");
+                        AlertMissingAccountName();
                     }
                     else
                     {
@@ -99,22 +101,40 @@ public class Login implements Initializable {
                           if(txtUserName.getText().trim().toLowerCase().equals(s.getAccountNv().trim()) && txtPassword.getText().trim().toLowerCase().equals(s.getPasswordNv().trim())) 
                           {
                               Stage loginStage = (Stage) txtUserName.getScene().getWindow();
-                                    loginStage.hide();
-                               FXMLLoader fxmloader = new FXMLLoader(getClass().getResource("StaffApp.fxml"));
-                                    Parent root1 = (Parent) fxmloader.load();
-                                    Stage stage = new Stage();
-                                    stage.setTitle("Staff Manager");
-                                    stage.setScene(new Scene(root1));
-                                    stage.show();
+                              loginStage.hide();
+                              FXMLLoader fxmloader = new FXMLLoader(getClass().getResource("StaffApp.fxml"));
+                              Parent root1 = (Parent) fxmloader.load();
+                              Stage stage = new Stage();
+                              stage.setTitle("Staff Manager");
+                              stage.setScene(new Scene(root1));
+                              stage.show();
                           }
                           else
                           {
-                              System.out.println("Sai mật khẩu");
+                                AlertWrongPassword();
                           }
                         }
                     }
                 }
             }
+    }
+    @FXML
+    private void AlertWrongPassword()
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Login Information");
+        alert.setHeaderText(null);
+        alert.setContentText("Login Failed. Please check your password");
+        alert.showAndWait();
+    }
+    @FXML
+    private void AlertMissingAccountName()
+    {
+         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+         alert.setTitle("Login Information");
+         alert.setHeaderText(null);
+         alert.setContentText("Your Account Name is not exist in database");
+         alert.showAndWait();
     }
     @FXML
     private void radioSelect(ActionEvent event)
