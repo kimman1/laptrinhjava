@@ -5,7 +5,6 @@
  */
 package DAO;
 
-import Model.Administrator;
 import Model.Nhanvien;
 import java.util.List;
 import org.hibernate.Query;
@@ -27,6 +26,7 @@ public class StaffDAO {
         Query query = session.createQuery(hql);
         query.setParameter("accountNV", accountNV);
         List<Nhanvien> listStaff = query.list();
+        session.close();
         return listStaff;
     }
 }

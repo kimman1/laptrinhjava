@@ -29,6 +29,14 @@ public class Sach  implements java.io.Serializable {
         this.soLuong = soLuong;
         this.giaSach = giaSach;
     }
+    public Sach(String tenSach, String tenTacGia, String nxb, int soLuong, String giaSach) {
+       this.tenSach = tenSach;
+       this.tenTacGia = tenTacGia;
+       this.nxb = nxb;
+       this.soLuong = soLuong;
+       this.giaSach = giaSach;
+       
+    }
     public Sach(String tenSach, String tenTacGia, String nxb, int soLuong, String giaSach, Set<Phieumuon> phieumuons) {
        this.tenSach = tenSach;
        this.tenTacGia = tenTacGia;

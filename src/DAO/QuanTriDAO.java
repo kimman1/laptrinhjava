@@ -19,13 +19,14 @@ import org.hibernate.cfg.Configuration;
  */
 public class QuanTriDAO {
     SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-   public List<Administrator> readAdministrator()
+   public List<Administrator> readAllAdministrator()
     {
         Session session  = sessionFactory.openSession();
         session.beginTransaction();
         String hql = "FROM Administrator";
         Query query = session.createQuery(hql);
         List<Administrator> result = query.list();
+        session.close();
         return result;
     }
    public List<Administrator> quanTriLogin(String accountAdmin)
@@ -36,6 +37,7 @@ public class QuanTriDAO {
        Query query = session.createQuery(hql);
        query.setParameter("maAdminQuery", accountAdmin);
        List<Administrator> result =  query.list();
+       session.close();
        return result;
    }
 }

@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="794.0" prefWidth="1064.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="qltv.AdminAppController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="794.0" prefWidth="1064.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="qltv.AdminAppController">
    <children>
       <TabPane prefHeight="796.0" prefWidth="1064.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -27,19 +27,17 @@
                         <Label layoutX="40.0" layoutY="138.0" text="Tác giả:" />
                         <Label layoutX="40.0" layoutY="87.0" prefHeight="21.0" prefWidth="75.0" text="Tên Sách:" />
                         <Label layoutX="39.0" layoutY="194.0" prefHeight="21.0" prefWidth="78.0" text="Số Lượng:" />
-                        <TextField id="txtIdSach" fx:id="txtIdSach" layoutX="124.0" layoutY="29.0" />
-                        <TextField id="txtTenSach" fx:id="txtTenSach" layoutX="124.0" layoutY="82.0" />
-                        <TextField id="txtTacGia" fx:id="txtTacGia" layoutX="124.0" layoutY="133.0" />
-                        <TextField id="txtSoLuong" fx:id="txtSoLuong" layoutX="124.0" layoutY="189.0" />
+                        <TextField id="txtIdSach" fx:id="txtIdSach" disable="true" layoutX="124.0" layoutY="29.0" prefHeight="25.0" prefWidth="172.0" />
+                        <TextField id="txtTenSach" fx:id="txtTenSach" layoutX="124.0" layoutY="82.0" prefHeight="25.0" prefWidth="172.0" />
+                        <TextField id="txtTacGia" fx:id="txtTacGia" layoutX="124.0" layoutY="133.0" prefHeight="25.0" prefWidth="171.0" />
+                        <TextField id="txtSoLuong" fx:id="txtSoLuong" layoutX="124.0" layoutY="189.0" prefHeight="25.0" prefWidth="172.0" />
                         <Button id="btnSuaSach" fx:id="btnSuaSach" layoutX="809.0" layoutY="93.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Sửa" />
                         <Button fx:id="btnXoaSach" layoutX="809.0" layoutY="159.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Xóa" />
-                        <Label layoutX="351.0" layoutY="34.0" prefHeight="21.0" prefWidth="100.0" text="Thể loại:" />
                         <Label layoutX="351.0" layoutY="87.0" prefHeight="21.0" prefWidth="100.0" text="Nhà xuất bản:" />
                         <Label layoutX="351.0" layoutY="138.0" prefHeight="21.0" prefWidth="100.0" text="Giá sách:" />
-                        <TextField id="txtTheLoai" fx:id="txtTheLoai" layoutX="457.0" layoutY="29.0" />
                         <TextField id="txtNXB" fx:id="txtNXB" layoutX="457.0" layoutY="82.0" />
                         <TextField id="txtGiaSach" fx:id="txtGiaSach" layoutX="457.0" layoutY="133.0" />
-                        <Button id="btnThemSach" fx:id="btnThemSach" layoutX="809.0" layoutY="29.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Thêm" />
+                        <Button id="btnThemSach" fx:id="btnThemSach" layoutX="809.0" layoutY="29.0" mnemonicParsing="false" onAction="#addSach" prefHeight="31.0" prefWidth="103.0" text="Thêm" />
                         <TextField id="txtTImKiem" fx:id="txtTimKiem" layoutX="197.0" layoutY="265.0" prefHeight="31.0" prefWidth="326.0" />
                         <RadioButton id="rdTimKiemTen" layoutX="653.0" layoutY="270.0" mnemonicParsing="false" text="Theo tên">
                            <toggleGroup>
@@ -85,7 +83,7 @@
                               <TextField layoutX="560.0" layoutY="29.0" />
                               <TextField layoutX="560.0" layoutY="78.0" />
                               <TextField layoutX="560.0" layoutY="133.0" />
-                              <Button layoutX="809.0" layoutY="29.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Thêm" />
+                              <Button id="btnThemSach" fx:id="btnThemSach" layoutX="809.0" layoutY="29.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Thêm" />
                               <Label layoutX="438.0" layoutY="138.0" prefHeight="21.0" prefWidth="106.0" text="Ngày hẹn trả:" />
                               <TextField layoutX="197.0" layoutY="265.0" prefHeight="31.0" prefWidth="326.0" />
                               <RadioButton layoutX="653.0" layoutY="270.0" mnemonicParsing="false" text="Theo tên" />
