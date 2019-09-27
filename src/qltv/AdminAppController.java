@@ -96,11 +96,13 @@ public class AdminAppController implements Initializable {
         txtSoLuong.setText(String.valueOf(tableView.getSelectionModel().getSelectedItems().get(0).getSoLuong()));
         txtNXB.setText(tableView.getSelectionModel().getSelectedItems().get(0).getNxb());
         txtGiaSach.setText(String.valueOf(tableView.getSelectionModel().getSelectedItems().get(0).getGiaSach()));
+        
     }
     @FXML
     private void addSach(ActionEvent event)
     {
-        
+            if(checkTextFieldEmpty()!= true)
+            {
             SachDAO themSach = new SachDAO();
               if(themSach.checkDuplicate(txtTenSach.getText()))
               {
@@ -118,7 +120,8 @@ public class AdminAppController implements Initializable {
               {
                   AlertMessage("Database", "Sách bạn thêm đã có trong thư viện");
               }
-                
+            }   
+            
     }
     @FXML
     private void suaSach(ActionEvent event)
@@ -236,37 +239,43 @@ public class AdminAppController implements Initializable {
         }
         return status;
     }
-    private void checkTextFieldEmpty()
+    private boolean checkTextFieldEmpty()
     {
+        boolean check = false;
         if(txtTenSach.getText().trim().isEmpty())
         {
             AlertMessage("Data Feild", "Tên sách trống");
             txtTenSach.requestFocus();
+            check = true;
         }
         else if(txtTacGia.getText().trim().isEmpty())
         {
             AlertMessage("Data Feild", "Tác giả trống");
             txtTacGia.requestFocus();
+            check = true;
         }
         else if(txtSoLuong.getText().trim().isEmpty())
         {
             AlertMessage("Data Feild", "Số lượng trống");
             txtSoLuong.requestFocus();
+            check = true;
         }
         else if(txtNXB.getText().trim().isEmpty())
         {
             AlertMessage("Data Feild", "Nhà Xuất Bản trống");
             txtNXB.requestFocus();
+            check = true;
         }
         else if(txtGiaSach.getText().trim().isEmpty())
         {
             AlertMessage("Data Feild", "Giá sách trống");
             txtGiaSach.requestFocus();
+            check = true;
         }
         else
         {
-            
+            check = false;
         }
-        
+        return check;
     }
 }
