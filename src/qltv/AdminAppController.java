@@ -6,34 +6,21 @@
 package qltv;
 
 import DAO.SachDAO;
-import Model.Nhanvien;
 import Model.Sach;
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableCell;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -68,10 +55,15 @@ public class AdminAppController implements Initializable {
     private ToggleGroup groupTImKiem;
     @FXML
     private TableView<Sach> tableView;
+    @FXML
+    private RadioButton rdTimKiemTen;
+    @FXML
+    private RadioButton rdTimKiemTacGIa;
+    @FXML
+    private Button btnNhapLai;
          
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Nhanvien nv  = new Nhanvien("kimman1", "kimman", "KimMan");
         TableColumn idSach = new TableColumn("Mã Sách");
         TableColumn tenSach = new TableColumn("Tên Sách");
         TableColumn tacGia = new TableColumn("Tên Tác Giả");
@@ -90,10 +82,11 @@ public class AdminAppController implements Initializable {
         for(Sach s : listSach)
         {
             tableView.getItems().add(s);
-        }  
+        }
         tableView.setOnMouseClicked(e -> {
             eventOnClickItem();
         });
+        
     }  
     public void eventOnClickItem()
     {
@@ -123,17 +116,157 @@ public class AdminAppController implements Initializable {
               }
               else
               {
-                  AlertDuplicate();
+                  AlertMessage("Database", "Sách bạn thêm đã có trong thư viện");
               }
                 
     }
     @FXML
-    private void AlertDuplicate()
+    private void suaSach(ActionEvent event)
+    {
+        SachDAO updateSach = new SachDAO();
+        Sach sach = new Sach();
+        sach.setMaSach(Integer.valueOf(txtIdSach.getText()));
+        sach.setGiaSach(txtGiaSach.getText());
+        sach.setNxb(txtNXB.getText());
+        sach.setSoLuong(Integer.valueOf(txtSoLuong.getText()));
+        sach.setTenSach(txtTenSach.getText());
+        sach.setTenTacGia(txtTacGia.getText());
+        int result =  updateSach.modifedSach(sach);
+        //System.out.println(sach.getMaSach());
+        if(result != 0)
+        {
+            System.out.println("Sửa thành công");
+            tableView.getItems().clear();
+             List<Sach> listSachReload =  updateSach.readAllSach();
+                    for(Sach s : listSachReload)
+                    {
+                        tableView.getItems().add(s);
+                    }  
+        }
+        else
+        {
+            System.out.println("Không thể sửa");
+        }
+    }
+    @FXML
+    private void timKiem(ActionEvent event)
+    {
+        if(rdTimKiemStatus().trim().isEmpty())
+        {
+            AlertMessage("Thiếu lựa chọn tìm kiếm", "Hãy chọn điều kiện tìm kiếm");
+        }
+        else
+        {
+            SachDAO timSach = new SachDAO();
+            List<Sach> listSachTimKiem = timSach.searchSach(txtTimKiem.getText(),rdTimKiemStatus());
+            if(listSachTimKiem.isEmpty())
+            {
+                AlertMessage("Lỗi tìm kiếm", "Không tìm thấy sách bạn muốn trong thư viện");
+            }
+            else
+            {
+                tableView.getItems().clear();
+                        for(Sach s : listSachTimKiem)
+                        {
+                            tableView.getItems().add(s);
+                        }  
+            }
+        }
+        
+    }
+    @FXML
+    private void xoaSach(ActionEvent event)
+    {
+        SachDAO xoaSach = new SachDAO();
+        int result = xoaSach.deleteSach(Integer.parseInt(txtIdSach.getText()));
+        if(result != 0)
+        {
+            System.out.println("Xoá thành công");
+            txtGiaSach.clear();
+            txtIdSach.clear();
+            txtNXB.clear();
+            txtSoLuong.clear();
+            txtTacGia.clear();
+            txtTenSach.clear();
+            txtTenSach.clear();
+            tableView.getItems().clear();
+            List<Sach> listSachReload =  xoaSach.readAllSach();
+                    for(Sach s : listSachReload)
+                    {
+                        tableView.getItems().add(s);
+                    }  
+        }
+        else
+        {
+            System.out.println("Xoá lỗi");
+        }
+    }
+    @FXML
+    private void nhapLai(ActionEvent event)
+    {
+        txtGiaSach.clear();
+        txtIdSach.clear();
+        txtNXB.clear();
+        txtSoLuong.clear();
+        txtTacGia.clear();
+        txtTenSach.clear();
+        txtTimKiem.clear();
+    }
+    
+    private void AlertMessage(String title, String content)
     {
          Alert alert = new Alert(Alert.AlertType.INFORMATION);
-         alert.setTitle("Database");
+         alert.setTitle(title);
          alert.setHeaderText(null);
-         alert.setContentText("Tên Sách bạn thêm đã có trong thư viện");
+         alert.setContentText(content);
          alert.showAndWait();
+    }
+   
+    
+    private String rdTimKiemStatus()
+    {
+        String status = "";
+        if(rdTimKiemTen.isSelected())
+        {
+            status = "name";
+        }
+        if(rdTimKiemTacGIa.isSelected())
+        {
+            status = "author";
+        }
+        return status;
+    }
+    private void checkTextFieldEmpty()
+    {
+        if(txtTenSach.getText().trim().isEmpty())
+        {
+            AlertMessage("Data Feild", "Tên sách trống");
+            txtTenSach.requestFocus();
+        }
+        else if(txtTacGia.getText().trim().isEmpty())
+        {
+            AlertMessage("Data Feild", "Tác giả trống");
+            txtTacGia.requestFocus();
+        }
+        else if(txtSoLuong.getText().trim().isEmpty())
+        {
+            AlertMessage("Data Feild", "Số lượng trống");
+            txtSoLuong.requestFocus();
+        }
+        else if(txtNXB.getText().trim().isEmpty())
+        {
+            AlertMessage("Data Feild", "Nhà Xuất Bản trống");
+            txtNXB.requestFocus();
+        }
+        else if(txtGiaSach.getText().trim().isEmpty())
+        {
+            AlertMessage("Data Feild", "Giá sách trống");
+            txtGiaSach.requestFocus();
+        }
+        else
+        {
+            
+        }
+        
     }
 }
