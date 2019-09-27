@@ -8,7 +8,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -93,24 +92,12 @@
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Pane prefHeight="706.0" prefWidth="1064.0" style="-fx-background-color: A2B3E4;">
+                        <Pane prefHeight="758.0" prefWidth="1064.0" style="-fx-background-color: A2B3E4;">
                            <children>
-                              <TreeTableView layoutX="-3.0" layoutY="335.0" prefHeight="421.0" prefWidth="1070.0">
-                                 <columns>
-                                    <TreeTableColumn prefWidth="122.0" text="ID Phiếu mượn" />
-                                    <TreeTableColumn prefWidth="126.0" text="ID độc giả" />
-                                    <TreeTableColumn prefWidth="186.0" text="ID sách" />
-                                    <TreeTableColumn minWidth="3.0" prefWidth="111.0" text="Tên sách" />
-                                    <TreeTableColumn prefWidth="134.0" text="Tên độc giả" />
-                                    <TreeTableColumn minWidth="0.0" prefWidth="143.0" text="Ngày mượn" />
-                                    <TreeTableColumn minWidth="4.0" prefWidth="103.0" text="Ngày hẹn trả" />
-                                    <TreeTableColumn prefWidth="142.0" text="Ngày trả" />
-                                 </columns>
-                              </TreeTableView>
                               <Button layoutX="38.0" layoutY="265.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="124.0" text="Tìm kiếm" />
-                              <Label layoutX="40.0" layoutY="34.0" prefHeight="21.0" prefWidth="146.0" text="ID phiếu mượn:" />
-                              <Label layoutX="40.0" layoutY="138.0" text="ID sách:" />
-                              <Label layoutX="40.0" layoutY="87.0" prefHeight="21.0" prefWidth="75.0" text="ID độc giả:" />
+                              <Label layoutX="40.0" layoutY="34.0" prefHeight="21.0" prefWidth="146.0" text="Mã phiếu mượn:" />
+                              <Label layoutX="40.0" layoutY="138.0" prefHeight="21.0" prefWidth="124.0" text="Mã sách:" />
+                              <Label layoutX="40.0" layoutY="87.0" prefHeight="21.0" prefWidth="124.0" text="Mã độc giả:" />
                               <Label layoutX="39.0" layoutY="194.0" prefHeight="21.0" prefWidth="78.0" text="Tên sách:" />
                               <TextField layoutX="186.0" layoutY="29.0" />
                               <TextField layoutX="186.0" layoutY="78.0" />
@@ -123,35 +110,34 @@
                               <TextField layoutX="560.0" layoutY="29.0" />
                               <TextField layoutX="560.0" layoutY="78.0" />
                               <TextField layoutX="560.0" layoutY="133.0" />
-                              <Button id="btnThemSach" fx:id="btnThemSach" layoutX="809.0" layoutY="29.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Thêm" />
+                              <Button id="btnThemPhieuMuon" fx:id="btnThemPhieuMuon" layoutX="809.0" layoutY="29.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Thêm" />
                               <Label layoutX="438.0" layoutY="138.0" prefHeight="21.0" prefWidth="106.0" text="Ngày hẹn trả:" />
                               <TextField layoutX="197.0" layoutY="265.0" prefHeight="31.0" prefWidth="326.0" />
-                              <RadioButton layoutX="653.0" layoutY="270.0" mnemonicParsing="false" text="Theo tên" />
-                              <RadioButton layoutX="776.0" layoutY="270.0" mnemonicParsing="false" text="Theo tác giả" />
-                              <RadioButton layoutX="912.0" layoutY="270.0" mnemonicParsing="false" text="Theo thể loại" />
-                              <RadioButton layoutX="538.0" layoutY="270.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="105.0" text="Theo ID" />
+                              <RadioButton layoutX="538.0" layoutY="313.0" mnemonicParsing="false" text="Theo độc giả" />
+                              <RadioButton layoutX="776.0" layoutY="270.0" mnemonicParsing="false" text="Theo mã sách" />
+                              <RadioButton layoutX="774.0" layoutY="313.0" mnemonicParsing="false" text="Theo tên sách" />
+                              <RadioButton layoutX="538.0" layoutY="270.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="195.0" text="Theo mã phiếu mượn" />
                               <Label layoutX="442.0" layoutY="194.0" prefHeight="21.0" prefWidth="106.0" text="Ngày trả:" />
                               <TextField layoutX="560.0" layoutY="189.0" />
+                              <TableView layoutX="-4.0" layoutY="377.0" prefHeight="377.0" prefWidth="1070.0">
+                                
+                              </TableView>
                            </children>
                         </Pane>
                      </children>
                   </Pane>
                </content></Tab>
-            <Tab text="Thống kê" />
+             <Tab text="Thống kê">
+               <content>
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: A2B3E4;" />
+               </content></Tab>
             <Tab text="Quản lý nhân viên">
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <Pane prefHeight="706.0" prefWidth="1064.0" style="-fx-background-color: #A2B3E4;">
                            <children>
-                              <TreeTableView layoutX="-3.0" layoutY="383.0" prefHeight="373.0" prefWidth="1070.0">
-                                 <columns>
-                                    <TreeTableColumn prefWidth="145.0" text="Mã nhân viên" />
-                                    <TreeTableColumn minWidth="5.0" prefWidth="175.0" text="Tên nhân viên" />
-                                    <TreeTableColumn minWidth="5.0" prefWidth="175.0" text="Mật khẩu" />
-                                    <TreeTableColumn minWidth="5.0" prefWidth="175.0" text="Ngày sinh" />
-                                 </columns>
-                              </TreeTableView>
+                              <TreeTableView layoutX="-3.0" layoutY="383.0" prefHeight="373.0" prefWidth="1070.0" />
                               <Label layoutX="40.0" layoutY="34.0" prefHeight="21.0" prefWidth="116.0" text="Mã nhân viên:" />
                               <Label layoutX="40.0" layoutY="148.0" text="Mật khẩu:" />
                               <Label layoutX="40.0" layoutY="87.0" prefHeight="21.0" prefWidth="120.0" text="Tên nhân viên:" />
@@ -190,15 +176,7 @@
                      <children>
                         <Pane prefHeight="706.0" prefWidth="1064.0" style="-fx-background-color: A2B3E4;">
                            <children>
-                              <TreeTableView layoutX="-3.0" layoutY="383.0" prefHeight="373.0" prefWidth="1070.0">
-                                 <columns>
-                                    <TreeTableColumn prefWidth="145.0" text="Mã độc giả" />
-                                    <TreeTableColumn minWidth="5.0" prefWidth="175.0" text="Tên độc giả" />
-                                    <TreeTableColumn minWidth="5.0" prefWidth="175.0" text="Mật khẩu" />
-                                    <TreeTableColumn minWidth="5.0" prefWidth="175.0" text="Ngày sinh" />
-                                    <TreeTableColumn minWidth="5.0" prefWidth="175.0" text="SDT" />
-                                 </columns>
-                              </TreeTableView>
+                              <TreeTableView layoutX="-3.0" layoutY="383.0" prefHeight="373.0" prefWidth="1070.0" />
                               <Label layoutX="40.0" layoutY="34.0" prefHeight="21.0" prefWidth="116.0" text="Mã độc giả:" />
                               <Label layoutX="40.0" layoutY="148.0" text="Mật khẩu:" />
                               <Label layoutX="40.0" layoutY="87.0" prefHeight="21.0" prefWidth="120.0" text="Tên độc giả:" />
