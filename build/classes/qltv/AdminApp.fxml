@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -15,118 +17,8 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="794.0" prefWidth="1064.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="qltv.AdminAppController">
    <children>
-      <TabPane prefHeight="796.0" prefWidth="1064.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPaneContainer" prefHeight="796.0" prefWidth="1064.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab text="Quản lý sách">
-               <content>
-                  <Pane prefHeight="706.0" prefWidth="965.0" style="-fx-background-color: #abd7e5;">
-                     <children>
-                        <Button id="btnTimKiem" fx:id="btnTimKiem" layoutX="38.0" layoutY="265.0" mnemonicParsing="false" onAction="#timKiem" prefHeight="26.0" prefWidth="124.0" text="Tìm kiếm">
-                           <font>
-                              <Font name="Tahoma Bold" size="18.0" />
-                           </font></Button>
-                        <Label layoutX="37.0" layoutY="29.0" prefHeight="27.0" prefWidth="88.0" text="Mã Sách:" textFill="#1a07eb">
-                           <font>
-                              <Font name="Tahoma Bold" size="13.0" />
-                           </font></Label>
-                        <Label layoutX="36.0" layoutY="134.0" prefHeight="27.0" prefWidth="88.0" text="Tác giả:" textFill="#1a07eb">
-                           <font>
-                              <Font name="Tahoma Bold" size="13.0" />
-                           </font></Label>
-                        <Label layoutX="36.0" layoutY="82.0" prefHeight="27.0" prefWidth="88.0" text="Tên Sách:" textFill="#1a07eb">
-                           <font>
-                              <Font name="Tahoma Bold" size="13.0" />
-                           </font></Label>
-                        <Label layoutX="38.0" layoutY="188.0" prefHeight="27.0" prefWidth="86.0" text="Số Lượng:" textFill="#1a07eb">
-                           <font>
-                              <Font name="Tahoma Bold" size="13.0" />
-                           </font></Label>
-                        <TextField id="txtIdSach" fx:id="txtIdSach" disable="true" layoutX="124.0" layoutY="29.0" prefHeight="25.0" prefWidth="172.0" />
-                        <TextField id="txtTenSach" fx:id="txtTenSach" layoutX="124.0" layoutY="82.0" prefHeight="25.0" prefWidth="172.0" />
-                        <TextField id="txtTacGia" fx:id="txtTacGia" layoutX="124.0" layoutY="133.0" prefHeight="25.0" prefWidth="171.0" />
-                        <TextField id="txtSoLuong" fx:id="txtSoLuong" layoutX="124.0" layoutY="189.0" prefHeight="25.0" prefWidth="172.0" />
-                        <Button id="btnSuaSach" fx:id="btnSuaSach" layoutX="809.0" layoutY="93.0" mnemonicParsing="false" onAction="#suaSach" prefHeight="31.0" prefWidth="103.0" text="Sửa" textFill="#ee0489">
-                           <font>
-                              <Font name="Tahoma Bold" size="17.0" />
-                           </font></Button>
-                        <Button fx:id="btnXoaSach" alignment="CENTER" layoutX="809.0" layoutY="146.0" mnemonicParsing="false" onAction="#xoaSach" prefHeight="31.0" prefWidth="103.0" text="Xóa" textFill="#f20000">
-                           <font>
-                              <Font name="Tahoma Bold" size="17.0" />
-                           </font></Button>
-                        <Label layoutX="356.0" layoutY="81.0" prefHeight="27.0" prefWidth="100.0" text="Nhà xuất bản:" textFill="#1a07eb">
-                           <font>
-                              <Font name="Tahoma Bold" size="13.0" />
-                           </font></Label>
-                        <Label layoutX="357.0" layoutY="133.0" prefHeight="27.0" prefWidth="100.0" text="Giá sách:" textFill="#1a07eb">
-                           <font>
-                              <Font name="Tahoma Bold" size="13.0" />
-                           </font></Label>
-                        <TextField id="txtNXB" fx:id="txtNXB" layoutX="457.0" layoutY="82.0" />
-                        <TextField id="txtGiaSach" fx:id="txtGiaSach" layoutX="457.0" layoutY="133.0" />
-                        <Button id="btnThemSach" fx:id="btnThemSach" alignment="CENTER" layoutX="810.0" layoutY="41.0" mnemonicParsing="false" onAction="#addSach" prefHeight="30.0" prefWidth="99.0" text="Thêm" textFill="#22b246">
-                           <font>
-                              <Font name="Tahoma Bold" size="17.0" />
-                           </font></Button>
-                        <TextField id="txtTImKiem" fx:id="txtTimKiem" layoutX="197.0" layoutY="265.0" prefHeight="36.0" prefWidth="326.0" />
-                        <RadioButton id="rdTimKiemTen" fx:id="rdTimKiemTen" layoutX="653.0" layoutY="270.0" mnemonicParsing="false" text="Theo tên">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="groupTImKiem" />
-                           </toggleGroup>
-                           <font>
-                              <Font name="Tahoma Bold" size="14.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton id="rdTimKiemTacGIa" fx:id="rdTimKiemTacGIa" layoutX="776.0" layoutY="270.0" mnemonicParsing="false" text="Theo tác giả" toggleGroup="$groupTImKiem">
-                           <font>
-                              <Font name="Tahoma Bold" size="14.0" />
-                           </font></RadioButton>
-                        <TableView id="tableView" fx:id="tableView" layoutX="12.0" layoutY="316.0" prefHeight="435.0" prefWidth="1039.0" />
-                        <Button fx:id="btnNhapLai" layoutX="810.0" layoutY="200.0" mnemonicParsing="false" onAction="#nhapLai" prefHeight="31.0" prefWidth="103.0" text="Nhập Lại">
-                           <font>
-                              <Font name="Tahoma Bold" size="17.0" />
-                           </font></Button>
-                     </children>
-                  </Pane>
-               </content></Tab>
-            <Tab text="Quản lý phiếu mượn">
-               <content>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <Pane prefHeight="758.0" prefWidth="1064.0" style="-fx-background-color: A2B3E4;">
-                           <children>
-                              <Button layoutX="38.0" layoutY="265.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="124.0" text="Tìm kiếm" />
-                              <Label layoutX="40.0" layoutY="34.0" prefHeight="21.0" prefWidth="146.0" text="Mã phiếu mượn:" />
-                              <Label layoutX="40.0" layoutY="138.0" prefHeight="21.0" prefWidth="124.0" text="Mã sách:" />
-                              <Label layoutX="40.0" layoutY="87.0" prefHeight="21.0" prefWidth="124.0" text="Mã độc giả:" />
-                              <Label layoutX="39.0" layoutY="194.0" prefHeight="21.0" prefWidth="78.0" text="Tên sách:" />
-                              <TextField layoutX="186.0" layoutY="29.0" />
-                              <TextField layoutX="186.0" layoutY="78.0" />
-                              <TextField layoutX="186.0" layoutY="133.0" />
-                              <TextField layoutX="186.0" layoutY="189.0" />
-                              <Button layoutX="809.0" layoutY="93.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Sửa" />
-                              <Button layoutX="809.0" layoutY="159.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Xóa" />
-                              <Label layoutX="438.0" layoutY="34.0" prefHeight="21.0" prefWidth="114.0" text="Tên độc giả:" />
-                              <Label layoutX="438.0" layoutY="83.0" prefHeight="21.0" prefWidth="109.0" text="Ngày mượn:" />
-                              <TextField layoutX="560.0" layoutY="29.0" />
-                              <TextField layoutX="560.0" layoutY="78.0" />
-                              <TextField layoutX="560.0" layoutY="133.0" />
-                              <Button id="btnThemPhieuMuon" fx:id="btnThemPhieuMuon" layoutX="809.0" layoutY="29.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Thêm" />
-                              <Label layoutX="438.0" layoutY="138.0" prefHeight="21.0" prefWidth="106.0" text="Ngày hẹn trả:" />
-                              <TextField layoutX="197.0" layoutY="265.0" prefHeight="31.0" prefWidth="326.0" />
-                              <RadioButton layoutX="538.0" layoutY="313.0" mnemonicParsing="false" text="Theo độc giả" />
-                              <RadioButton layoutX="776.0" layoutY="270.0" mnemonicParsing="false" text="Theo mã sách" />
-                              <RadioButton layoutX="774.0" layoutY="313.0" mnemonicParsing="false" text="Theo tên sách" />
-                              <RadioButton layoutX="538.0" layoutY="270.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="195.0" text="Theo mã phiếu mượn" />
-                              <Label layoutX="442.0" layoutY="194.0" prefHeight="21.0" prefWidth="106.0" text="Ngày trả:" />
-                              <TextField layoutX="560.0" layoutY="189.0" />
-                              <TableView layoutX="-4.0" layoutY="377.0" prefHeight="377.0" prefWidth="1070.0">
-                                
-                              </TableView>
-                           </children>
-                        </Pane>
-                     </children>
-                  </Pane>
-               </content></Tab>
              <Tab text="Thống kê">
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: A2B3E4;" />
@@ -201,6 +93,127 @@
                   </Pane>
                </content>
             </Tab>
+            <Tab fx:id="tabQuanLySach" text="Quản lý sách">
+               <content>
+                  <Pane prefHeight="706.0" prefWidth="965.0" style="-fx-background-color: #abd7e5;">
+                     <children>
+                        <Button id="btnTimKiem" fx:id="btnTimKiem" layoutX="38.0" layoutY="265.0" mnemonicParsing="false" onAction="#timKiem" prefHeight="26.0" prefWidth="124.0" text="Tìm kiếm">
+                           <font>
+                              <Font name="Tahoma Bold" size="18.0" />
+                           </font></Button>
+                        <Label layoutX="37.0" layoutY="29.0" prefHeight="27.0" prefWidth="88.0" text="Mã Sách:" textFill="#1a07eb">
+                           <font>
+                              <Font name="Tahoma Bold" size="13.0" />
+                           </font></Label>
+                        <Label layoutX="36.0" layoutY="134.0" prefHeight="27.0" prefWidth="88.0" text="Tác giả:" textFill="#1a07eb">
+                           <font>
+                              <Font name="Tahoma Bold" size="13.0" />
+                           </font></Label>
+                        <Label layoutX="36.0" layoutY="82.0" prefHeight="27.0" prefWidth="88.0" text="Tên Sách:" textFill="#1a07eb">
+                           <font>
+                              <Font name="Tahoma Bold" size="13.0" />
+                           </font></Label>
+                        <Label layoutX="38.0" layoutY="188.0" prefHeight="27.0" prefWidth="86.0" text="Số Lượng:" textFill="#1a07eb">
+                           <font>
+                              <Font name="Tahoma Bold" size="13.0" />
+                           </font></Label>
+                        <TextField id="txtIdSach" fx:id="txtIdSach" disable="true" layoutX="124.0" layoutY="29.0" prefHeight="25.0" prefWidth="172.0" />
+                        <TextField id="txtTenSach" fx:id="txtTenSach" layoutX="124.0" layoutY="82.0" prefHeight="25.0" prefWidth="172.0" />
+                        <TextField id="txtTacGia" fx:id="txtTacGia" layoutX="124.0" layoutY="133.0" prefHeight="25.0" prefWidth="171.0" />
+                        <TextField id="txtSoLuong" fx:id="txtSoLuong" layoutX="124.0" layoutY="189.0" prefHeight="25.0" prefWidth="172.0" />
+                        <Button id="btnSuaSach" fx:id="btnSuaSach" layoutX="809.0" layoutY="93.0" mnemonicParsing="false" onAction="#suaSach" prefHeight="31.0" prefWidth="103.0" text="Sửa" textFill="#ee0489">
+                           <font>
+                              <Font name="Tahoma Bold" size="17.0" />
+                           </font></Button>
+                        <Button fx:id="btnXoaSach" alignment="CENTER" layoutX="809.0" layoutY="146.0" mnemonicParsing="false" onAction="#xoaSach" prefHeight="31.0" prefWidth="103.0" text="Xóa" textFill="#f20000">
+                           <font>
+                              <Font name="Tahoma Bold" size="17.0" />
+                           </font></Button>
+                        <Label layoutX="356.0" layoutY="81.0" prefHeight="27.0" prefWidth="100.0" text="Nhà xuất bản:" textFill="#1a07eb">
+                           <font>
+                              <Font name="Tahoma Bold" size="13.0" />
+                           </font></Label>
+                        <Label layoutX="357.0" layoutY="133.0" prefHeight="27.0" prefWidth="100.0" text="Giá sách:" textFill="#1a07eb">
+                           <font>
+                              <Font name="Tahoma Bold" size="13.0" />
+                           </font></Label>
+                        <TextField id="txtNXB" fx:id="txtNXB" layoutX="457.0" layoutY="82.0" />
+                        <TextField id="txtGiaSach" fx:id="txtGiaSach" layoutX="457.0" layoutY="133.0" />
+                        <Button id="btnThemSach" fx:id="btnThemSach" alignment="CENTER" layoutX="810.0" layoutY="41.0" mnemonicParsing="false" onAction="#addSach" prefHeight="30.0" prefWidth="99.0" text="Thêm" textFill="#22b246">
+                           <font>
+                              <Font name="Tahoma Bold" size="17.0" />
+                           </font></Button>
+                        <TextField id="txtTImKiem" fx:id="txtTimKiem" layoutX="197.0" layoutY="265.0" prefHeight="36.0" prefWidth="326.0" />
+                        <RadioButton id="rdTimKiemTen" fx:id="rdTimKiemTen" layoutX="653.0" layoutY="270.0" mnemonicParsing="false" text="Theo tên">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="groupTImKiem" />
+                           </toggleGroup>
+                           <font>
+                              <Font name="Tahoma Bold" size="14.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton id="rdTimKiemTacGIa" fx:id="rdTimKiemTacGIa" layoutX="776.0" layoutY="270.0" mnemonicParsing="false" text="Theo tác giả" toggleGroup="$groupTImKiem">
+                           <font>
+                              <Font name="Tahoma Bold" size="14.0" />
+                           </font></RadioButton>
+                        <TableView id="tableView" fx:id="tableView" layoutX="12.0" layoutY="316.0" prefHeight="435.0" prefWidth="1039.0" />
+                        <Button fx:id="btnNhapLai" layoutX="810.0" layoutY="200.0" mnemonicParsing="false" onAction="#nhapLai" prefHeight="31.0" prefWidth="103.0" text="Nhập Lại">
+                           <font>
+                              <Font name="Tahoma Bold" size="17.0" />
+                           </font></Button>
+                     </children>
+                  </Pane>
+               </content></Tab>
+            <Tab fx:id="tabQuanLyPhieuMuon" text="Quản lý phiếu mượn">
+               <content>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="758.0" prefWidth="1064.0" style="-fx-background-color: A2B3E4;">
+                           <children>
+                              <Button fx:id="btnTimKiemPhieuMuon" layoutX="38.0" layoutY="265.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="124.0" text="Tìm kiếm" />
+                              <Label layoutX="40.0" layoutY="34.0" prefHeight="21.0" prefWidth="146.0" text="Mã phiếu mượn:" />
+                              <Label layoutX="40.0" layoutY="138.0" prefHeight="21.0" prefWidth="124.0" text="Mã sách:" />
+                              <Label layoutX="40.0" layoutY="87.0" prefHeight="21.0" prefWidth="124.0" text="Mã độc giả:" />
+                              <Label layoutX="39.0" layoutY="194.0" prefHeight="21.0" prefWidth="78.0" text="Tên sách:" />
+                              <TextField fx:id="txtMaPhieuMuon" layoutX="186.0" layoutY="29.0" />
+                              <TextField fx:id="txtMaDocGiaPM" layoutX="186.0" layoutY="78.0" />
+                              <TextField fx:id="txtMaSachPM" layoutX="186.0" layoutY="133.0" />
+                              <TextField fx:id="txtTenSachPM" layoutX="186.0" layoutY="189.0" />
+                              <Button layoutX="809.0" layoutY="93.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Sửa" />
+                              <Button layoutX="809.0" layoutY="159.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Xóa" />
+                              <Label layoutX="438.0" layoutY="34.0" prefHeight="21.0" prefWidth="114.0" text="Tên độc giả:" />
+                              <Label layoutX="438.0" layoutY="83.0" prefHeight="21.0" prefWidth="109.0" text="Ngày mượn:" />
+                              <TextField fx:id="txtTenDocGiaPM" layoutX="560.0" layoutY="29.0" />
+                              <TextField fx:id="txtNgayMuonPM" layoutX="560.0" layoutY="78.0" />
+                              <TextField fx:id="txtNgayHenTraPM" layoutX="560.0" layoutY="133.0" />
+                              <Button id="btnThemPhieuMuon" fx:id="btnThemPhieuMuon" layoutX="809.0" layoutY="29.0" mnemonicParsing="false" onAction="#themPM" prefHeight="31.0" prefWidth="103.0" text="Thêm" />
+                              <Label layoutX="438.0" layoutY="138.0" prefHeight="21.0" prefWidth="106.0" text="Ngày hẹn trả:" />
+                              <TextField fx:id="txtTimKiemPhieuMuon" layoutX="197.0" layoutY="265.0" prefHeight="31.0" prefWidth="326.0" />
+                              <RadioButton fx:id="rdTimKiemPMMaDocGia" layoutX="538.0" layoutY="313.0" mnemonicParsing="false" text="Theo độc giả">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="TKPM" />
+                                 </toggleGroup></RadioButton>
+                              <RadioButton fx:id="rdTimKiemPMMaSach" layoutX="776.0" layoutY="270.0" mnemonicParsing="false" text="Theo mã sách" toggleGroup="$TKPM" />
+                              <RadioButton fx:id="rdTimKiemPMTenSach" layoutX="774.0" layoutY="313.0" mnemonicParsing="false" text="Theo tên sách" toggleGroup="$TKPM" />
+                              <RadioButton fx:id="rdTimKiemMaPhieuMuon" layoutX="538.0" layoutY="270.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="195.0" text="Theo mã phiếu mượn" toggleGroup="$TKPM" />
+                              <Label layoutX="442.0" layoutY="194.0" prefHeight="21.0" prefWidth="106.0" text="Ngày trả:" />
+                              <TextField fx:id="txtNgayTraPM" layoutX="560.0" layoutY="189.0" />
+                              <TableView fx:id="tableViewPhieuMuon" layoutX="-4.0" layoutY="377.0" prefHeight="377.0" prefWidth="1070.0">
+                                
+                              </TableView>
+                              <MenuButton fx:id="menubtn" layoutX="186.0" layoutY="230.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="MenuButton" />
+                              <MenuButton fx:id="menubtnTenDocGiaPM" layoutX="560.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="MenuButton" />
+                              <MenuButton fx:id="menubtnNVPM" layoutX="560.0" layoutY="230.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="MenuButton">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" text="Action 1" />
+                                  <MenuItem mnemonicParsing="false" text="Action 2" />
+                                </items>
+                              </MenuButton>
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+               </content></Tab>
         </tabs>
       </TabPane>
    </children>

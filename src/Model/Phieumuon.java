@@ -20,7 +20,7 @@ public class Phieumuon  implements java.io.Serializable {
      private int soLuongMuon;
      private String tienBoiThuong;
      private String tienPhat;
-
+     private Integer maKh;
     public Phieumuon() {
     }
 
@@ -42,6 +42,7 @@ public class Phieumuon  implements java.io.Serializable {
        this.tienBoiThuong = tienBoiThuong;
        this.tienPhat = tienPhat;
     }
+    
    
     public Integer getMaPhieuMuon() {
         return this.maPhieuMuon;

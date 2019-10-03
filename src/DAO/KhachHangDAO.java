@@ -29,4 +29,24 @@ public class KhachHangDAO {
         session.close();
         return result;
     }
+   public Khachhang readIdKH(String tenKH)
+    {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        String hql = "FROM Khachhang where tenKh = :TenKH";
+        Query query = session.createQuery(hql);
+        query.setParameter("TenKH", tenKH);
+        List<Khachhang> result = query.list();
+        Khachhang kh = new Khachhang();
+        session.close();
+            //sach.setGiaSach(result.get(0).getGiaSach());
+            kh.setMaKh(result.get(0).getMaKh());
+           // sach.setNxb(result.get(0).getNxb());
+           // sach.setSoLuong(result.get(0).getSoLuong());
+           // sach.setTenSach(result.get(0).getTenSach());
+           // sach.setTenTacGia(result.get(0).getTenTacGia());
+        
+        return kh;
+    }
+    
 }
