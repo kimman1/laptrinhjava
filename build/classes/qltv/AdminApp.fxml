@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -203,12 +202,7 @@
                               </TableView>
                               <MenuButton fx:id="menubtn" layoutX="186.0" layoutY="230.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="MenuButton" />
                               <MenuButton fx:id="menubtnTenDocGiaPM" layoutX="560.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="MenuButton" />
-                              <MenuButton fx:id="menubtnNVPM" layoutX="560.0" layoutY="230.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="MenuButton">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                                  <MenuItem mnemonicParsing="false" text="Action 2" />
-                                </items>
-                              </MenuButton>
+                              <MenuButton fx:id="menubtnNVPM" layoutX="560.0" layoutY="230.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="MenuButton" />
                            </children>
                         </Pane>
                      </children>

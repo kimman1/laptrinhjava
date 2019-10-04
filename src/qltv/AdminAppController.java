@@ -18,6 +18,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -119,6 +120,8 @@ public class AdminAppController implements Initializable {
     private TextField txtNgayHenTraPM;
     @FXML
     private TextField txtNgayTraPM;
+    @FXML
+    private TextField txtSoLuongMuonPM;
     @FXML
     private TabPane tabPaneContainer;
     @FXML
@@ -261,8 +264,8 @@ public class AdminAppController implements Initializable {
                                 selectTenNVPMItem = s.getText();
                             });
                         }
-            
-      
+            /*=====================Test void ==================*/
+                        
 
     }  
     public void eventOnClickItem()
@@ -478,13 +481,31 @@ public class AdminAppController implements Initializable {
          Sach sachPM = sachPMDAO.readIdSach(selectTenSachItem);
          Nhanvien nvPM = nvDAO.readIdNV(selectTenNVPMItem);
          Khachhang khPM = khDAO.readIdKH(selectTenDocGiaPMItem);
+         //get current date
+         long millis = System.currentTimeMillis();
+         Date currentDate = new Date(millis);
+         Date hanTraDate = Date.valueOf(txtNgayHenTraPM.getText());
+         Date ngayTraDate = Date.valueOf(txtNgayTraPM.getText());
+          //SimpleDateFormat simpDate = new SimpleDateFormat("yyyy-MM-dd");
+          
         Phieumuon PM = new Phieumuon();
         PM.setSach(sachPM);
         PM.setNhanvien(nvPM);
         PM.setKhachhang(khPM);
-        PM.setSoLuongMuon(5);
+        PM.setSoLuongMuon(Integer.parseInt(txtSoLuongMuonPM.getText()));
+        PM.setNgayMuon(currentDate);
+        PM.setHanTra(hanTraDate);
+        PM.setNgayTra(ngayTraDate);
+        
         PhieuMuonDAO pmDao = new PhieuMuonDAO();
         pmDao.addPM(PM);
+        
+        
+        
+       
+       
+        
+       // System.out.println(simpDate.format(date));
     }
     
   
