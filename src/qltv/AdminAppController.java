@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -32,6 +34,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
@@ -42,6 +45,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.StringConverter;
+
 
 /**
  * FXML Controller class
@@ -130,6 +135,12 @@ public class AdminAppController implements Initializable {
     private MenuButton menubtnTenDocGiaPM;
     @FXML
     private MenuButton menubtnNVPM;
+    @FXML
+    private DatePicker datePickerNgayMuonPM;
+    @FXML
+    private DatePicker datePickerNgayHenTraPM;
+    @FXML
+    private DatePicker datePickerNgayTraPM;
     @FXML
     private String selectTenSachItem = "";
     @FXML
@@ -269,6 +280,34 @@ public class AdminAppController implements Initializable {
                                 selectTenNVPMItem = s.getText();
                             });
                         }
+                       /*======================Date picker*=================*/
+                        StringConverter<LocalDate> converter = new StringConverter<LocalDate>() 
+                        {
+                             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+                             @Override
+                             public String toString(LocalDate date) {
+                                 if (date != null) {
+                                     return dateFormatter.format(date);
+                                 } else {
+                                     return "";
+                                 }
+                             }
+                             @Override
+                             public LocalDate fromString(String string) {
+                                 if (string != null && !string.isEmpty()) {
+                                     return LocalDate.parse(string, dateFormatter);
+                                 } else {
+                                     return null;
+                                 }
+                             }
+                         }; 
+                        datePickerNgayMuonPM.setConverter(converter);
+                        datePickerNgayMuonPM.setPromptText("dd-MM-yyyy");
+                        datePickerNgayTraPM.setConverter(converter);
+                        datePickerNgayTraPM.setPromptText("dd-MM-yyyy");
+                        datePickerNgayHenTraPM.setConverter(converter);
+                        datePickerNgayHenTraPM.setPromptText("dd-MM-yyyy");
             /*=====================Test void ==================*/
                         
               
@@ -491,8 +530,13 @@ public class AdminAppController implements Initializable {
          //get current date
          long millis = System.currentTimeMillis();
          Date currentDate = new Date(millis);
-         Date hanTraDate = Date.valueOf(txtNgayHenTraPM.getText());
-         Date ngayTraDate = Date.valueOf(txtNgayTraPM.getText());
+         LocalDate NgayTravalue = datePickerNgayTraPM.getValue();
+         
+         LocalDate HanTravalue = datePickerNgayHenTraPM.getValue();
+         Date hanTraDate = Date.valueOf(HanTravalue);
+         Date ngayTraDate = Date.valueOf(NgayTravalue);
+         
+         
           //SimpleDateFormat simpDate = new SimpleDateFormat("yyyy-MM-dd");
           
         Phieumuon PM = new Phieumuon();
@@ -518,6 +562,9 @@ public class AdminAppController implements Initializable {
         Phieumuon pm = new Phieumuon();
         Sach sach;
         Khachhang kh;
+        Nhanvien nv = new Nhanvien();
+        
+        // set data for model
         if(selectTenSachItem.isEmpty())
         {
              sach = sachDao.readIdSach(menubtn.getText());
@@ -534,11 +581,12 @@ public class AdminAppController implements Initializable {
         {
             kh = khDao.readIdKH(selectTenDocGiaPMItem);
         }
-        Nhanvien nv = new Nhanvien();
-        // set data for model
+        
+        
         //kh.setMaKh(Integer.parseInt(txtMaDocGiaPM.getText()));
         //sach.setMaSach(Integer.parseInt(txtMaSachPM.getText()));
         nv.setMaNv(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaNV());
+        
         // Set Phieu Muon 
         pm.setMaPhieuMuon(Integer.parseInt(txtMaPhieuMuon.getText()));
         pm.setKhachhang(kh);
@@ -550,7 +598,9 @@ public class AdminAppController implements Initializable {
     @FXML
     private void testaction (ActionEvent e)
     {
-        System.out.println("print");
+       
+       //LocalDate value = datePickerPM.getValue();
+        //System.out.println(value);
     }
     
     

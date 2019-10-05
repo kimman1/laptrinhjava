@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.RadioButton?>
@@ -204,6 +205,9 @@
                               <MenuButton fx:id="menubtnTenDocGiaPM" layoutX="560.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="MenuButton" />
                               <MenuButton fx:id="menubtnNVPM" layoutX="560.0" layoutY="230.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="MenuButton" />
                               <TextField fx:id="txtSoLuongMuonPM" layoutX="776.0" layoutY="218.0" />
+                              <DatePicker fx:id="datePickerNgayMuonPM" layoutX="925.0" layoutY="78.0" />
+                              <DatePicker fx:id="datePickerNgayHenTraPM" layoutX="925.0" layoutY="133.0" />
+                              <DatePicker fx:id="datePickerNgayTraPM" layoutX="925.0" layoutY="189.0" />
                            </children>
                         </Pane>
                      </children>
