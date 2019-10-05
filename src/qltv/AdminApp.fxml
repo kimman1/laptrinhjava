@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="794.0" prefWidth="1064.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="qltv.AdminAppController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="813.0" prefWidth="1106.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="qltv.AdminAppController">
    <children>
       <TabPane fx:id="tabPaneContainer" prefHeight="796.0" prefWidth="1064.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -167,9 +167,9 @@
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Pane prefHeight="758.0" prefWidth="1064.0" style="-fx-background-color: A2B3E4;">
+                        <Pane layoutY="2.0" prefHeight="756.0" prefWidth="1106.0" style="-fx-background-color: A2B3E4;">
                            <children>
-                              <Button fx:id="btnTimKiemPhieuMuon" layoutX="38.0" layoutY="265.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="124.0" text="Tìm kiếm" />
+                              <Button fx:id="btnTimKiemPhieuMuon" layoutX="38.0" layoutY="265.0" mnemonicParsing="false" onAction="#testaction" prefHeight="31.0" prefWidth="124.0" text="Tìm kiếm" />
                               <Label layoutX="40.0" layoutY="34.0" prefHeight="21.0" prefWidth="146.0" text="Mã phiếu mượn:" />
                               <Label layoutX="40.0" layoutY="138.0" prefHeight="21.0" prefWidth="124.0" text="Mã sách:" />
                               <Label layoutX="40.0" layoutY="87.0" prefHeight="21.0" prefWidth="124.0" text="Mã độc giả:" />
@@ -178,7 +178,7 @@
                               <TextField fx:id="txtMaDocGiaPM" layoutX="186.0" layoutY="78.0" />
                               <TextField fx:id="txtMaSachPM" layoutX="186.0" layoutY="133.0" />
                               <TextField fx:id="txtTenSachPM" layoutX="186.0" layoutY="189.0" />
-                              <Button layoutX="809.0" layoutY="93.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Sửa" />
+                              <Button layoutX="809.0" layoutY="93.0" mnemonicParsing="false" onAction="#suaPM" prefHeight="31.0" prefWidth="103.0" text="Sửa" />
                               <Button layoutX="809.0" layoutY="159.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Xóa" />
                               <Label layoutX="438.0" layoutY="34.0" prefHeight="21.0" prefWidth="114.0" text="Tên độc giả:" />
                               <Label layoutX="438.0" layoutY="83.0" prefHeight="21.0" prefWidth="109.0" text="Ngày mượn:" />
@@ -197,7 +197,7 @@
                               <RadioButton fx:id="rdTimKiemMaPhieuMuon" layoutX="538.0" layoutY="270.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="195.0" text="Theo mã phiếu mượn" toggleGroup="$TKPM" />
                               <Label layoutX="442.0" layoutY="194.0" prefHeight="21.0" prefWidth="106.0" text="Ngày trả:" />
                               <TextField fx:id="txtNgayTraPM" layoutX="560.0" layoutY="189.0" />
-                              <TableView fx:id="tableViewPhieuMuon" layoutX="-4.0" layoutY="377.0" prefHeight="377.0" prefWidth="1070.0">
+                              <TableView fx:id="tableViewPhieuMuon" layoutX="-4.0" layoutY="377.0" prefHeight="377.0" prefWidth="1113.0">
                                 
                               </TableView>
                               <MenuButton fx:id="menubtn" layoutX="186.0" layoutY="230.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="MenuButton" />

@@ -152,7 +152,6 @@ public class AdminAppController implements Initializable {
         soLuong.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
         giaSach.setCellValueFactory(new PropertyValueFactory<>("giaSach"));
         tableView.getColumns().setAll(idSach,tenSach,tacGia,NXB,soLuong,giaSach);
-        
         SachDAO sach = new SachDAO();
         List<Sach> listSach =  sach.readAllSach();
         for(Sach s : listSach)
@@ -162,13 +161,15 @@ public class AdminAppController implements Initializable {
         tableView.setOnMouseClicked(e -> {
             eventOnClickItem();
         });
-        
+        System.out.println("init");
         //Tab Quản Lý Phiếu Mượn
         TableColumn idPM = new TableColumn("Mã Phiếu Mượn");
         TableColumn idDocGiaPM = new TableColumn("Mã Độc Giả");
         TableColumn idSachPM = new TableColumn("Mã Sách");
+        TableColumn idNVPM = new TableColumn("Mã NV");
         TableColumn tenSachPM = new TableColumn("Tên Sách");
         TableColumn tenKhPM  = new TableColumn("Tên Khách Hàng");
+        TableColumn tenNVPM  = new TableColumn("Tên Nhân Viên");
         TableColumn ngayMuonPM = new TableColumn("Ngày Mượn");
         TableColumn ngayHenTraPM = new TableColumn("Ngày Hẹn Trả");
         TableColumn ngayTraPM = new TableColumn("Ngày Trả");
@@ -178,15 +179,17 @@ public class AdminAppController implements Initializable {
         idPM.setCellValueFactory(new PropertyValueFactory<>("maPhieuMuon"));
         idDocGiaPM.setCellValueFactory(new PropertyValueFactory<>("maDocGia"));
         idSachPM.setCellValueFactory(new PropertyValueFactory<>("maSach"));
+        idNVPM.setCellValueFactory(new PropertyValueFactory<>("maNV"));
         tenSachPM.setCellValueFactory(new PropertyValueFactory<>("tenSach"));
         tenKhPM.setCellValueFactory(new PropertyValueFactory<>("tenKh"));
+        tenNVPM.setCellValueFactory(new PropertyValueFactory<>("tenNV"));
         ngayMuonPM.setCellValueFactory(new PropertyValueFactory<>("ngayMuon"));
         ngayHenTraPM.setCellValueFactory(new PropertyValueFactory<>("ngayHenTra"));
         ngayTraPM.setCellValueFactory(new PropertyValueFactory<>("ngayTra"));
         SLMuonPM.setCellValueFactory(new PropertyValueFactory<>("soLuongMuon"));
         TienBTPM.setCellValueFactory(new PropertyValueFactory<>("tienBoiThuong"));
         TienPhatPM.setCellValueFactory(new PropertyValueFactory<>("tienPhat"));
-        tableViewPhieuMuon.getColumns().addAll(idPM,idDocGiaPM,idSachPM,tenSachPM,tenKhPM,ngayMuonPM,ngayHenTraPM,ngayTraPM,SLMuonPM,TienBTPM,TienPhatPM);
+        tableViewPhieuMuon.getColumns().addAll(idNVPM,idPM,idDocGiaPM,idSachPM,tenSachPM,tenKhPM,tenNVPM,ngayMuonPM,ngayHenTraPM,ngayTraPM,SLMuonPM,TienBTPM,TienPhatPM);
         PhieuMuonDAO PM = new PhieuMuonDAO();
         List<PhieumuonTableView> listPMTBV = new ArrayList<>();
         List<Object[]> result = PM.readAllPM();
@@ -195,24 +198,26 @@ public class AdminAppController implements Initializable {
         {
              Object[] row = result.get(indexResultPM);
            PhieumuonTableView temp = new PhieumuonTableView();
-             
-             temp.setMaPhieuMuon((Integer)row[0]);
-             temp.setMaDocGia((Integer)row[1]);
-             temp.setMaSach((Integer)row[2]);
-             temp.setTenSach((String)row[3]);
-             temp.setTenKh((String)row[4]);
-             temp.setNgayMuon((Date)row[5]);
-             temp.setNgayHenTra((Date)row[6]);
-             temp.setNgayTra((Date)row[7]);
-             temp.setSoLuongMuon((Integer)row[8]);
-             temp.setTienBoiThuong((String)row[9]);
-             temp.setTienPhat((String)row[10]);
+             temp.setMaNV((Integer)row[0]);
+             temp.setMaPhieuMuon((Integer)row[1]);
+             temp.setMaDocGia((Integer)row[2]);
+             temp.setMaSach((Integer)row[3]);
+             temp.setTenSach((String)row[4]);
+             temp.setTenKh((String)row[5]);
+             temp.setNgayMuon((Date)row[6]);
+             temp.setNgayHenTra((Date)row[7]);
+             temp.setNgayTra((Date)row[8]);
+             temp.setSoLuongMuon((Integer)row[9]);
+             temp.setTienBoiThuong((String)row[10]);
+             temp.setTienPhat((String)row[11]);
+             temp.setTenNV((String)row[12]);
              listPMTBV.add(temp);
              indexResultPM++;
         }
         for(PhieumuonTableView s : listPMTBV)
         {
             tableViewPhieuMuon.getItems().add(s);
+            
         }
         tableViewPhieuMuon.setOnMouseClicked(e -> {
             eventOnClickPMItem();
@@ -266,7 +271,7 @@ public class AdminAppController implements Initializable {
                         }
             /*=====================Test void ==================*/
                         
-
+              
     }  
     public void eventOnClickItem()
     {
@@ -283,8 +288,10 @@ public class AdminAppController implements Initializable {
         txtMaPhieuMuon.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaPhieuMuon()));
         txtMaDocGiaPM.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaDocGia()));
         txtTenSachPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenSach());
+        menubtn.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenSach());
         txtMaSachPM.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaSach()));
         txtTenDocGiaPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenKh());
+        menubtnTenDocGiaPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenKh());
         txtNgayMuonPM.clear();
         txtNgayHenTraPM.clear();
         txtNgayTraPM.clear();
@@ -496,19 +503,55 @@ public class AdminAppController implements Initializable {
         PM.setNgayMuon(currentDate);
         PM.setHanTra(hanTraDate);
         PM.setNgayTra(ngayTraDate);
-        
+       
         PhieuMuonDAO pmDao = new PhieuMuonDAO();
-        pmDao.addPM(PM);
-        
-        
-        
-       
-       
-        
+        pmDao.addPM(PM);   
        // System.out.println(simpDate.format(date));
     }
+    @FXML
+    private void suaPM(ActionEvent event)
+    {
+        //Create model
+        PhieuMuonDAO pmDao = new PhieuMuonDAO();
+        KhachHangDAO khDao = new KhachHangDAO();
+        SachDAO sachDao = new SachDAO();
+        Phieumuon pm = new Phieumuon();
+        Sach sach;
+        Khachhang kh;
+        if(selectTenSachItem.isEmpty())
+        {
+             sach = sachDao.readIdSach(menubtn.getText());
+        }
+        else
+        {
+             sach = sachDao.readIdSach(selectTenSachItem);
+        }
+        if(selectTenDocGiaPMItem.isEmpty())
+        {
+            kh = khDao.readIdKH(menubtnTenDocGiaPM.getText());
+        }
+        else
+        {
+            kh = khDao.readIdKH(selectTenDocGiaPMItem);
+        }
+        Nhanvien nv = new Nhanvien();
+        // set data for model
+        //kh.setMaKh(Integer.parseInt(txtMaDocGiaPM.getText()));
+        //sach.setMaSach(Integer.parseInt(txtMaSachPM.getText()));
+        nv.setMaNv(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaNV());
+        // Set Phieu Muon 
+        pm.setMaPhieuMuon(Integer.parseInt(txtMaPhieuMuon.getText()));
+        pm.setKhachhang(kh);
+        pm.setNhanvien(nv);
+        pm.setSach(sach);
+        pmDao.modifiedPM(pm);
+    }
     
-  
+    @FXML
+    private void testaction (ActionEvent e)
+    {
+        System.out.println("print");
+    }
     
     
 }

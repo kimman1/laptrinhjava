@@ -15,30 +15,50 @@ public class PhieumuonTableView {
     private int maPhieuMuon;
     private int maDocGia;
     private int maSach;
+    private int maNV;
     private String tenSach;
     private String tenKh;
+    private String tenNV;
     private Date ngayMuon;
     private Date ngayHenTra;
     private Date ngayTra;
     private String tienPhat;
-     private int soLuongMuon;
-     private String tienBoiThuong;
+    private int soLuongMuon;
+    private String tienBoiThuong;
     public PhieumuonTableView()
     {
     }
-    public PhieumuonTableView(int maPhieuMuon, int maDocGia, int maSach, String tenSach, String tenKh, String tenDocGia, Date ngayMuon, Date ngayHenTra, Date ngayTra,String tienPhat,int soLuongMuon,String tienBoiThuong)
+    public PhieumuonTableView(int maPhieuMuon, int maDocGia, int maSach, int maNv, String tenSach, String tenKh,String tenNv, String tenDocGia, Date ngayMuon, Date ngayHenTra, Date ngayTra,String tienPhat,int soLuongMuon,String tienBoiThuong)
     {
         maPhieuMuon = this.maPhieuMuon;
         maDocGia = this.maDocGia;
         maSach = this.maSach;
+        maNv = this.maNV;
         tenSach = this.tenSach;
         tenKh = this.tenKh;
+        tenNv = this.tenNV;
         ngayMuon = this.ngayMuon;
         ngayHenTra = this.ngayHenTra;
         ngayTra = this.ngayTra;
         tienPhat = this.tienPhat;
         soLuongMuon = this.soLuongMuon;
         tienBoiThuong = this.tienBoiThuong;
+    }
+    public void setTenNV(String tenNv)
+    {
+        this.tenNV = tenNv;
+    }
+    public String getTenNV()
+    {
+        return tenNV;
+    }
+    public void setMaNV(int maNv)
+    {
+        this.maNV = maNv;
+    }
+    public int getMaNV()
+    {
+       return this.maNV; 
     }
     public void setSoLuongMuon(int soLuongMuon)
     {
