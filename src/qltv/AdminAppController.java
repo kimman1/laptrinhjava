@@ -118,14 +118,8 @@ public class AdminAppController implements Initializable {
     @FXML
     private TextField txtTenSachPM;
     @FXML
-    private TextField txtTenDocGiaPM;
-    @FXML
     private TextField txtNgayMuonPM;
-    @FXML
-    private TextField txtNgayHenTraPM;
-    @FXML
-    private TextField txtNgayTraPM;
-    @FXML
+   @FXML
     private TextField txtSoLuongMuonPM;
     @FXML
     private TabPane tabPaneContainer;
@@ -245,6 +239,7 @@ public class AdminAppController implements Initializable {
                 {
                     s.setOnAction(e -> {
                         menubtn.setText(s.getText());
+                        selectTenSachItem = "";
                         selectTenSachItem = s.getText();
                     });
                 }
@@ -261,6 +256,7 @@ public class AdminAppController implements Initializable {
                     {
                         s.setOnAction(e ->{
                             menubtnTenDocGiaPM.setText(s.getText());
+                            selectTenDocGiaPMItem = "";
                             selectTenDocGiaPMItem = s.getText();
                         });
                     }
@@ -277,6 +273,7 @@ public class AdminAppController implements Initializable {
                         {
                             s.setOnAction(e ->{
                                 menubtnNVPM.setText(s.getText());
+                                selectTenNVPMItem = "";
                                 selectTenNVPMItem = s.getText();
                             });
                         }
@@ -308,7 +305,7 @@ public class AdminAppController implements Initializable {
                         datePickerNgayTraPM.setPromptText("dd-MM-yyyy");
                         datePickerNgayHenTraPM.setConverter(converter);
                         datePickerNgayHenTraPM.setPromptText("dd-MM-yyyy");
-            /*=====================Test void ==================*/
+            /*=====================Test init  ==================*/
                         
               
     }  
@@ -329,14 +326,13 @@ public class AdminAppController implements Initializable {
         txtTenSachPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenSach());
         menubtn.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenSach());
         txtMaSachPM.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaSach()));
-        txtTenDocGiaPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenKh());
         menubtnTenDocGiaPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenKh());
-        txtNgayMuonPM.clear();
-        txtNgayHenTraPM.clear();
-        txtNgayTraPM.clear();
         txtNgayMuonPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNgayMuon().toString());
-        txtNgayHenTraPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNgayHenTra().toString());
-        txtNgayTraPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNgayTra().toString());
+        Date dateHenTraPM = tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNgayHenTra();
+        Date dateTraPM = tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNgayTra();
+        datePickerNgayHenTraPM.setValue(dateHenTraPM.toLocalDate());
+        datePickerNgayTraPM.setValue(dateTraPM.toLocalDate());
+       
     }
     @FXML
     private void addSach(ActionEvent event)
@@ -463,8 +459,7 @@ public class AdminAppController implements Initializable {
          alert.setContentText(content);
          alert.showAndWait();
     }
-   
-    
+     
     private String rdTimKiemStatus()
     {
         String status = "";
@@ -531,14 +526,13 @@ public class AdminAppController implements Initializable {
          long millis = System.currentTimeMillis();
          Date currentDate = new Date(millis);
          LocalDate NgayTravalue = datePickerNgayTraPM.getValue();
-         
          LocalDate HanTravalue = datePickerNgayHenTraPM.getValue();
          Date hanTraDate = Date.valueOf(HanTravalue);
          Date ngayTraDate = Date.valueOf(NgayTravalue);
          
          
           //SimpleDateFormat simpDate = new SimpleDateFormat("yyyy-MM-dd");
-          
+         // set Data for Phieumuon 
         Phieumuon PM = new Phieumuon();
         PM.setSach(sachPM);
         PM.setNhanvien(nvPM);
@@ -547,9 +541,11 @@ public class AdminAppController implements Initializable {
         PM.setNgayMuon(currentDate);
         PM.setHanTra(hanTraDate);
         PM.setNgayTra(ngayTraDate);
-       
+        //Add proccess
         PhieuMuonDAO pmDao = new PhieuMuonDAO();
-        pmDao.addPM(PM);   
+        pmDao.addPM(PM);
+        //Reload after Added 
+        reloadTabPM(pmDao);
        // System.out.println(simpDate.format(date));
     }
     @FXML
@@ -586,15 +582,139 @@ public class AdminAppController implements Initializable {
         //kh.setMaKh(Integer.parseInt(txtMaDocGiaPM.getText()));
         //sach.setMaSach(Integer.parseInt(txtMaSachPM.getText()));
         nv.setMaNv(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaNV());
-        
-        // Set Phieu Muon 
+        LocalDate NgayTravalue = datePickerNgayTraPM.getValue();
+        LocalDate HanTravalue = datePickerNgayHenTraPM.getValue();
+        Date hanTraDate = Date.valueOf(HanTravalue);
+        Date ngayTraDate = Date.valueOf(NgayTravalue);
+        // Set Data for Phieu Muon 
         pm.setMaPhieuMuon(Integer.parseInt(txtMaPhieuMuon.getText()));
         pm.setKhachhang(kh);
         pm.setNhanvien(nv);
         pm.setSach(sach);
+        pm.setHanTra(hanTraDate);
+        pm.setNgayTra(ngayTraDate);
+        pm.setSoLuongMuon(Integer.parseInt(txtSoLuongMuonPM.getText()));
         pmDao.modifiedPM(pm);
+        reloadTabPM(pmDao);
     }
-    
+    @FXML
+    private void xoaPM(ActionEvent e)
+    {
+        int idPM =  tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaPhieuMuon();
+        PhieuMuonDAO pmDAO = new PhieuMuonDAO();
+        pmDAO.deletePM(idPM);
+        reloadTabPM(pmDAO);
+    }
+    @FXML
+    private void timKiemPM(ActionEvent e)
+    {
+        PhieuMuonDAO pmDAO = new PhieuMuonDAO();
+         tableViewPhieuMuon.getItems().clear();
+        List<PhieumuonTableView> listPMTBV = new ArrayList<>();
+        List<Object[]> result = pmDAO.searchPM(txtTimKiemPhieuMuon.getText(),rdTimKiemPMStatus());
+        int indexResultPM = 0;
+        for(Object[] s : result)
+        {
+             Object[] row = result.get(indexResultPM);
+           PhieumuonTableView temp = new PhieumuonTableView();
+             temp.setMaNV((Integer)row[0]);
+             temp.setMaPhieuMuon((Integer)row[1]);
+             temp.setMaDocGia((Integer)row[2]);
+             temp.setMaSach((Integer)row[3]);
+             temp.setTenSach((String)row[4]);
+             temp.setTenKh((String)row[5]);
+             temp.setNgayMuon((Date)row[6]);
+             temp.setNgayHenTra((Date)row[7]);
+             temp.setNgayTra((Date)row[8]);
+             temp.setSoLuongMuon((Integer)row[9]);
+             temp.setTienBoiThuong((String)row[10]);
+             temp.setTienPhat((String)row[11]);
+             temp.setTenNV((String)row[12]);
+             listPMTBV.add(temp);
+             indexResultPM++;
+        }
+        for(PhieumuonTableView s : listPMTBV)
+        {
+            tableViewPhieuMuon.getItems().add(s);
+        }
+    }
+    private void reloadTabPM(PhieuMuonDAO pmDAO)
+    {
+        txtMaPhieuMuon.clear();
+        txtMaDocGiaPM.clear();
+        txtMaSachPM.clear();
+        txtTenSachPM.clear();
+        txtNgayMuonPM.clear();
+        txtSoLuongMuonPM.clear();
+        datePickerNgayHenTraPM.setValue(null);
+        datePickerNgayTraPM.setValue(null);
+        datePickerNgayTraPM.setPromptText("dd-MM-yyyy");
+        datePickerNgayHenTraPM.setPromptText("dd-MM-yyyy");
+        menubtn.setText("Chọn Sách...");
+        menubtnNVPM.setText("Chọn tên NV...");
+        menubtnTenDocGiaPM.setText("Chọn tên Độc Giả...");
+        menubtn.getItems().clear();
+        menubtnNVPM.getItems().clear();
+        menubtnTenDocGiaPM.getItems().clear();
+        tableViewPhieuMuon.getItems().clear();
+        List<PhieumuonTableView> listPMTBV = new ArrayList<>();
+        List<Object[]> result = pmDAO.readAllPM();
+        int indexResultPM = 0;
+        for(Object[] s : result)
+        {
+             Object[] row = result.get(indexResultPM);
+           PhieumuonTableView temp = new PhieumuonTableView();
+             temp.setMaNV((Integer)row[0]);
+             temp.setMaPhieuMuon((Integer)row[1]);
+             temp.setMaDocGia((Integer)row[2]);
+             temp.setMaSach((Integer)row[3]);
+             temp.setTenSach((String)row[4]);
+             temp.setTenKh((String)row[5]);
+             temp.setNgayMuon((Date)row[6]);
+             temp.setNgayHenTra((Date)row[7]);
+             temp.setNgayTra((Date)row[8]);
+             temp.setSoLuongMuon((Integer)row[9]);
+             temp.setTienBoiThuong((String)row[10]);
+             temp.setTienPhat((String)row[11]);
+             temp.setTenNV((String)row[12]);
+             listPMTBV.add(temp);
+             indexResultPM++;
+        }
+        for(PhieumuonTableView s : listPMTBV)
+        {
+            tableViewPhieuMuon.getItems().add(s);
+        }
+        SachDAO sach = new SachDAO();
+        List<Sach> listSach =  sach.readAllSach();
+        for(Sach s : listSach)
+                {
+                    MenuItem temp = new MenuItem(s.getTenSach());
+                    menubtn.getItems().addAll(temp);
+                }
+        KhachHangDAO kh = new KhachHangDAO();
+                    List<Khachhang> listKh = kh.readAllKhachHang();
+                    for(Khachhang s : listKh)
+                    {
+                        MenuItem temp = new MenuItem(s.getTenKh());
+                        menubtnTenDocGiaPM.getItems().addAll(temp);
+                    }
+                    NhanVienDAO nv = new NhanVienDAO();
+                        List<Nhanvien> listNV = nv.readAllKhachHang();
+                        for(Nhanvien s : listNV)
+                        {
+                            MenuItem temp = new MenuItem(s.getTenNv());
+                            menubtnNVPM.getItems().addAll(temp);
+                        }
+    }
+     private String rdTimKiemPMStatus()
+    {
+        String status = "";
+        if(rdTimKiemPMTenSach.isSelected())
+        {
+            status = "name";
+        }
+        return status;
+    }
     @FXML
     private void testaction (ActionEvent e)
     {

@@ -44,15 +44,48 @@ public class PhieuMuonDAO {
      {
          Session session = sessionFactory.openSession();
         Transaction tx =  session.beginTransaction();
-        String hql = "update Phieumuon set khachhang=  :KhachHang, nhanvien= :NhanVien,sach= :Sach where maPhieuMuon= :MaPhieuMuon";
+        String hql = "update Phieumuon set khachhang=  :KhachHang, nhanvien= :NhanVien,sach= :Sach, hanTra= :HanTra, ngayTra= :NgayTra, soLuongMuon= :SoLuongMuon  where maPhieuMuon= :MaPhieuMuon";
         Query query = session.createQuery(hql);
         query.setParameter("KhachHang", phieumuon.getKhachhang());
         query.setParameter("NhanVien", phieumuon.getNhanvien());
         query.setParameter("Sach", phieumuon.getSach());
+        query.setParameter("HanTra",phieumuon.getHanTra());
+        query.setParameter("NgayTra", phieumuon.getNgayTra());
+        query.setParameter("SoLuongMuon", phieumuon.getSoLuongMuon());
         query.setParameter("MaPhieuMuon",phieumuon.getMaPhieuMuon());
         query.executeUpdate();
         tx.commit();
         session.close();
+     }
+     public int deletePM(int maPMDelete)
+    {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        String hql =  "delete Phieumuon where maPhieuMuon = :maPM";
+        Query query = session.createQuery(hql);
+        query.setParameter("maPM", maPMDelete);
+        int result = query.executeUpdate();
+        tx.commit();
+        session.close();
+        return result;
+    }
+     public List searchPM(String SearchString, String SearchType)
+     {
+         String hql = "";
+         Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        if(SearchType.trim().equalsIgnoreCase("name"))
+        {
+             hql = "select nhanvien.maNv,maPhieuMuon ,khachhang.maKh, sach.maSach, sach.tenSach, khachhang.tenKh, ngayMuon, hanTra, ngayTra, soLuongMuon,tienBoiThuong,tienPhat, nhanvien.tenNv from Phieumuon where sach.tenSach like :searchString";
+             //select nhanvien.maNv,maPhieuMuon ,khachhang.maKh, sach.maSach, sach.tenSach, khachhang.tenKh, ngayMuon, hanTra, ngayTra, soLuongMuon,tienBoiThuong,tienPhat, nhanvien.tenNv from Phieumuon
+              
+        }
+              Query query = session.createQuery(hql);
+              query.setParameter("searchString","%"+SearchString+"%");
+               List<Object[]> result = query.list();
+               session.close();
+               return result;
+        
      }
      
 }
