@@ -91,6 +91,7 @@
                               <TableView fx:id="tableViewDocGia" layoutY="355.0" prefHeight="345.0" prefWidth="1056.0" />
                               <Label layoutX="381.0" layoutY="142.0" text="Account: " />
                               <TextField fx:id="txtAccountDG" layoutX="431.0" layoutY="136.0" />
+                              <Button layoutX="631.0" layoutY="191.0" mnemonicParsing="false" onAction="#nhapLaiActionDG" prefHeight="31.0" prefWidth="105.0" text="Nhập lại" />
                            </children>
                         </Pane>
                      </children>
@@ -212,6 +213,7 @@
                               <DatePicker fx:id="datePickerNgayTraPM" layoutX="549.0" layoutY="189.0" />
                               <Label layoutX="439.0" layoutY="189.0" prefHeight="21.0" prefWidth="106.0" text="Ngày trả:" />
                               <Label layoutX="770.0" layoutY="245.0" prefHeight="21.0" prefWidth="104.0" text="Số Lượng Mượn:" />
+                              <Button layoutX="810.0" layoutY="203.0" mnemonicParsing="false" onAction="#nhapLaiPM" prefHeight="32.0" prefWidth="101.0" text="Nhập lại" />
                            </children>
                         </Pane>
                      </children>
