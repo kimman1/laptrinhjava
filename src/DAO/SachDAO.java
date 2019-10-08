@@ -66,7 +66,7 @@ public class SachDAO {
             //sach.setGiaSach(result.get(0).getGiaSach());
             sach.setMaSach(result.get(0).getMaSach());
            // sach.setNxb(result.get(0).getNxb());
-           // sach.setSoLuong(result.get(0).getSoLuong());
+            sach.setSoLuong(result.get(0).getSoLuong());
            // sach.setTenSach(result.get(0).getTenSach());
            // sach.setTenTacGia(result.get(0).getTenTacGia());
         
@@ -119,5 +119,27 @@ public class SachDAO {
         query.setParameter("searchString","%"+SearchString+"%");
         listResultSach = query.list();
         return listResultSach;
+    }
+    public void updateStockSach(Sach sach, String updateMethod)
+    {
+        Session session = sessionFactory.openSession();
+        Transaction tx =  session.beginTransaction();
+        String hql = "";
+        if(updateMethod.trim().equalsIgnoreCase("plus"))
+        {
+            hql = "update Sach set soLuong= soLuong + :SoLuongUpdate where maSach = :MaSachUpdate";
+        }
+        if(updateMethod.trim().equalsIgnoreCase("minus"))
+        {
+             hql = "update Sach set soLuong= soLuong - :SoLuongUpdate where maSach = :MaSachUpdate";
+        }
+        
+        Query query = session.createQuery(hql);
+        query.setParameter("SoLuongUpdate", sach.getSoLuong());
+        query.setParameter("MaSachUpdate", sach.getMaSach());
+        query.executeUpdate();
+        tx.commit();
+        session.close();
+        
     }
 }

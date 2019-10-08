@@ -141,6 +141,28 @@ public class AdminAppController implements Initializable {
     private String selectTenDocGiaPMItem = "";
     @FXML
     private String selectTenNVPMItem = "";
+    /*==========================Tab quản lý độc giả===============*/
+    @FXML 
+    private TextField txtTenDocGiaDG;
+    @FXML 
+    private TextField txtMaDocGiaDG;
+    @FXML
+    private TextField txtMatKhauDG;
+    @FXML
+    private TextField txtAccountDG;
+    @FXML 
+    private TextField txtSDTDG;
+    @FXML
+    private TextField   txtDiaChiDG;
+    @FXML
+    private RadioButton rdTimKiemTenDG;
+    @FXML 
+    private RadioButton rdTimKiemSDTDG;
+    @FXML
+    private TextField txtTimKiemDG;
+    @FXML
+    private TableView<Khachhang> tableViewDocGia;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Tab Quản Lý Sách
@@ -166,7 +188,6 @@ public class AdminAppController implements Initializable {
         tableView.setOnMouseClicked(e -> {
             eventOnClickItem();
         });
-        System.out.println("init");
         //Tab Quản Lý Phiếu Mượn
         TableColumn idPM = new TableColumn("Mã Phiếu Mượn");
         TableColumn idDocGiaPM = new TableColumn("Mã Độc Giả");
@@ -305,10 +326,30 @@ public class AdminAppController implements Initializable {
                         datePickerNgayTraPM.setPromptText("dd-MM-yyyy");
                         datePickerNgayHenTraPM.setConverter(converter);
                         datePickerNgayHenTraPM.setPromptText("dd-MM-yyyy");
-            /*=====================Test init  ==================*/
-                        
-              
-    }  
+            /*========================Tab Quản Lý Độc Giả ============================*/
+                        TableColumn idDG = new TableColumn("Mã Độc Giả");
+                        TableColumn TenDG = new TableColumn("Tên Độc Giả");
+                        TableColumn MKDG = new TableColumn("Mật khẩu Độc Giả");
+                        TableColumn AccountDG = new TableColumn("Account Độc Giả");
+                        TableColumn SDTDG = new TableColumn("SDT Độc Giả");
+                        TableColumn DiaChiDG = new TableColumn("Địa chỉ");
+                        idDG.setCellValueFactory(new PropertyValueFactory<>("maKh"));
+                        TenDG.setCellValueFactory(new PropertyValueFactory<>("tenKh"));
+                        MKDG.setCellValueFactory(new PropertyValueFactory<>("passwordKh"));
+                        AccountDG.setCellValueFactory(new PropertyValueFactory<>("accountKh"));
+                        SDTDG.setCellValueFactory(new PropertyValueFactory<>("sdtkh"));
+                        DiaChiDG.setCellValueFactory(new PropertyValueFactory<>("diaChi"));
+                        tableViewDocGia.getColumns().addAll(idDG,TenDG,AccountDG,MKDG,DiaChiDG,SDTDG);
+                        KhachHangDAO khDao = new KhachHangDAO();
+                        List<Khachhang> listKhTableViewInit = khDao.readAllKhachHang();
+                        for(Khachhang s : listKhTableViewInit)
+                        {
+                            tableViewDocGia.getItems().add(s);
+                        }
+                        tableViewDocGia.setOnMouseClicked(e ->{
+                                eventOnClickDGItem();
+                        });
+    }           
     public void eventOnClickItem()
     {
         txtIdSach.setText(tableView.getSelectionModel().getSelectedItems().get(0).getMaSach().toString());
@@ -333,6 +374,16 @@ public class AdminAppController implements Initializable {
         datePickerNgayHenTraPM.setValue(dateHenTraPM.toLocalDate());
         datePickerNgayTraPM.setValue(dateTraPM.toLocalDate());
        
+    }
+    public void eventOnClickDGItem()
+    {
+        txtMaDocGiaDG.setText(String.valueOf(tableViewDocGia.getSelectionModel().getSelectedItems().get(0).getMaKh()));
+        txtTenDocGiaDG.setText(tableViewDocGia.getSelectionModel().getSelectedItems().get(0).getTenKh());
+        txtMatKhauDG.setText(tableViewDocGia.getSelectionModel().getSelectedItems().get(0).getPasswordKh());
+        txtAccountDG.setText(tableViewDocGia.getSelectionModel().getSelectedItems().get(0).getAccountKh());
+        txtDiaChiDG.setText(tableViewDocGia.getSelectionModel().getSelectedItems().get(0).getDiaChi());
+        txtSDTDG.setText(tableViewDocGia.getSelectionModel().getSelectedItems().get(0).getSdtkh());
+        
     }
     @FXML
     private void addSach(ActionEvent event)
@@ -459,6 +510,14 @@ public class AdminAppController implements Initializable {
          alert.setContentText(content);
          alert.showAndWait();
     }
+    private void AlertMessageError(String title, String content)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle(title);
+         alert.setHeaderText(null);
+         alert.setContentText(content);
+         alert.showAndWait();
+    }
      
     private String rdTimKiemStatus()
     {
@@ -533,20 +592,38 @@ public class AdminAppController implements Initializable {
          
           //SimpleDateFormat simpDate = new SimpleDateFormat("yyyy-MM-dd");
          // set Data for Phieumuon 
-        Phieumuon PM = new Phieumuon();
-        PM.setSach(sachPM);
-        PM.setNhanvien(nvPM);
-        PM.setKhachhang(khPM);
-        PM.setSoLuongMuon(Integer.parseInt(txtSoLuongMuonPM.getText()));
-        PM.setNgayMuon(currentDate);
-        PM.setHanTra(hanTraDate);
-        PM.setNgayTra(ngayTraDate);
-        //Add proccess
-        PhieuMuonDAO pmDao = new PhieuMuonDAO();
-        pmDao.addPM(PM);
-        //Reload after Added 
-        reloadTabPM(pmDao);
-       // System.out.println(simpDate.format(date));
+         if(sachPM.getSoLuong() == 0)
+         {
+             //System.out.println("Sách trong thư viện đã hết");
+             AlertMessageError("Lỗi thêm sách", "Sách bạn chọn đã hết");
+         }
+         else if(sachPM.getSoLuong() < Integer.parseInt(txtSoLuongMuonPM.getText()))
+         {
+             //System.out.println("Số lượng sách mượn không đủ cung cấp");
+             AlertMessageError("Lỗi thêm sách", "Không đủ số lượng sách cho mượn");
+         }
+         else
+         {
+               Phieumuon PM = new Phieumuon();
+               PM.setSach(sachPM);
+               PM.setNhanvien(nvPM);
+               PM.setKhachhang(khPM);
+               PM.setSoLuongMuon(Integer.parseInt(txtSoLuongMuonPM.getText()));
+               PM.setNgayMuon(currentDate);
+               PM.setHanTra(hanTraDate);
+               PM.setNgayTra(ngayTraDate);
+
+
+               //Add proccess
+               PhieuMuonDAO pmDao = new PhieuMuonDAO();
+               pmDao.addPM(PM);
+               //Update Stock
+               sachPM.setSoLuong(Integer.parseInt(txtSoLuongMuonPM.getText()));
+               sachPMDAO.updateStockSach(sachPM,"minus");
+               //Reload after Added 
+               reloadTabPM(pmDao);
+              // System.out.println(simpDate.format(date));
+         }
     }
     @FXML
     private void suaPM(ActionEvent event)
@@ -601,8 +678,13 @@ public class AdminAppController implements Initializable {
     private void xoaPM(ActionEvent e)
     {
         int idPM =  tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaPhieuMuon();
+        Sach sach = new Sach();
+        sach.setSoLuong(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getSoLuongMuon());
+        sach.setMaSach(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaSach());
         PhieuMuonDAO pmDAO = new PhieuMuonDAO();
         pmDAO.deletePM(idPM);
+        SachDAO sachDao = new SachDAO();
+        sachDao.updateStockSach(sach,"plus");
         reloadTabPM(pmDAO);
     }
     @FXML
@@ -722,6 +804,81 @@ public class AdminAppController implements Initializable {
        //LocalDate value = datePickerPM.getValue();
         //System.out.println(value);
     }
+    @FXML
+    private void themDG(ActionEvent e)
+    {
+        Khachhang kh  = new Khachhang();
+        kh.setAccountKh(txtAccountDG.getText());
+        kh.setDiaChi(txtDiaChiDG.getText());
+        kh.setPasswordKh(txtMatKhauDG.getText());
+        kh.setSdtkh(txtSDTDG.getText());
+        kh.setTenKh(txtTenDocGiaDG.getText());
+        KhachHangDAO khDao = new KhachHangDAO();
+        khDao.addKhachHang(kh);
+        reloadTabQLDG(khDao);
+    }
+    @FXML
+    private void suaDG(ActionEvent e)
+    {
+        Khachhang kh  = new Khachhang();
+        kh.setAccountKh(txtAccountDG.getText());
+        kh.setDiaChi(txtDiaChiDG.getText());
+        kh.setPasswordKh(txtMatKhauDG.getText());
+        kh.setSdtkh(txtSDTDG.getText());
+        kh.setTenKh(txtTenDocGiaDG.getText());
+        kh.setMaKh(Integer.parseInt(txtMaDocGiaDG.getText()));
+        KhachHangDAO khDao = new KhachHangDAO();
+        khDao.modifedKH(kh);
+        reloadTabQLDG(khDao);
+    }
+    @FXML
+    private void xoaDG(ActionEvent e)
+    {
+        KhachHangDAO khDao = new KhachHangDAO();
+        khDao.deleteKH(tableViewDocGia.getSelectionModel().getSelectedItems().get(0).getMaKh());
+        reloadTabQLDG(khDao);
+    }
+    @FXML
+    private void timKiemDG(ActionEvent e)
+    {
+        KhachHangDAO kh = new KhachHangDAO();
+        List<Khachhang> listKh =  kh.searchKH(txtTimKiemDG.getText(), rdTimKiemDGStatus());
+        tableViewDocGia.getItems().clear();
+        for(Khachhang s : listKh)
+        {
+            tableViewDocGia.getItems().add(s);
+        }
+    }
+    private void reloadTabQLDG(KhachHangDAO khDao)
+    {
+        txtMaDocGiaDG.clear();
+        txtTenDocGiaDG.clear();
+        txtMaDocGiaDG.clear();
+        txtAccountDG.clear();
+        txtMatKhauDG.clear();
+        txtDiaChiDG.clear();
+        txtSDTDG.clear();
+        tableViewDocGia.getItems().clear();
+          List<Khachhang> listKhTableViewReload = khDao.readAllKhachHang();
+          for(Khachhang s : listKhTableViewReload)
+           {
+              tableViewDocGia.getItems().add(s);
+           }
+    }
+    private String rdTimKiemDGStatus()
+    {
+        String status = "";
+        if(rdTimKiemSDTDG.isSelected())
+        {
+            status = "phone";
+        }
+        if(rdTimKiemTenDG.isSelected())
+        {
+            status = "name";
+        }
+        return status;
+    }
+    
     
     
 }

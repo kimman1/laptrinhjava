@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 23, 2019 at 02:44 PM
+-- Generation Time: Oct 08, 2019 at 09:14 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -61,15 +61,16 @@ CREATE TABLE IF NOT EXISTS `khachhang` (
   `AccountKH` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `PasswordKH` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`MaKH`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `khachhang`
 --
 
 INSERT INTO `khachhang` (`MaKH`, `TenKH`, `SDTKH`, `DiaChi`, `AccountKH`, `PasswordKH`) VALUES
-(1, 'Man', '0985855746', '93 đường số 6 ', 'kimman1', 'kimman'),
-(2, 'Quan', '123456789', '371 nguyễn kiệm ', 'quan123', 'quan');
+(1, 'Mãn', '0985855746', '93 đường số 6 ', 'kimman1', 'kimman'),
+(2, 'Quân', '123456789', '371 nguyễn kiệm ', 'quan123', 'quan'),
+(3, 'Tiên ', '0123456789', '91 đường số 3', 'tien1', 'tien');
 
 -- --------------------------------------------------------
 
@@ -116,15 +117,19 @@ CREATE TABLE IF NOT EXISTS `phieumuon` (
   KEY `MaSach_idx` (`MaSach`),
   KEY `MaKH_idx` (`MaKH`),
   KEY `MaNV_idx` (`MaNV`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `phieumuon`
 --
 
 INSERT INTO `phieumuon` (`MaPhieuMuon`, `MaKH`, `MaSach`, `MaNV`, `NgayMuon`, `HanTra`, `NgayTra`, `SoLuongMuon`, `TienBoiThuong`, `TienPhat`) VALUES
-(1, 1, 1, 1, '2019-09-23', '2019-10-23', '2019-10-25', 2, NULL, NULL),
-(2, 2, 1, 1, '2019-09-23', '2019-10-23', '2019-10-26', 2, '50000', NULL);
+(2, 1, 13, 1, '2019-09-23', '2019-10-25', '2019-10-26', 2, '50000', NULL),
+(11, 2, 2, 1, '2019-10-07', '2019-10-09', '2019-10-17', 10, NULL, NULL),
+(12, 2, 4, 1, '2019-10-08', '2019-10-10', '2019-10-11', 5, NULL, NULL),
+(13, 2, 4, 1, '2019-10-08', '2019-10-17', '2019-10-17', 5, NULL, NULL),
+(14, 2, 12, 1, '2019-10-08', '2019-10-17', '2019-10-25', 5, NULL, NULL),
+(15, 2, 3, 1, '2019-10-08', '2019-10-30', '2019-10-31', 10, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -141,17 +146,20 @@ CREATE TABLE IF NOT EXISTS `sach` (
   `SoLuong` int(10) NOT NULL,
   `GiaSach` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`MaSach`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `sach`
 --
 
 INSERT INTO `sach` (`MaSach`, `TenSach`, `TenTacGia`, `NXB`, `SoLuong`, `GiaSach`) VALUES
-(1, 'Lập trình hướng đối tượng', 'Tô Oai Hùng ', '371 Nguyễn Kiệm', 5, '50'),
+(1, 'Lập trình hướng đối tượng ', 'Tô Oai Hùng ', '371 Nguyễn Kiệm', 5, '50'),
 (2, 'Lập Trình Java', 'Dương Hữu Thành', '371 Nguyễn Kiệm', 5, '70'),
-(3, 'Lập Trình Mạng', 'Lưu Quang Phương', '371 Nguyễn Kiệm', 10, '12'),
-(4, 'Quản Trị Hệ CSDL', 'Hồ Quang Khải', '371 Nguyễn Kiệm', 20, '60');
+(3, 'Lập Trình Mạng', 'Lưu Quang Phương', '371 Nguyễn Kiệm', 0, '12'),
+(4, 'Quản Trị Hệ CSDL', 'Hồ Quang Khải', '371 Nguyễn Kiệm', 0, '60'),
+(12, 'Quản Trị Mạng', 'Lưu Quang Phương', '371 Nguyễn Kiệm', 95, '200'),
+(13, 'Kiến Trúc Máy Tính', 'Tô Oai Hùng', '371 Nguyễn Kiệm', 100, '300'),
+(14, 'Xử Lý Ảnh', 'Lê Viết Tuấn', '371 Nguyễn Kiệm', 100, '400');
 
 -- --------------------------------------------------------
 

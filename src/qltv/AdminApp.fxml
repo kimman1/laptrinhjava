@@ -68,25 +68,29 @@
                      <children>
                         <Pane prefHeight="706.0" prefWidth="1064.0" style="-fx-background-color: A2B3E4;">
                            <children>
-                              <TreeTableView layoutX="-3.0" layoutY="383.0" prefHeight="373.0" prefWidth="1070.0" />
                               <Label layoutX="40.0" layoutY="34.0" prefHeight="21.0" prefWidth="116.0" text="Mã độc giả:" />
                               <Label layoutX="40.0" layoutY="148.0" text="Mật khẩu:" />
                               <Label layoutX="40.0" layoutY="87.0" prefHeight="21.0" prefWidth="120.0" text="Tên độc giả:" />
-                              <TextField layoutX="184.0" layoutY="29.0" />
-                              <TextField layoutX="184.0" layoutY="82.0" />
-                              <TextField layoutX="184.0" layoutY="143.0" />
-                              <Button layoutX="631.0" layoutY="29.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Thêm" />
-                              <Button layoutX="631.0" layoutY="82.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Sửa" />
-                              <Button layoutX="631.0" layoutY="143.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Xóa" />
-                              <Label layoutX="40.0" layoutY="208.0" prefHeight="21.0" prefWidth="84.0" text="Ngày sinh:" />
-                              <TextField layoutX="184.0" layoutY="203.0" />
+                              <TextField fx:id="txtMaDocGiaDG" disable="true" layoutX="184.0" layoutY="29.0" />
+                              <TextField fx:id="txtTenDocGiaDG" layoutX="184.0" layoutY="82.0" />
+                              <TextField fx:id="txtMatKhauDG" layoutX="184.0" layoutY="143.0" />
+                              <Button layoutX="631.0" layoutY="29.0" mnemonicParsing="false" onAction="#themDG" prefHeight="31.0" prefWidth="103.0" text="Thêm" />
+                              <Button layoutX="631.0" layoutY="82.0" mnemonicParsing="false" onAction="#suaDG" prefHeight="31.0" prefWidth="103.0" text="Sửa" />
+                              <Button layoutX="631.0" layoutY="143.0" mnemonicParsing="false" onAction="#xoaDG" prefHeight="31.0" prefWidth="103.0" text="Xóa" />
+                              <Label layoutX="40.0" layoutY="208.0" prefHeight="21.0" prefWidth="84.0" text="Địa chỉ:" />
+                              <TextField fx:id="txtDiaChiDG" layoutX="184.0" layoutY="203.0" />
                               <Label layoutX="40.0" layoutY="270.0" prefHeight="21.0" prefWidth="84.0" text="SDT:" />
-                              <TextField layoutX="184.0" layoutY="265.0" />
-                              <Button layoutX="859.0" layoutY="234.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="124.0" text="Tìm kiếm" />
-                              <TextField layoutX="486.0" layoutY="234.0" prefHeight="31.0" prefWidth="326.0" />
-                              <RadioButton layoutX="606.0" layoutY="315.0" mnemonicParsing="false" text="Theo tên" />
-                              <RadioButton layoutX="719.0" layoutY="315.0" mnemonicParsing="false" text="Theo SDT" />
-                              <RadioButton layoutX="486.0" layoutY="315.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="105.0" text="Theo ID" />
+                              <TextField fx:id="txtSDTDG" layoutX="184.0" layoutY="265.0" />
+                              <Button layoutX="859.0" layoutY="234.0" mnemonicParsing="false" onAction="#timKiemDG" prefHeight="31.0" prefWidth="124.0" text="Tìm kiếm" />
+                              <TextField fx:id="txtTimKiemDG" layoutX="486.0" layoutY="234.0" prefHeight="31.0" prefWidth="326.0" />
+                              <RadioButton fx:id="rdTimKiemTenDG" layoutX="606.0" layoutY="315.0" mnemonicParsing="false" text="Theo tên">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="TKDG" />
+                                 </toggleGroup></RadioButton>
+                              <RadioButton fx:id="rdTimKiemSDTDG" layoutX="719.0" layoutY="315.0" mnemonicParsing="false" text="Theo SDT" toggleGroup="$TKDG" />
+                              <TableView fx:id="tableViewDocGia" layoutY="355.0" prefHeight="345.0" prefWidth="1056.0" />
+                              <Label layoutX="381.0" layoutY="142.0" text="Account: " />
+                              <TextField fx:id="txtAccountDG" layoutX="431.0" layoutY="136.0" />
                            </children>
                         </Pane>
                      </children>
@@ -184,7 +188,7 @@
                               <Label layoutX="438.0" layoutY="34.0" prefHeight="21.0" prefWidth="114.0" text="Tên độc giả:" />
                               <Label layoutX="438.0" layoutY="83.0" prefHeight="21.0" prefWidth="109.0" text="Ngày mượn:" />
                               <TextField fx:id="txtTenDocGiaPM" layoutX="560.0" layoutY="29.0" />
-                              <TextField fx:id="txtNgayMuonPM" layoutX="560.0" layoutY="78.0" />
+                              <TextField fx:id="txtNgayMuonPM" disable="true" layoutX="560.0" layoutY="78.0" />
                               <Button id="btnThemPhieuMuon" fx:id="btnThemPhieuMuon" layoutX="809.0" layoutY="29.0" mnemonicParsing="false" onAction="#themPM" prefHeight="31.0" prefWidth="103.0" text="Thêm" />
                               <Label layoutX="438.0" layoutY="138.0" prefHeight="21.0" prefWidth="106.0" text="Ngày hẹn trả:" />
                               <TextField fx:id="txtTimKiemPhieuMuon" layoutX="197.0" layoutY="265.0" prefHeight="31.0" prefWidth="326.0" />

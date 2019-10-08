@@ -5,9 +5,8 @@
         <group>
             <file>file:/C:/Users/KimMan/Desktop/LapTrinhJava/QLTV/src/DAO/SachDAO.java</file>
             <file>file:/C:/Users/KimMan/Desktop/LapTrinhJava/QLTV/src/qltv/AdminAppController.java</file>
-            <file>file:/C:/Users/KimMan/Desktop/LapTrinhJava/QLTV/src/Model/Sach.java</file>
-            <file>file:/C:/Users/KimMan/Desktop/LapTrinhJava/QLTV/src/DAO/PhieuMuonDAO.java</file>
-            <file>file:/C:/Users/KimMan/Desktop/LapTrinhJava/QLTV/src/Model/Phieumuon.java</file>
+            <file>file:/C:/Users/KimMan/Desktop/LapTrinhJava/QLTV/src/DAO/KhachHangDAO.java</file>
+            <file>file:/C:/Users/KimMan/Desktop/LapTrinhJava/QLTV/src/Model/Khachhang.java</file>
         </group>
     </open-files>
 </project-private>
