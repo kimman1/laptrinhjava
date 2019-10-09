@@ -167,7 +167,27 @@ public class AdminAppController implements Initializable {
     private TableView<Khachhang> tableViewDocGia;
     @FXML
     private Button btnNhapLaiDG;
-    
+    /*===============================Tab Quản lý nhân viên=====================*/
+    @FXML
+    private TextField txtMaNVNV;
+    @FXML
+    private TextField txttenNVNV;
+    @FXML
+    private TextField txtMKNV;
+    @FXML
+    private TextField txtAccountNV;
+    @FXML
+    private TextField txtngaySinhNV;
+    @FXML
+    private TextField txtSDTNV;
+    @FXML
+    private TextField txttimKiemNV;
+    @FXML
+    private RadioButton rdTimKiemTenNV;
+    @FXML
+    private RadioButton rdTimKiemSDTNV;
+    @FXML
+    private TableView<Nhanvien> tableViewNhanVien; 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Tab Quản Lý Sách
@@ -289,7 +309,7 @@ public class AdminAppController implements Initializable {
                     }
                     /*===============MENU BTN Tên NV==========*/
                         NhanVienDAO nv = new NhanVienDAO();
-                        List<Nhanvien> listNV = nv.readAllKhachHang();
+                        List<Nhanvien> listNV = nv.readAllNV();
                         for(Nhanvien s : listNV)
                         {
                             MenuItem temp = new MenuItem(s.getTenNv());
@@ -355,6 +375,29 @@ public class AdminAppController implements Initializable {
                         tableViewDocGia.setOnMouseClicked(e ->{
                                 eventOnClickDGItem();
                         });
+            /*=============================Tab quản lý nhân viên======================*/
+                        TableColumn idNVNV = new TableColumn("Mã NV");
+                        TableColumn TenNVNV = new TableColumn("Tên Nhân Viên");
+                        TableColumn MKNVNV = new TableColumn("Mật khẩu Nhân Viên");
+                        TableColumn AccountNVNV = new TableColumn("Account Nhân Viên");
+                        TableColumn SDTNVNV = new TableColumn("SDT Nhân Viên");
+                        //TableColumn DiaChiDG = new TableColumn("Địa chỉ");
+                        idNVNV.setCellValueFactory(new PropertyValueFactory<>("maNv"));
+                        TenNVNV.setCellValueFactory(new PropertyValueFactory<>("tenNv"));
+                        MKNVNV.setCellValueFactory(new PropertyValueFactory<>("passwordNv"));
+                        AccountNVNV.setCellValueFactory(new PropertyValueFactory<>("accountNv"));
+                        SDTNVNV.setCellValueFactory(new PropertyValueFactory<>("sdtnv"));
+                        tableViewNhanVien.getColumns().addAll(idNVNV,TenNVNV,AccountNVNV,MKNVNV,SDTNVNV);
+                        NhanVienDAO nvDao = new NhanVienDAO();
+                        List<Nhanvien> listNVNV = nvDao.readAllNV();
+                        for(Nhanvien s : listNVNV)
+                        {
+                            tableViewNhanVien.getItems().add(s);
+                        }
+                        tableViewNhanVien.setOnMouseClicked(e->{
+                            evenOnClickNVItem();
+                        });
+                        
     }           
     public void eventOnClickItem()
     {
@@ -392,6 +435,14 @@ public class AdminAppController implements Initializable {
         txtDiaChiDG.setText(tableViewDocGia.getSelectionModel().getSelectedItems().get(0).getDiaChi());
         txtSDTDG.setText(tableViewDocGia.getSelectionModel().getSelectedItems().get(0).getSdtkh());
         
+    }
+    public void evenOnClickNVItem()
+    {
+        txtMaNVNV.setText(String.valueOf(tableViewNhanVien.getSelectionModel().getSelectedItems().get(0).getMaNv()));
+        txttenNVNV.setText(tableViewNhanVien.getSelectionModel().getSelectedItems().get(0).getTenNv());
+        txtMKNV.setText(tableViewNhanVien.getSelectionModel().getSelectedItems().get(0).getPasswordNv());
+        txtSDTNV.setText(String.valueOf(tableViewNhanVien.getSelectionModel().getSelectedItems().get(0).getSdtnv()));
+        txtAccountNV.setText(tableViewNhanVien.getSelectionModel().getSelectedItems().get(0).getAccountNv());
     }
     @FXML
     private void addSach(ActionEvent event)
@@ -805,7 +856,7 @@ public class AdminAppController implements Initializable {
                             });
                         }
                     NhanVienDAO nv = new NhanVienDAO();
-                        List<Nhanvien> listNV = nv.readAllKhachHang();
+                        List<Nhanvien> listNV = nv.readAllNV();
                         for(Nhanvien s : listNV)
                         {
                             MenuItem temp = new MenuItem(s.getTenNv());
@@ -924,7 +975,28 @@ public class AdminAppController implements Initializable {
         }
         return status;
     }
-    
+  /*==============================Tab Quản lý nhân viên====================*/
+    @FXML
+    private void themNV(ActionEvent e)
+    {
+        Nhanvien nv = new Nhanvien();
+        nv.setAccountNv(txtAccountNV.getText());
+        nv.setPasswordNv(txtMKNV.getText());
+        nv.setSdtnv(txtSDTNV.getText());
+        nv.setTenNv(txttenNVNV.getText());
+        NhanVienDAO nvDao = new NhanVienDAO();
+        
+       // System.out.println(nvDao.checkDuplicateNV(txttenNVNV.getText()));
+        if(nvDao.checkDuplicateNV(txttenNVNV.getText()) == false)
+        {
+            nvDao.addNV(nv);
+        }
+        else
+        {
+            AlertMessageError("Error", "Nhân viên đã tồn tại");
+        }
+        
+    }
     
     
 }

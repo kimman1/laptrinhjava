@@ -18,7 +18,7 @@ import org.hibernate.cfg.Configuration;
  */
 public class NhanVienDAO {
     SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-    public List<Nhanvien> readAllKhachHang()
+    public List<Nhanvien> readAllNV()
     {
         Session session  = sessionFactory.openSession();
         session.beginTransaction();
@@ -47,4 +47,32 @@ public class NhanVienDAO {
         
         return nv;
     }
+    
+     public void addNV(Nhanvien nv)
+    {
+       
+        Session session  = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(nv);
+        session.getTransaction().commit();
+        session.close();
+        //String hql = "INSERT INTO Sach(maSach,tenSach,tenTacGia,nxb,soLuong,giaSach)" + ;
+    }
+     public boolean checkDuplicateNV(String tenNV)
+     {
+         Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        String hql = "FROM Nhanvien where tenNv = :TenNV";
+        Query query = session.createQuery(hql);
+        query.setParameter("TenNV", tenNV);
+        List<Nhanvien> result = query.list();
+        if(result.isEmpty())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+     }
 }
