@@ -10,6 +10,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 /**
@@ -58,13 +59,43 @@ public class NhanVienDAO {
         session.close();
         //String hql = "INSERT INTO Sach(maSach,tenSach,tenTacGia,nxb,soLuong,giaSach)" + ;
     }
-     public boolean checkDuplicateNV(String tenNV)
+     public int deleteNV(int maNV)
+     {
+          Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        String hql =  "update Nhanvien set statusNv= :StatusNV where maNv = :maNVDelete";
+        Query query = session.createQuery(hql);
+        query.setParameter("StatusNV","Đã Nghỉ");
+        query.setParameter("maNVDelete", maNV );
+        int result = query.executeUpdate();
+        tx.commit();
+        session.close();
+        return result;
+     }
+     public int modifedNV(Nhanvien nv)
+    {
+        Session session = sessionFactory.openSession();
+        Transaction tx =  session.beginTransaction();
+        String hql = "update Nhanvien set accountNv = :accountNVUpdate, passwordNv= :passwordNVUpdate, tenNv = :tenNVUpdate, sdtnv = :sdtNVUpdate, statusNv = :statusNVUpdate WHERE maNv = :maNVUpdate";
+        Query query = session.createQuery(hql);
+        query.setParameter("accountNVUpdate", nv.getAccountNv());
+        query.setParameter("passwordNVUpdate", nv.getPasswordNv());
+        query.setParameter("tenNVUpdate", nv.getTenNv());
+        query.setParameter("sdtNVUpdate", nv.getSdtnv());
+        query.setParameter("statusNVUpdate", nv.getStatusNv());
+        query.setParameter("maNVUpdate", nv.getMaNv());
+        int result = query.executeUpdate();
+        tx.commit();
+        session.close();
+        return result;
+    }
+     public boolean checkDuplicateNV(String accountNV)
      {
          Session session = sessionFactory.openSession();
         session.beginTransaction();
-        String hql = "FROM Nhanvien where tenNv = :TenNV";
+        String hql = "FROM Nhanvien where accountNv = :accountNV";
         Query query = session.createQuery(hql);
-        query.setParameter("TenNV", tenNV);
+        query.setParameter("accountNV", accountNV);
         List<Nhanvien> result = query.list();
         if(result.isEmpty())
         {

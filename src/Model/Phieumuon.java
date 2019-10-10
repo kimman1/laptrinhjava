@@ -1,5 +1,5 @@
 package Model;
-// Generated Sep 23, 2019 3:42:39 PM by Hibernate Tools 4.3.1
+// Generated Oct 10, 2019 1:26:59 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -20,7 +20,7 @@ public class Phieumuon  implements java.io.Serializable {
      private int soLuongMuon;
      private String tienBoiThuong;
      private String tienPhat;
-     private Integer maKh;
+
     public Phieumuon() {
     }
 
@@ -42,7 +42,6 @@ public class Phieumuon  implements java.io.Serializable {
        this.tienBoiThuong = tienBoiThuong;
        this.tienPhat = tienPhat;
     }
-    
    
     public Integer getMaPhieuMuon() {
         return this.maPhieuMuon;

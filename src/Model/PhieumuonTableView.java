@@ -12,100 +12,47 @@ import java.sql.Date;
  * @author KimMan
  */
 public class PhieumuonTableView {
-    private int maPhieuMuon;
-    private int maDocGia;
-    private int maSach;
-    private int maNV;
+    private Integer maNV;
+    private Integer maPhieuMuon;
+    private Integer maSach;
+    private Integer maDocGia;
     private String tenSach;
     private String tenKh;
     private String tenNV;
     private Date ngayMuon;
-    private Date ngayHenTra;
-    private Date ngayTra;
-    private String tienPhat;
-    private int soLuongMuon;
-    private String tienBoiThuong;
-    public PhieumuonTableView()
-    {
+
+
+    
+    public Integer getMaNV() {
+        return maNV;
     }
-    public PhieumuonTableView(int maPhieuMuon, int maDocGia, int maSach, int maNv, String tenSach, String tenKh,String tenNv, String tenDocGia, Date ngayMuon, Date ngayHenTra, Date ngayTra,String tienPhat,int soLuongMuon,String tienBoiThuong)
-    {
-        maPhieuMuon = this.maPhieuMuon;
-        maDocGia = this.maDocGia;
-        maSach = this.maSach;
-        maNv = this.maNV;
-        tenSach = this.tenSach;
-        tenKh = this.tenKh;
-        tenNv = this.tenNV;
-        ngayMuon = this.ngayMuon;
-        ngayHenTra = this.ngayHenTra;
-        ngayTra = this.ngayTra;
-        tienPhat = this.tienPhat;
-        soLuongMuon = this.soLuongMuon;
-        tienBoiThuong = this.tienBoiThuong;
+
+    public void setMaNV(Integer maNV) {
+        this.maNV = maNV;
     }
-    public void setTenNV(String tenNv)
-    {
-        this.tenNV = tenNv;
-    }
-    public String getTenNV()
-    {
-        return tenNV;
-    }
-    public void setMaNV(int maNv)
-    {
-        this.maNV = maNv;
-    }
-    public int getMaNV()
-    {
-       return this.maNV; 
-    }
-    public void setSoLuongMuon(int soLuongMuon)
-    {
-        this.soLuongMuon = soLuongMuon;
-    }
-    public void setTienBoiThuong(String tienBoiThuong)
-    {
-        this.tienBoiThuong = tienBoiThuong;
-    }
-    public void setTienPhat(String tienPhat )
-    {
-        this.tienPhat = tienPhat;
-    }
-    public int getSoLuongMuon()
-    {
-        return soLuongMuon;
-    }
-    public String getTienBoiThuong()
-    {
-        return tienBoiThuong;
-    }
-    public String getTienPhat()
-    {
-        return tienPhat;
-    }
-    public int getMaPhieuMuon() {
+
+    public Integer getMaPhieuMuon() {
         return maPhieuMuon;
     }
 
-    public void setMaPhieuMuon(int maPhieuMuon) {
+    public void setMaPhieuMuon(Integer maPhieuMuon) {
         this.maPhieuMuon = maPhieuMuon;
     }
 
-    public int getMaDocGia() {
-        return maDocGia;
-    }
-
-    public void setMaDocGia(int maDocGia) {
-        this.maDocGia = maDocGia;
-    }
-
-    public int getMaSach() {
+    public Integer getMaSach() {
         return maSach;
     }
 
-    public void setMaSach(int maSach) {
+    public void setMaSach(Integer maSach) {
         this.maSach = maSach;
+    }
+
+    public Integer getMaDocGia() {
+        return maDocGia;
+    }
+
+    public void setMaDocGia(Integer maDocGia) {
+        this.maDocGia = maDocGia;
     }
 
     public String getTenSach() {
@@ -115,39 +62,75 @@ public class PhieumuonTableView {
     public void setTenSach(String tenSach) {
         this.tenSach = tenSach;
     }
-    public void setTenKh(String tenKH)
-    {
-        this.tenKh = tenKH;
-    }
-    
-    public void setNgayMuon(Date ngayMuon)
-    {
-        this.ngayMuon = ngayMuon;
-    }
-    public void setNgayHenTra(Date ngayHenTra)
-    {
-        this.ngayHenTra = ngayHenTra;
-    }
-    public void setNgayTra(Date ngayTra)
-    {
-        this.ngayTra = ngayTra;
-    }
-    public String getTenKh()
-    {
+
+    public String getTenKh() {
         return tenKh;
     }
-    
-    public Date getNgayMuon()
-    {
+
+    public void setTenKh(String tenKh) {
+        this.tenKh = tenKh;
+    }
+
+    public String getTenNV() {
+        return tenNV;
+    }
+
+    public void setTenNV(String tenNV) {
+        this.tenNV = tenNV;
+    }
+
+    public Date getNgayMuon() {
         return ngayMuon;
     }
-    public Date getNgayHenTra()
-    {
+
+    public void setNgayMuon(Date ngayMuon) {
+        this.ngayMuon = ngayMuon;
+    }
+
+    public Date getNgayHenTra() {
         return ngayHenTra;
     }
-    public Date getNgayTra()
-    {
+
+    public void setNgayHenTra(Date ngayHenTra) {
+        this.ngayHenTra = ngayHenTra;
+    }
+
+    public Date getNgayTra() {
         return ngayTra;
     }
 
+    public void setNgayTra(Date ngayTra) {
+        this.ngayTra = ngayTra;
+    }
+
+    public Integer getSoLuongMuon() {
+        return soLuongMuon;
+    }
+
+    public void setSoLuongMuon(Integer soLuongMuon) {
+        this.soLuongMuon = soLuongMuon;
+    }
+
+    public String getTienBoiThuong() {
+        return tienBoiThuong;
+    }
+
+    public void setTienBoiThuong(String tienBoiThuong) {
+        this.tienBoiThuong = tienBoiThuong;
+    }
+
+    public String getTienPhat() {
+        return tienPhat;
+    }
+
+    public void setTienPhat(String tienPhat) {
+        this.tienPhat = tienPhat;
+    }
+    private Date ngayHenTra;
+    private Date ngayTra;
+    private Integer soLuongMuon;
+    private String tienBoiThuong;
+    private String tienPhat;
+    
+    
 }

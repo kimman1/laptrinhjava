@@ -6,7 +6,7 @@
 package DAO;
 
 import Model.Phieumuon;
-import Model.PhieumuonTableView;
+//import Model.PhieumuonTableView;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;

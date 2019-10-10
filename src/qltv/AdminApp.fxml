@@ -48,8 +48,8 @@
                               <TextField fx:id="txttenNVNV" layoutX="184.0" layoutY="82.0" />
                               <TextField fx:id="txtMKNV" layoutX="184.0" layoutY="143.0" />
                               <Button layoutX="505.0" layoutY="169.0" mnemonicParsing="false" onAction="#themNV" prefHeight="31.0" prefWidth="103.0" text="Thêm" />
-                              <Button layoutX="682.0" layoutY="169.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Sửa" />
-                              <Button layoutX="848.0" layoutY="169.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="103.0" text="Xóa" />
+                              <Button layoutX="682.0" layoutY="169.0" mnemonicParsing="false" onAction="#suaNV" prefHeight="31.0" prefWidth="103.0" text="Sửa" />
+                              <Button layoutX="848.0" layoutY="169.0" mnemonicParsing="false" onAction="#xoaNV" prefHeight="31.0" prefWidth="103.0" text="Xóa" />
                               <Label layoutX="40.0" layoutY="208.0" prefHeight="21.0" prefWidth="84.0" text="Ngày sinh:" />
                               <TextField fx:id="txtngaySinhNV" layoutX="184.0" layoutY="203.0" />
                               <Label layoutX="40.0" layoutY="270.0" prefHeight="21.0" prefWidth="84.0" text="SDT:" />
@@ -70,6 +70,7 @@
                               <TableView fx:id="tableViewNhanVien" layoutX="14.0" layoutY="339.0" prefHeight="295.0" prefWidth="776.0" />
                               <Label layoutX="347.0" layoutY="148.0" text="Account NV:" />
                               <TextField fx:id="txtAccountNV" layoutX="420.0" layoutY="143.0" />
+                              <MenuButton fx:id="menubtnStatusNV" layoutX="424.0" layoutY="216.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="146.0" text="MenuButton" />
                            </children>
                         </Pane>
                      </children>
