@@ -1,5 +1,5 @@
 package Model;
-// Generated Oct 10, 2019 1:26:59 PM by Hibernate Tools 4.3.1
+// Generated Oct 15, 2019 2:26:15 PM by Hibernate Tools 4.3.1
 
 
 
@@ -13,14 +13,16 @@ public class Thongke  implements java.io.Serializable {
      private Integer soPhieuQuaHan;
      private Integer soPhieuMuon;
      private String tongTienPhat;
+     private String ngayThongKe;
 
     public Thongke() {
     }
 
-    public Thongke(Integer soPhieuQuaHan, Integer soPhieuMuon, String tongTienPhat) {
+    public Thongke(Integer soPhieuQuaHan, Integer soPhieuMuon, String tongTienPhat, String ngayThongKe) {
        this.soPhieuQuaHan = soPhieuQuaHan;
        this.soPhieuMuon = soPhieuMuon;
        this.tongTienPhat = tongTienPhat;
+       this.ngayThongKe = ngayThongKe;
     }
    
     public Integer getMaPhieuTk() {
@@ -50,6 +52,13 @@ public class Thongke  implements java.io.Serializable {
     
     public void setTongTienPhat(String tongTienPhat) {
         this.tongTienPhat = tongTienPhat;
+    }
+    public String getNgayThongKe() {
+        return this.ngayThongKe;
+    }
+    
+    public void setNgayThongKe(String ngayThongKe) {
+        this.ngayThongKe = ngayThongKe;
     }
 
 

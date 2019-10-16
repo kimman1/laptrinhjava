@@ -106,4 +106,24 @@ public class NhanVienDAO {
             return true;
         }
      }
+     public List<Nhanvien> searchNV(String SearchString, String searchType)
+    {
+        String hql = "";
+        List<Nhanvien> listResultSach;
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        if(searchType.trim().equalsIgnoreCase("name"))
+        {
+             hql = "from Nhanvien where tenNv like :searchString";
+        }
+        if(searchType.trim().equalsIgnoreCase("phone"))
+        {
+             hql = "from Nhanvien where sdtNv like :searchString";
+        }
+        Query query = session.createQuery(hql);
+        query.setParameter("searchString","%"+SearchString+"%");
+        listResultSach = query.list();
+        return listResultSach;
+    }
+    
 }

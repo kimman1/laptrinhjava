@@ -31,7 +31,16 @@ public class PhieuMuonDAO {
         session.close();
         return result;
      }
-     
+     public List checkYearPM()
+     {
+         Session session  = sessionFactory.openSession();
+        session.beginTransaction();
+        String hql = "select ngayTra from Phieumuon";
+        Query query = session.createQuery(hql);
+        List<Object[]> result = query.list();
+        session.close();
+        return result;
+     }
      public void addPM(Phieumuon phieumuon)
      {
          Session session  = sessionFactory.openSession();

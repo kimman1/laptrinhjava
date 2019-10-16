@@ -1,5 +1,5 @@
 package Model;
-// Generated Oct 10, 2019 1:26:59 PM by Hibernate Tools 4.3.1
+// Generated Oct 15, 2019 2:26:15 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -21,13 +21,14 @@ public class Sach  implements java.io.Serializable {
 
     public Sach() {
     }
-    public Sach(String tenSach, String tenTacGia, String nxb, int soLuong, String giaSach)
-    {
-        this.tenSach = tenSach;
+        public Sach(String tenSach, String tenTacGia, String nxb, int soLuong, String giaSach)
+        {
+       this.tenSach = tenSach;
        this.tenTacGia = tenTacGia;
        this.nxb = nxb;
        this.soLuong = soLuong;
        this.giaSach = giaSach;
+       
     }
 	
     public Sach(String tenSach, String tenTacGia, int soLuong, String giaSach) {

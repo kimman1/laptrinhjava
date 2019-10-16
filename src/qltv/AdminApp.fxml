@@ -25,14 +25,24 @@
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: A2B3E4;">
                      <children>
-                        <BarChart layoutX="74.0" layoutY="38.0">
+                        <BarChart fx:id="barchartThongKe" layoutX="74.0" layoutY="38.0">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                            <CategoryAxis prefHeight="53.0" prefWidth="443.0" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </BarChart>
+                        <Button layoutX="641.0" layoutY="68.0" mnemonicParsing="false" onAction="#thongKe" text="Thống Kê" />
+                        <RadioButton fx:id="rdThongKeQuy" layoutX="625.0" layoutY="130.0" mnemonicParsing="false" text="Theo Quý">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="TKTK" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rdThongKeNam" layoutX="625.0" layoutY="158.0" mnemonicParsing="false" text="Theo Năm" toggleGroup="$TKTK" />
+                        <TableView fx:id="tableViewThongKe" layoutX="14.0" layoutY="384.0" prefHeight="274.0" prefWidth="721.0" />
+                        <MenuButton fx:id="menubtnThongKe" layoutX="625.0" layoutY="191.0" mnemonicParsing="false" text="MenuButton" />
+                        <TextField fx:id="txtNamThongKe" layoutX="751.0" layoutY="191.0" />
                      </children></Pane>
                </content></Tab>
             <Tab text="Quản lý nhân viên">
@@ -54,15 +64,18 @@
                               <TextField fx:id="txtngaySinhNV" layoutX="184.0" layoutY="203.0" />
                               <Label layoutX="40.0" layoutY="270.0" prefHeight="21.0" prefWidth="84.0" text="SDT:" />
                               <TextField fx:id="txtSDTNV" layoutX="184.0" layoutY="265.0" />
-                              <Button layoutX="879.0" layoutY="255.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="124.0" text="Tìm kiếm">
+                              <Button layoutX="879.0" layoutY="255.0" mnemonicParsing="false" onAction="#timKiemNV" prefHeight="31.0" prefWidth="124.0" text="Tìm kiếm">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Button>
                               <TextField fx:id="txttimKiemNV" layoutX="505.0" layoutY="255.0" prefHeight="31.0" prefWidth="326.0" />
-                              <RadioButton fx:id="rdTimKiemTenNV" layoutX="639.0" layoutY="318.0" mnemonicParsing="false" text="Theo tên" />
-                              <RadioButton fx:id="rdTimKiemSDTNV" layoutX="770.0" layoutY="318.0" mnemonicParsing="false" text="SDT" />
-                              <RadioButton layoutX="516.0" layoutY="318.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="105.0" text="Theo ID" />
+                              <RadioButton fx:id="rdTimKiemTenNV" layoutX="639.0" layoutY="318.0" mnemonicParsing="false" text="Theo tên">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="TKNV" />
+                                 </toggleGroup></RadioButton>
+                              <RadioButton fx:id="rdTimKiemSDTNV" layoutX="770.0" layoutY="318.0" mnemonicParsing="false" text="SDT" toggleGroup="$TKNV" />
+                              <RadioButton layoutX="516.0" layoutY="318.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="105.0" text="Theo ID" toggleGroup="$TKNV" />
                               <Label layoutX="443.0" layoutY="34.0" prefHeight="21.0" prefWidth="116.0" text="Địa chỉ:" />
                               <TextField layoutX="516.0" layoutY="29.0" />
                               <Label layoutX="441.0" layoutY="87.0" prefHeight="21.0" prefWidth="61.0" text="Email:" />
@@ -71,6 +84,7 @@
                               <Label layoutX="347.0" layoutY="148.0" text="Account NV:" />
                               <TextField fx:id="txtAccountNV" layoutX="420.0" layoutY="143.0" />
                               <MenuButton fx:id="menubtnStatusNV" layoutX="424.0" layoutY="216.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="146.0" text="MenuButton" />
+                              <Button layoutX="601.0" layoutY="217.0" mnemonicParsing="false" onAction="#nhapLaiActionNV" text="Nhập Lại" />
                            </children>
                         </Pane>
                      </children>
@@ -229,6 +243,8 @@
                               <Label layoutX="439.0" layoutY="189.0" prefHeight="21.0" prefWidth="106.0" text="Ngày trả:" />
                               <Label layoutX="770.0" layoutY="245.0" prefHeight="21.0" prefWidth="104.0" text="Số Lượng Mượn:" />
                               <Button layoutX="810.0" layoutY="203.0" mnemonicParsing="false" onAction="#nhapLaiPM" prefHeight="32.0" prefWidth="101.0" text="Nhập lại" />
+                              <TextField fx:id="txtTienBoiThuong" layoutX="925.0" layoutY="291.0" />
+                              <TextField fx:id="txtTienPhat" layoutX="925.0" layoutY="330.0" />
                            </children>
                         </Pane>
                      </children>

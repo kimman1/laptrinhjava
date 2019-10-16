@@ -9,31 +9,33 @@ import DAO.KhachHangDAO;
 import DAO.NhanVienDAO;
 import DAO.PhieuMuonDAO;
 import DAO.SachDAO;
+import DAO.ThongKeDAO;
 import Model.Khachhang;
 import Model.Nhanvien;
 import Model.Phieumuon;
 import Model.PhieumuonTableView;
 import Model.Sach;
+import Model.Thongke;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -45,7 +47,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 
 
@@ -55,7 +56,7 @@ import javafx.util.StringConverter;
  * @author KimMan
  */
 public class AdminAppController implements Initializable {
-
+    /*==========================Tab Quản Lý Sách==============================*/
     @FXML
     private Button btnTimKiem;
     @FXML
@@ -86,6 +87,7 @@ public class AdminAppController implements Initializable {
     private RadioButton rdTimKiemTen;
     @FXML
     private RadioButton rdTimKiemTacGIa;
+    /*===========================================Tab Phiếu Mượn==============*/
     @FXML
     private Button btnNhapLai;
     @FXML
@@ -144,7 +146,11 @@ public class AdminAppController implements Initializable {
     private String selectTenDocGiaPMItem = "";
     @FXML
     private String selectTenNVPMItem = "";
-    /*==========================Tab quản lý độc giả===============*/
+    @FXML
+    private TextField txtTienBoiThuong;
+    @FXML
+    private TextField txtTienPhat;
+    /*==========================Tab quản lý độc giả============================*/
     @FXML 
     private TextField txtTenDocGiaDG;
     @FXML 
@@ -190,6 +196,21 @@ public class AdminAppController implements Initializable {
     private MenuButton menubtnStatusNV;
     @FXML
     private TableView<Nhanvien> tableViewNhanVien; 
+    /*===========================Tab Thống kê=================================*/
+    @FXML
+    private BarChart<String,Number> barchartThongKe;
+    @FXML
+    private RadioButton rdThongKeQuy;
+    @FXML
+    private RadioButton rdThongKeNam;
+    @FXML
+    private TableView<Thongke> tableViewThongKe;
+    @FXML
+    private MenuButton menubtnThongKe;
+    @FXML
+    private TextField txtNamThongKe;
+
+    /*=============================Main process================================*/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Tab Quản Lý Sách
@@ -412,6 +433,34 @@ public class AdminAppController implements Initializable {
                                     menubtnStatusNV.setText(s.getText());
                                 });
                             }
+                /*===================================Thống kê==================================*/
+                            XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+                            XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+                                series1.setName("Series 1");
+                               series1.getData().add(new XYChart.Data("0 – 14", 24));
+                                series1.getData().add(new XYChart.Data("15 – 64"  , 70));
+                                series1.getData().add(new XYChart.Data("Trên 64"  , 6));
+                                 series2.setName("Series 2");
+                               series2.getData().add(new XYChart.Data("0 – 14", 100));
+                                series2.getData().add(new XYChart.Data("15 – 64"  , 100));
+                                series2.getData().add(new XYChart.Data("Trên 64"  , 1));
+                                barchartThongKe.getData().add(series1);
+                                barchartThongKe.getData().add(series2);
+                                /*=========================Menu btn Thống kê=======*/
+                                   menubtnThongKe.setText("Chọn Quý...");
+                                    MenuItem itemQuy1 = new MenuItem("Quý 1");
+                                    MenuItem itemQuy2 = new MenuItem("Quý 2");
+                                    MenuItem itemQuy3 = new MenuItem("Quý 3");
+                                    MenuItem itemQuy4 = new MenuItem("Quý 4");
+                                    menubtnThongKe.getItems().addAll(itemQuy1,itemQuy2,itemQuy3,itemQuy4);
+                                    for(MenuItem s : menubtnThongKe.getItems())
+                                    {
+                                        s.setOnAction(e ->{
+                                            menubtnThongKe.setText(s.getText());
+                                        });
+                                        
+                                    }
+                                    
     }                       
     public void eventOnClickItem()
     {
@@ -744,6 +793,8 @@ public class AdminAppController implements Initializable {
         pm.setSach(sach);
         pm.setHanTra(hanTraDate);
         pm.setNgayTra(ngayTraDate);
+        pm.setTienBoiThuong(txtTienBoiThuong.getText());
+        pm.setTienPhat(txtTienPhat.getText());
         pm.setSoLuongMuon(Integer.parseInt(txtSoLuongMuonPM.getText()));
         pmDao.modifiedPM(pm);
         reloadTabPM(pmDao);
@@ -1034,6 +1085,27 @@ public class AdminAppController implements Initializable {
         nvDao.modifedNV(nv);
         reloadTabNV(nvDao);
     }
+    @FXML
+    private void nhapLaiActionNV(ActionEvent e)
+    {
+       NhanVienDAO nvDao = new NhanVienDAO();
+        reloadTabNV(nvDao);
+    }
+    @FXML
+    private void timKiemNV(ActionEvent event)
+    {
+        NhanVienDAO nvDao = new NhanVienDAO();
+       List<Nhanvien> listnv =   nvDao.searchNV(txttimKiemNV.getText(), rdTimKiemNVStatus());
+        tableViewNhanVien.getItems().clear();
+      
+         for(Nhanvien s : listnv)
+          {
+            tableViewNhanVien.getItems().add(s);
+          }
+            tableViewNhanVien.setOnMouseClicked(e->{
+                    evenOnClickNVItem();
+            }); 
+    }
     private void reloadTabNV(NhanVienDAO nvDao)
     {
         txtAccountNV.clear();
@@ -1041,6 +1113,7 @@ public class AdminAppController implements Initializable {
         txttenNVNV.clear();
         txtMKNV.clear();
         txtSDTNV.clear();
+        menubtnStatusNV.getItems().clear();
         tableViewNhanVien.getItems().clear();
         List<Nhanvien> listNVNV = nvDao.readAllNV();
          for(Nhanvien s : listNVNV)
@@ -1050,8 +1123,230 @@ public class AdminAppController implements Initializable {
             tableViewNhanVien.setOnMouseClicked(e->{
                     evenOnClickNVItem();
                 });
-            
+           ///
+            menubtnStatusNV.setText("Chọn trạng thái...");
+             MenuItem itemDangLam = new MenuItem("Đang Làm");
+             MenuItem itemDaNghi = new MenuItem("Đã Nghỉ");
+             menubtnStatusNV.getItems().addAll(itemDangLam, itemDaNghi);
+                for(MenuItem s : menubtnStatusNV.getItems())
+                    {
+                      s.setOnAction(e->{
+                       menubtnStatusNV.setText(s.getText());
+                          });
+                    }
         
+    }
+    private String rdTimKiemNVStatus()
+    {
+        String status = "";
+        if(rdTimKiemSDTNV.isSelected())
+        {
+            status = "phone";
+        }
+        if(rdTimKiemTenNV.isSelected())
+        {
+            status = "name";
+        }
+        return status;
+    }
+    /*=================================Tab Thống Kê===========================*/
+    @FXML
+    private void thongKe(ActionEvent e)
+    {
+        int namTK = Integer.parseInt(txtNamThongKe.getText());
+        
+        ThongKeDAO tkDao = new ThongKeDAO();
+        List<Phieumuon> listTK = null;
+        int tongTienPhat = 0;
+        int tongPhieuMuon = 0;
+        int tongSoPhieuQH = 0;
+        if(rdThongKeStatus().equalsIgnoreCase("quy"))
+        {
+            if(menubtnQuy() == 1)
+            {
+                listTK = tkDao.readThongKeQuy(1,3,namTK);
+
+            }
+            if(menubtnQuy() == 2)
+            {
+                listTK = tkDao.readThongKeQuy(4,6,namTK);
+            }
+            if(menubtnQuy() == 3)
+            {
+               listTK = tkDao.readThongKeQuy(7,9,namTK);
+            }
+            if(menubtnQuy() == 4)
+            {
+                listTK =tkDao.readThongKeQuy(10,12,namTK);
+            }
+        }
+        if(rdThongKeStatus().equalsIgnoreCase("nam"))
+        {
+            listTK = tkDao.readThongKeNam(namTK);
+        }
+        
+        
+        tableViewThongKe.getItems().clear();
+        tableViewThongKe.getColumns().clear();
+        ///////
+         TableColumn idPhieuTK = new TableColumn("Mã Phiếu TK");
+                        TableColumn SoPhieuQuaHanTK = new TableColumn("Số Phiếu Quá Hạn");
+                        TableColumn SoPhieuMuonTK = new TableColumn("Số Phiếu Mượn");
+                        TableColumn TongTienPhatTK = new TableColumn("Tổng Tiền Phạt");
+                        TableColumn NgayThongKeTK = new TableColumn("Ngày Thống Kê");
+                        
+                        idPhieuTK.setCellValueFactory(new PropertyValueFactory<>("maPhieuTk"));
+                        SoPhieuQuaHanTK.setCellValueFactory(new PropertyValueFactory<>("soPhieuQuaHan"));
+                        SoPhieuMuonTK.setCellValueFactory(new PropertyValueFactory<>("soPhieuMuon"));
+                        TongTienPhatTK.setCellValueFactory(new PropertyValueFactory<>("tongTienPhat"));
+                        NgayThongKeTK.setCellValueFactory(new PropertyValueFactory<>("ngayThongKe"));
+                      tableViewThongKe.getColumns().addAll(idPhieuTK,SoPhieuQuaHanTK,SoPhieuMuonTK,TongTienPhatTK,NgayThongKeTK);
+                        // check Database for TK
+                        PhieuMuonDAO pmDao = new PhieuMuonDAO();
+                        List<Object[]> result = pmDao.readAllPM();
+                        int indexResultPM = 0;
+                        List<Integer> year = new ArrayList<>();
+                        for(Object[] s : result)
+                        {
+                             Object[] row = result.get(indexResultPM);
+                            Date newDate = (Date)row[8];
+                            //java.util.Date dateHanTra= newDate;
+                            Calendar calHanTra = Calendar.getInstance();
+                            calHanTra.setTime(newDate);
+                            if(calHanTra.get(Calendar.YEAR) != 0)
+                            {
+                                year.add(calHanTra.get(Calendar.YEAR));
+                            } 
+                            indexResultPM++;    
+                        }
+                       
+                        Boolean isHaveYear = false;
+                        for(int s : year)
+                        {
+                            if(s == namTK)
+                            {
+                                isHaveYear = true;
+                            }
+                        }
+                        if(isHaveYear == true)
+                        {
+                              
+                          for(Phieumuon s : listTK)
+                            {
+
+                                // get Hạn Trả set to Cal Hạn Trả
+                                java.util.Date dateHanTra= s.getHanTra();
+                                Calendar calHanTra = Calendar.getInstance();
+                                calHanTra.setTime(dateHanTra);
+
+                                //   get Ngày Trả set to Cal Ngày Trả                          
+                                java.util.Date dateNgayTra= s.getNgayTra();
+                                Calendar calNgayTra = Calendar.getInstance();
+                                calNgayTra.setTime(dateNgayTra);
+                                // Calculate day between 2 date
+                                long diff = calNgayTra.getTimeInMillis() - calHanTra.getTimeInMillis();
+                                float dayCount = (float) diff / (24 * 60 * 60 * 1000);
+                                    if(dayCount > 0.0)
+                                    {
+                                        tongSoPhieuQH++;
+                                        tongTienPhat += dayCount*5000;
+                                    }    
+                                tongPhieuMuon++;
+                            }
+
+                            Thongke tkRead = null;
+                            Boolean checkDupTK = false;
+                            List<Thongke> readAllTK = tkDao.readAllTK();
+                            for(Thongke s : readAllTK)
+                            {
+
+
+
+                                if(rdThongKeStatus().equalsIgnoreCase("quy"))
+                                {
+                                    if(s.getNgayThongKe().equalsIgnoreCase(menubtnThongKe.getText() + "-"+ txtNamThongKe.getText()))
+                                    {
+                                        checkDupTK = true;
+                                        tkRead = s;
+                                    }
+                                }
+                                if(rdThongKeStatus().equalsIgnoreCase("nam"))
+                                {
+                                    if(s.getNgayThongKe().equalsIgnoreCase(txtNamThongKe.getText()))
+                                    {
+                                        checkDupTK = true;
+                                        tkRead = s;
+                                    }
+                                }
+
+                            }
+                            if(checkDupTK == true)
+                            {
+                                tableViewThongKe.getItems().add(tkRead);
+
+                            }
+                            if(checkDupTK == false)
+                            {
+                                Thongke tkAdd = new Thongke();
+                                tkAdd.setSoPhieuMuon(tongPhieuMuon);
+                                tkAdd.setTongTienPhat(String.valueOf(tongTienPhat));
+                                tkAdd.setSoPhieuQuaHan(tongSoPhieuQH);
+                                if(rdThongKeStatus().equalsIgnoreCase("quy"))
+                                {
+                                    tkAdd.setNgayThongKe(menubtnThongKe.getText() + "-"+ txtNamThongKe.getText());
+                                }
+                                if(rdThongKeStatus().equalsIgnoreCase("nam"))
+                                {
+                                    tkAdd.setNgayThongKe(txtNamThongKe.getText());
+                                }
+
+                                tkDao.addTK(tkAdd);
+                                tableViewThongKe.getItems().add(tkAdd);
+                            }
+                        }
+                        else
+                        {
+                            AlertMessageError("Error", "Năm bạn chọn không có trong hệ thống");
+                        }
+                        
+    }
+    private void reloadTabThongKe(ThongKeDAO tkDao)
+    {
+     
+    }
+    private String rdThongKeStatus()
+    {
+        String status = null;
+        if(rdThongKeNam.isSelected())
+        {
+            status = "nam";
+        }
+        if(rdThongKeQuy.isSelected())
+        {
+            status = "quy";
+        }
+        return status;
+    }
+    private int menubtnQuy()
+    {
+        int quy = 0;
+        if(menubtnThongKe.getText().equalsIgnoreCase("Quý 1"))
+        {
+            quy = 1;
+        }
+         if(menubtnThongKe.getText().equalsIgnoreCase("Quý 2"))
+        {
+            quy = 2;
+        }
+          if(menubtnThongKe.getText().equalsIgnoreCase("Quý 3"))
+        {
+            quy = 3;
+        }
+           if(menubtnThongKe.getText().equalsIgnoreCase("Quý 4"))
+        {
+            quy = 4;
+        }
+        return quy;
     }
     
 }
