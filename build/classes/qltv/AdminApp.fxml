@@ -25,7 +25,7 @@
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: A2B3E4;">
                      <children>
-                        <BarChart fx:id="barchartThongKe" layoutX="74.0" layoutY="38.0">
+                        <BarChart fx:id="barchartThongKe" layoutX="-2.0" layoutY="38.0" prefHeight="405.0" prefWidth="794.0">
                           <xAxis>
                             <CategoryAxis prefHeight="53.0" prefWidth="443.0" side="BOTTOM" />
                           </xAxis>
@@ -33,16 +33,16 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </BarChart>
-                        <Button layoutX="641.0" layoutY="68.0" mnemonicParsing="false" onAction="#thongKe" text="Thống Kê" />
-                        <RadioButton fx:id="rdThongKeQuy" layoutX="625.0" layoutY="130.0" mnemonicParsing="false" text="Theo Quý">
+                        <Button layoutX="806.0" layoutY="68.0" mnemonicParsing="false" onAction="#thongKe" text="Thống Kê" />
+                        <RadioButton fx:id="rdThongKeQuy" layoutX="790.0" layoutY="130.0" mnemonicParsing="false" text="Theo Quý">
                            <toggleGroup>
                               <ToggleGroup fx:id="TKTK" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="rdThongKeNam" layoutX="625.0" layoutY="158.0" mnemonicParsing="false" text="Theo Năm" toggleGroup="$TKTK" />
-                        <TableView fx:id="tableViewThongKe" layoutX="14.0" layoutY="384.0" prefHeight="274.0" prefWidth="721.0" />
-                        <MenuButton fx:id="menubtnThongKe" layoutX="625.0" layoutY="191.0" mnemonicParsing="false" text="MenuButton" />
-                        <TextField fx:id="txtNamThongKe" layoutX="751.0" layoutY="191.0" />
+                        <RadioButton fx:id="rdThongKeNam" layoutX="790.0" layoutY="158.0" mnemonicParsing="false" text="Theo Năm" toggleGroup="$TKTK" />
+                        <TableView fx:id="tableViewThongKe" layoutX="14.0" layoutY="456.0" prefHeight="202.0" prefWidth="721.0" />
+                        <MenuButton fx:id="menubtnThongKe" layoutX="790.0" layoutY="191.0" mnemonicParsing="false" text="MenuButton" />
+                        <TextField fx:id="txtNamThongKe" layoutX="916.0" layoutY="191.0" />
                      </children></Pane>
                </content></Tab>
             <Tab text="Quản lý nhân viên">

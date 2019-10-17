@@ -24,9 +24,12 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -434,7 +437,7 @@ public class AdminAppController implements Initializable {
                                 });
                             }
                 /*===================================Thống kê==================================*/
-                            XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+                           /* XYChart.Series<String, Number> series1 = new XYChart.Series<>();
                             XYChart.Series<String, Number> series2 = new XYChart.Series<>();
                                 series1.setName("Series 1");
                                series1.getData().add(new XYChart.Data("0 – 14", 24));
@@ -445,7 +448,7 @@ public class AdminAppController implements Initializable {
                                 series2.getData().add(new XYChart.Data("15 – 64"  , 100));
                                 series2.getData().add(new XYChart.Data("Trên 64"  , 1));
                                 barchartThongKe.getData().add(series1);
-                                barchartThongKe.getData().add(series2);
+                                barchartThongKe.getData().add(series2);*/
                                 /*=========================Menu btn Thống kê=======*/
                                    menubtnThongKe.setText("Chọn Quý...");
                                     MenuItem itemQuy1 = new MenuItem("Quý 1");
@@ -1184,8 +1187,6 @@ public class AdminAppController implements Initializable {
         {
             listTK = tkDao.readThongKeNam(namTK);
         }
-        
-        
         tableViewThongKe.getItems().clear();
         tableViewThongKe.getColumns().clear();
         ///////
@@ -1194,13 +1195,13 @@ public class AdminAppController implements Initializable {
                         TableColumn SoPhieuMuonTK = new TableColumn("Số Phiếu Mượn");
                         TableColumn TongTienPhatTK = new TableColumn("Tổng Tiền Phạt");
                         TableColumn NgayThongKeTK = new TableColumn("Ngày Thống Kê");
-                        
                         idPhieuTK.setCellValueFactory(new PropertyValueFactory<>("maPhieuTk"));
                         SoPhieuQuaHanTK.setCellValueFactory(new PropertyValueFactory<>("soPhieuQuaHan"));
                         SoPhieuMuonTK.setCellValueFactory(new PropertyValueFactory<>("soPhieuMuon"));
                         TongTienPhatTK.setCellValueFactory(new PropertyValueFactory<>("tongTienPhat"));
                         NgayThongKeTK.setCellValueFactory(new PropertyValueFactory<>("ngayThongKe"));
                       tableViewThongKe.getColumns().addAll(idPhieuTK,SoPhieuQuaHanTK,SoPhieuMuonTK,TongTienPhatTK,NgayThongKeTK);
+                      
                         // check Database for TK
                         PhieuMuonDAO pmDao = new PhieuMuonDAO();
                         List<Object[]> result = pmDao.readAllPM();
@@ -1210,7 +1211,6 @@ public class AdminAppController implements Initializable {
                         {
                              Object[] row = result.get(indexResultPM);
                             Date newDate = (Date)row[8];
-                            //java.util.Date dateHanTra= newDate;
                             Calendar calHanTra = Calendar.getInstance();
                             calHanTra.setTime(newDate);
                             if(calHanTra.get(Calendar.YEAR) != 0)
@@ -1259,9 +1259,6 @@ public class AdminAppController implements Initializable {
                             List<Thongke> readAllTK = tkDao.readAllTK();
                             for(Thongke s : readAllTK)
                             {
-
-
-
                                 if(rdThongKeStatus().equalsIgnoreCase("quy"))
                                 {
                                     if(s.getNgayThongKe().equalsIgnoreCase(menubtnThongKe.getText() + "-"+ txtNamThongKe.getText()))
@@ -1308,8 +1305,25 @@ public class AdminAppController implements Initializable {
                         {
                             AlertMessageError("Error", "Năm bạn chọn không có trong hệ thống");
                         }
-                        
+             
+            List<Thongke> listTKChart = tkDao.readAllTK();
+            barchartThongKe.getData().clear();
+            CategoryAxis xAxis = new CategoryAxis();   
+            NumberAxis yAxis = new NumberAxis(); 
+            barchartThongKe.setTitle("Thống Kê");
+            barchartThongKe.setAnimated(false);
+            for(Thongke s : listTKChart)
+            {
+                
+                 XYChart.Series<String, Number> series = new XYChart.Series<>(); 
+                    series.setName(s.getNgayThongKe()); 
+                    series.getData().add(new XYChart.Data<>("Số Phiếu Quá Hạn", s.getSoPhieuQuaHan())); 
+                    series.getData().add(new XYChart.Data<>("Số Phiếu Mượn", s.getSoPhieuMuon())); 
+                    series.getData().add(new XYChart.Data<>("Tổng Tiền Phạt", Double.parseDouble(s.getTongTienPhat())/10000)); 
+                    barchartThongKe.getData().addAll(series);
+            }
     }
+    
     private void reloadTabThongKe(ThongKeDAO tkDao)
     {
      
