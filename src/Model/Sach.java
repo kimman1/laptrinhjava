@@ -31,12 +31,12 @@ public class Sach  implements java.io.Serializable {
        
     }
 	
-    public Sach(String tenSach, String tenTacGia, int soLuong, String giaSach) {
+    /*public Sach(String tenSach, String tenTacGia, int soLuong, String giaSach) {
         this.tenSach = tenSach;
         this.tenTacGia = tenTacGia;
         this.soLuong = soLuong;
         this.giaSach = giaSach;
-    }
+    }*/
     public Sach(String tenSach, String tenTacGia, String nxb, int soLuong, String giaSach, Set<Phieumuon> phieumuons) {
        this.tenSach = tenSach;
        this.tenTacGia = tenTacGia;
@@ -95,7 +95,11 @@ public class Sach  implements java.io.Serializable {
     public void setPhieumuons(Set<Phieumuon> phieumuons) {
         this.phieumuons = phieumuons;
     }
-
+    @Override
+    public String toString()
+    {
+        return this.tenSach;
+    }
 
 
 

@@ -107,4 +107,5 @@ public class KhachHangDAO {
         listResultKH = query.list();
         return listResultKH;
     }
+    
 }

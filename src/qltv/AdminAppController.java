@@ -757,11 +757,12 @@ public class AdminAppController implements Initializable {
         //Create model
         PhieuMuonDAO pmDao = new PhieuMuonDAO();
         KhachHangDAO khDao = new KhachHangDAO();
+        NhanVienDAO nvDao = new NhanVienDAO();
         SachDAO sachDao = new SachDAO();
         Phieumuon pm = new Phieumuon();
         Sach sach;
         Khachhang kh;
-        Nhanvien nv = new Nhanvien();
+        Nhanvien nv = null;
         
         // set data for model
         if(selectTenSachItem.isEmpty())
@@ -780,11 +781,18 @@ public class AdminAppController implements Initializable {
         {
             kh = khDao.readIdKH(selectTenDocGiaPMItem);
         }
-        
+          if(menubtnNVPM.getText().equalsIgnoreCase("Chọn tên NV..."))
+        {
+            AlertMessageError("Error","Chưa chọn Nhân Viện");
+        }
+        else
+        {
+            nv = nvDao.readIdNV(menubtnNVPM.getText());
+        }
         
         //kh.setMaKh(Integer.parseInt(txtMaDocGiaPM.getText()));
         //sach.setMaSach(Integer.parseInt(txtMaSachPM.getText()));
-        nv.setMaNv(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaNV());
+        //nv.setMaNv(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaNV());
         LocalDate NgayTravalue = datePickerNgayTraPM.getValue();
         LocalDate HanTravalue = datePickerNgayHenTraPM.getValue();
         Date hanTraDate = Date.valueOf(HanTravalue);

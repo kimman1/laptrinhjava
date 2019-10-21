@@ -87,7 +87,11 @@ public class Khachhang  implements java.io.Serializable {
     public void setPhieumuons(Set<Phieumuon> phieumuons) {
         this.phieumuons = phieumuons;
     }
-
+     @Override
+    public String toString()
+    {
+        return this.tenKh;
+    }
 
 
 

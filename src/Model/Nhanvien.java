@@ -87,8 +87,12 @@ public class Nhanvien  implements java.io.Serializable {
     public void setPhieumuons(Set<Phieumuon> phieumuons) {
         this.phieumuons = phieumuons;
     }
-
-
+    
+    @Override
+    public String toString()
+    {
+        return this.tenNv;
+    }
 
 
 }
