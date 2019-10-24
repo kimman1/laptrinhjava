@@ -479,7 +479,9 @@ public class AdminAppController implements Initializable {
     {
         txtMaPhieuMuon.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaPhieuMuon()));
         txtMaDocGiaPM.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaDocGia()));
-        txtTenSachPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenSach());
+        //txtTenSachPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenSach());
+       txtTienBoiThuong.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTienBoiThuong());
+       txtTienPhat.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTienPhat());
         menubtn.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenSach());
         txtMaSachPM.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaSach()));
         menubtnTenDocGiaPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenKh());
@@ -861,7 +863,6 @@ public class AdminAppController implements Initializable {
         txtMaPhieuMuon.clear();
         txtMaDocGiaPM.clear();
         txtMaSachPM.clear();
-        txtTenSachPM.clear();
         txtNgayMuonPM.clear();
         txtSoLuongMuonPM.clear();
         datePickerNgayHenTraPM.setValue(null);
@@ -961,9 +962,7 @@ public class AdminAppController implements Initializable {
     private void nhapLaiPM(ActionEvent e)
     {
         PhieuMuonDAO pmDao = new PhieuMuonDAO();
-        reloadTabPM(pmDao);
-        
-        
+        reloadTabPM(pmDao);  
     }
     @FXML
     private void testaction (ActionEvent e)
@@ -1063,7 +1062,6 @@ public class AdminAppController implements Initializable {
         nv.setTenNv(txttenNVNV.getText());
         nv.setStatusNv(menubtnStatusNV.getText());
         NhanVienDAO nvDao = new NhanVienDAO();
-       // System.out.println(nvDao.checkDuplicateNV(txttenNVNV.getText()));
         if(nvDao.checkDuplicateNV(txtAccountNV.getText()) == false)
         {
             nvDao.addNV(nv);
@@ -1165,12 +1163,14 @@ public class AdminAppController implements Initializable {
     private void thongKe(ActionEvent e)
     {
         int namTK = Integer.parseInt(txtNamThongKe.getText());
-        
-        ThongKeDAO tkDao = new ThongKeDAO();
-        List<Phieumuon> listTK = null;
         int tongTienPhat = 0;
         int tongPhieuMuon = 0;
         int tongSoPhieuQH = 0;
+        Boolean isHaveYear = false;
+        Boolean checkDupTK = false;
+        Thongke tkRead = null;
+        ThongKeDAO tkDao = new ThongKeDAO();
+        List<Phieumuon> listTK = null;
         if(rdThongKeStatus().equalsIgnoreCase("quy"))
         {
             if(menubtnQuy() == 1)
@@ -1228,7 +1228,7 @@ public class AdminAppController implements Initializable {
                             indexResultPM++;    
                         }
                        
-                        Boolean isHaveYear = false;
+                       
                         for(int s : year)
                         {
                             if(s == namTK)
@@ -1262,8 +1262,7 @@ public class AdminAppController implements Initializable {
                                 tongPhieuMuon++;
                             }
 
-                            Thongke tkRead = null;
-                            Boolean checkDupTK = false;
+                            
                             List<Thongke> readAllTK = tkDao.readAllTK();
                             for(Thongke s : readAllTK)
                             {

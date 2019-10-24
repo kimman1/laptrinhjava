@@ -62,6 +62,7 @@ public class KhachHangDAO {
    public int modifedKH(Khachhang kh)
     {
         Session session = sessionFactory.openSession();
+        Khachhang khSession = (Khachhang) session.get(Khachhang.class, kh.getMaKh());
         Transaction tx =  session.beginTransaction();
         String hql = "update Khachhang set tenKh = :tenKH, sdtkh= :SDTKH, diaChi = :DiaChi, accountKh = :AccountKH, passwordKh = :PasswordKH WHERE maKh = :MaKH";
         Query query = session.createQuery(hql);

@@ -20,12 +20,12 @@
         <tabs>
           <Tab text="Phiếu Mượn ">
                <content>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="borderPM">
                      <bottom>
                         <TableView fx:id="tableViewPM" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                      </bottom>
                      <center>
-                        <GridPane BorderPane.alignment="CENTER">
+                        <GridPane styleClass="gridPM" BorderPane.alignment="CENTER">
                           <columnConstraints>
                             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="105.0" />
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="10.0" prefWidth="166.0" />
@@ -56,9 +56,9 @@
                               <DatePicker fx:id="datePickerNgayMuonPM" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <DatePicker fx:id="datePickerNgayHenTraPM" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <DatePicker fx:id="datePickerNgayTraPM" GridPane.columnIndex="3" />
-                              <Button mnemonicParsing="false" onAction="#themPM" text="Thêm" GridPane.columnIndex="4" />
-                              <Button mnemonicParsing="false" onAction="#suaPM" text="Sửa" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" onAction="#nhapLai" text="Nhập Lại" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#themPM" styleClass="btnPM" text="Thêm" GridPane.columnIndex="4" />
+                              <Button mnemonicParsing="false" onAction="#suaPM" styleClass="btnPM" text="Sửa" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#nhapLai" styleClass="btnPM" text="Nhập Lại" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                               <MenuButton fx:id="menuBtnTenDocGiaPM" mnemonicParsing="false" text="MenuButton" GridPane.columnIndex="1" />
                               <MenuButton fx:id="menuBtnTenSachPM" mnemonicParsing="false" text="MenuButton" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <MenuButton fx:id="menuBtnTenNVPM" mnemonicParsing="false" text="MenuButton" GridPane.columnIndex="1" GridPane.rowIndex="2" />

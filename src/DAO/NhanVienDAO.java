@@ -57,7 +57,7 @@ public class NhanVienDAO {
         session.save(nv);
         session.getTransaction().commit();
         session.close();
-        //String hql = "INSERT INTO Sach(maSach,tenSach,tenTacGia,nxb,soLuong,giaSach)" + ;
+        
     }
      public int deleteNV(int maNV)
      {
@@ -72,11 +72,12 @@ public class NhanVienDAO {
         session.close();
         return result;
      }
-     public int modifedNV(Nhanvien nv)
+     public void modifedNV(Nhanvien nv)
     {
         Session session = sessionFactory.openSession();
+        Nhanvien nvSession = (Nhanvien) session.get(Nhanvien.class, nv.getMaNv());
         Transaction tx =  session.beginTransaction();
-        String hql = "update Nhanvien set accountNv = :accountNVUpdate, passwordNv= :passwordNVUpdate, tenNv = :tenNVUpdate, sdtnv = :sdtNVUpdate, statusNv = :statusNVUpdate WHERE maNv = :maNVUpdate";
+        /*String hql = "update Nhanvien set accountNv = :accountNVUpdate, passwordNv= :passwordNVUpdate, tenNv = :tenNVUpdate, sdtnv = :sdtNVUpdate, statusNv = :statusNVUpdate WHERE maNv = :maNVUpdate";
         Query query = session.createQuery(hql);
         query.setParameter("accountNVUpdate", nv.getAccountNv());
         query.setParameter("passwordNVUpdate", nv.getPasswordNv());
@@ -85,9 +86,15 @@ public class NhanVienDAO {
         query.setParameter("statusNVUpdate", nv.getStatusNv());
         query.setParameter("maNVUpdate", nv.getMaNv());
         int result = query.executeUpdate();
+        Nhanvien nvUpdate = new Nhanvien();*/
+        nvSession.setAccountNv(nv.getAccountNv());
+        nvSession.setPasswordNv(nv.getPasswordNv());
+        nvSession.setSdtnv(nv.getSdtnv());
+        nvSession.setStatusNv(nv.getStatusNv());
+        nvSession.setTenNv(nv.getTenNv());
+        session.update(nvSession);
         tx.commit();
         session.close();
-        return result;
     }
      public boolean checkDuplicateNV(String accountNV)
      {

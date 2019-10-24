@@ -439,4 +439,47 @@ public class StaffAppController implements Initializable {
                                     });
                             }
     }
+    @FXML
+    private void themDG(ActionEvent e)
+    {
+        KhachHangDAO khDao = new KhachHangDAO();
+        Khachhang kh  = new Khachhang();
+       /* kh.setAccountKh(txtAccountDG.getText());
+        kh.setDiaChi(txtDiaChiDG.getText());
+        kh.setPasswordKh(txtMatKhauDG.getText());
+        kh.setSdtkh(txtSDTDG.getText());
+        kh.setTenKh(txtTenDocGiaDG.getText());*/
+        khDao.addKhachHang(kh);
+        reloadTabQLDG(khDao);
+    }
+    @FXML
+    private void suaDG(ActionEvent e)
+    {
+        Khachhang kh  = new Khachhang();
+        /*kh.setAccountKh(txtAccountDG.getText());
+        kh.setDiaChi(txtDiaChiDG.getText());
+        kh.setPasswordKh(txtMatKhauDG.getText());
+        kh.setSdtkh(txtSDTDG.getText());
+        kh.setTenKh(txtTenDocGiaDG.getText());
+        kh.setMaKh(Integer.parseInt(txtMaDocGiaDG.getText()));*/
+        KhachHangDAO khDao = new KhachHangDAO();
+        khDao.modifedKH(kh);
+        reloadTabQLDG(khDao);
+    }
+    private void reloadTabQLDG(KhachHangDAO khDao)
+    {
+       /* txtMaDocGiaDG.clear();
+        txtTenDocGiaDG.clear();
+        txtMaDocGiaDG.clear();
+        txtAccountDG.clear();
+        txtMatKhauDG.clear();
+        txtDiaChiDG.clear();
+        txtSDTDG.clear();
+        tableViewDocGia.getItems().clear();
+          List<Khachhang> listKhTableViewReload = khDao.readAllKhachHang();
+          for(Khachhang s : listKhTableViewReload)
+           {
+              tableViewDocGia.getItems().add(s);
+           }*/
+    }
 }
