@@ -20,7 +20,7 @@ public class Phieumuon  implements java.io.Serializable {
      private int soLuongMuon;
      private String tienBoiThuong;
      private String tienPhat;
-
+     private Boolean matSach;
     public Phieumuon() {
     }
 
@@ -42,7 +42,16 @@ public class Phieumuon  implements java.io.Serializable {
        this.tienBoiThuong = tienBoiThuong;
        this.tienPhat = tienPhat;
     }
-   
+
+   public Boolean isMatSach()
+   {
+       return this.matSach;
+   }
+   public void setMatSach(Boolean status)
+   {
+       this.matSach = status;
+   }
+    
     public Integer getMaPhieuMuon() {
         return this.maPhieuMuon;
     }

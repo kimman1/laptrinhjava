@@ -57,14 +57,14 @@ public class KhachHangDAO {
         session.save(kh);
         session.getTransaction().commit();
         session.close();
-        //String hql = "INSERT INTO Sach(maSach,tenSach,tenTacGia,nxb,soLuong,giaSach)" + ;
+      
     }
-   public int modifedKH(Khachhang kh)
+   public void modifedKH(Khachhang kh)
     {
         Session session = sessionFactory.openSession();
         Khachhang khSession = (Khachhang) session.get(Khachhang.class, kh.getMaKh());
         Transaction tx =  session.beginTransaction();
-        String hql = "update Khachhang set tenKh = :tenKH, sdtkh= :SDTKH, diaChi = :DiaChi, accountKh = :AccountKH, passwordKh = :PasswordKH WHERE maKh = :MaKH";
+        /*String hql = "update Khachhang set tenKh = :tenKH, sdtkh= :SDTKH, diaChi = :DiaChi, accountKh = :AccountKH, passwordKh = :PasswordKH WHERE maKh = :MaKH";
         Query query = session.createQuery(hql);
         query.setParameter("tenKH", kh.getTenKh());
         query.setParameter("SDTKH", kh.getSdtkh());
@@ -72,10 +72,16 @@ public class KhachHangDAO {
         query.setParameter("AccountKH", kh.getAccountKh());
         query.setParameter("PasswordKH", kh.getPasswordKh());
         query.setParameter("MaKH", kh.getMaKh());
-        int result = query.executeUpdate();
+        int result = query.executeUpdate();*/
+        khSession.setAccountKh(kh.getAccountKh());
+        khSession.setDiaChi(kh.getDiaChi());
+        khSession.setPasswordKh(kh.getPasswordKh());
+        khSession.setSdtkh(kh.getSdtkh());
+        khSession.setTenKh(kh.getTenKh());
+        session.update(khSession);
         tx.commit();
         session.close();
-        return result;
+        
     }
    public int deleteKH(int maKHDelete)
     {

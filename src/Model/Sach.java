@@ -19,10 +19,11 @@ public class Sach  implements java.io.Serializable {
      private String giaSach;
      private Set<Phieumuon> phieumuons = new HashSet<Phieumuon>(0);
 
-    public Sach() {
+    public Sach()
+    {
     }
-        public Sach(String tenSach, String tenTacGia, String nxb, int soLuong, String giaSach)
-        {
+    public Sach(String tenSach, String tenTacGia, String nxb, int soLuong, String giaSach)
+    {
        this.tenSach = tenSach;
        this.tenTacGia = tenTacGia;
        this.nxb = nxb;

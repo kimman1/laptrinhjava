@@ -30,7 +30,7 @@
       <TextField id="txtUserName" fx:id="txtUserName" layoutX="195.0" layoutY="108.0" onAction="#handleButtonAction" prefHeight="34.0" prefWidth="239.0" />
      
      
-      <RadioButton id="rdAdmin" fx:id="rdAdmin" layoutX="113.0" layoutY="311.0" mnemonicParsing="false" onAction="#radioSelect" text="Admin" textFill="#fbfbfb">
+      <RadioButton id="rdAdmin" fx:id="rdAdmin" layoutX="113.0" layoutY="311.0" mnemonicParsing="false"  text="Admin" textFill="#fbfbfb">
          <font>
             <javafx.scene.text.Font size="15.0" />
          </font>
@@ -38,7 +38,7 @@
             <ToggleGroup fx:id="group" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton id="rdCustomers" fx:id="rdCustomers" layoutX="355.0" layoutY="311.0" mnemonicParsing="false" onAction="#radioSelect" text="Staff" textFill="#fbfbfb" toggleGroup="$group">
+      <RadioButton id="rdCustomers" fx:id="rdCustomers" layoutX="355.0" layoutY="311.0" mnemonicParsing="false"  text="Staff" textFill="#fbfbfb" toggleGroup="$group">
          <font>
             <javafx.scene.text.Font size="15.0" />
          </font>

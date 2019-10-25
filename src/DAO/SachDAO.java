@@ -72,11 +72,12 @@ public class SachDAO {
         
         return sach;
     }
-    public int modifedSach(Sach sach)
+    public void modifedSach(Sach sach)
     {
         Session session = sessionFactory.openSession();
+        Sach sachSession = (Sach) session.get(Sach.class, sach.getMaSach());
         Transaction tx =  session.beginTransaction();
-        String hql = "update Sach set tenSach = :tenSachUpdate, tenTacGia= :tenTacGiaUpdate, nxb = :NXBUpdate, soLuong = :soLuongUpdate, giaSach = :giaSachUpdate WHERE maSach = :maSachUpdate";
+       /* String hql = "update Sach set tenSach = :tenSachUpdate, tenTacGia= :tenTacGiaUpdate, nxb = :NXBUpdate, soLuong = :soLuongUpdate, giaSach = :giaSachUpdate WHERE maSach = :maSachUpdate";
         Query query = session.createQuery(hql);
         query.setParameter("tenSachUpdate", sach.getTenSach());
         query.setParameter("tenTacGiaUpdate", sach.getTenTacGia());
@@ -84,10 +85,15 @@ public class SachDAO {
         query.setParameter("soLuongUpdate", sach.getSoLuong());
         query.setParameter("giaSachUpdate", sach.getGiaSach());
         query.setParameter("maSachUpdate", sach.getMaSach());
-        int result = query.executeUpdate();
+        int result = query.executeUpdate();*/
+        sachSession.setGiaSach(sach.getGiaSach());
+        sachSession.setNxb(sach.getNxb());
+        sachSession.setSoLuong(sach.getSoLuong());
+        sachSession.setTenSach(sach.getTenSach());
+        sachSession.setTenTacGia(sach.getTenTacGia());
+        session.update(sachSession);
         tx.commit();
         session.close();
-        return result;
     }
     public int deleteSach(int maSachDelete)
     {
@@ -141,5 +147,21 @@ public class SachDAO {
         tx.commit();
         session.close();
         
+    }
+    public String readGiaSach(int idSach)
+    {
+        Session session  = sessionFactory.openSession();
+        session.beginTransaction();
+        String hql = "FROM Sach where maSach = :MaSach";
+        Query query = session.createQuery(hql);
+        query.setParameter("MaSach", idSach);
+        List<Sach> listRs = query.list();
+        session.close();
+        String giasach = null;
+        for(Sach s : listRs)
+        {
+            giasach = s.getGiaSach(); 
+        }
+        return giasach;
     }
 }

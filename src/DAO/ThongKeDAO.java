@@ -63,22 +63,27 @@ public class ThongKeDAO {
         session.save(tk);
         session.getTransaction().commit();
         session.close();
-        //String hql = "INSERT INTO Sach(maSach,tenSach,tenTacGia,nxb,soLuong,giaSach)" + ;
     }
-    public int modifedTK(Thongke tk)
+    public void modifedTK(Thongke tk)
     {
         Session session = sessionFactory.openSession();
+         Thongke tkSession = (Thongke) session.get(Thongke.class, tk.getMaPhieuTk());
         Transaction tx =  session.beginTransaction();
-        String hql = "update Thongke set soPhieuQuaHan = :SoPhieuQuaHan, soPhieuMuon= :SoPhieuMuon, tongTienPhat = :TongTienPhat, ngayThongKe = :NgayThongKe WHERE maPhieuTk = :MaPhieuTk";
+       /* String hql = "update Thongke set soPhieuQuaHan = :SoPhieuQuaHan, soPhieuMuon= :SoPhieuMuon, tongTienPhat = :TongTienPhat, ngayThongKe = :NgayThongKe WHERE maPhieuTk = :MaPhieuTk";
         Query query = session.createQuery(hql);
         query.setParameter("SoPhieuQuaHan", tk.getSoPhieuQuaHan());
         query.setParameter("SoPhieuMuon", tk.getSoPhieuMuon());
         query.setParameter("TongTienPhat", tk.getTongTienPhat());
         query.setParameter("NgayThongKe", tk.getNgayThongKe());
         query.setParameter("MaPhieuTk", tk.getMaPhieuTk());
-        int result = query.executeUpdate();
+        int result = query.executeUpdate();*/
+        tkSession.setNgayThongKe(tk.getNgayThongKe());
+        tkSession.setSoPhieuMuon(tk.getSoPhieuMuon());
+        tkSession.setSoPhieuQuaHan(tk.getSoPhieuQuaHan());
+        tkSession.setTongTienPhat(tk.getTongTienPhat());
+        session.update(tkSession);
         tx.commit();
         session.close();
-        return result;
+        
     }
 }

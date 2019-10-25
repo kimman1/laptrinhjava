@@ -25,7 +25,7 @@ public class PhieuMuonDAO {
      {
         Session session  = sessionFactory.openSession();
         session.beginTransaction();
-        String hql = "select nhanvien.maNv,maPhieuMuon ,khachhang.maKh, sach.maSach, sach.tenSach, khachhang.tenKh, ngayMuon, hanTra, ngayTra, soLuongMuon,tienBoiThuong,tienPhat, nhanvien.tenNv from Phieumuon";
+        String hql = "select nhanvien.maNv,maPhieuMuon ,khachhang.maKh, sach.maSach, sach.tenSach, khachhang.tenKh, ngayMuon, hanTra, ngayTra, soLuongMuon,tienBoiThuong,tienPhat, nhanvien.tenNv, matSach from Phieumuon";
         Query query = session.createQuery(hql);
         List<Object[]> result = query.list();
         session.close();
@@ -52,8 +52,9 @@ public class PhieuMuonDAO {
      public void modifiedPM(Phieumuon phieumuon)
      {
          Session session = sessionFactory.openSession();
+          Phieumuon pmSession = (Phieumuon) session.get(Phieumuon.class, phieumuon.getMaPhieuMuon());
         Transaction tx =  session.beginTransaction();
-        String hql = "update Phieumuon set khachhang=  :KhachHang, nhanvien= :NhanVien,sach= :Sach, hanTra= :HanTra, ngayTra= :NgayTra, soLuongMuon= :SoLuongMuon  where maPhieuMuon= :MaPhieuMuon";
+        /*String hql = "update Phieumuon set khachhang=  :KhachHang, nhanvien= :NhanVien,sach= :Sach, hanTra= :HanTra, ngayTra= :NgayTra, soLuongMuon= :SoLuongMuon  where maPhieuMuon= :MaPhieuMuon";
         Query query = session.createQuery(hql);
         query.setParameter("KhachHang", phieumuon.getKhachhang());
         query.setParameter("NhanVien", phieumuon.getNhanvien());
@@ -62,7 +63,18 @@ public class PhieuMuonDAO {
         query.setParameter("NgayTra", phieumuon.getNgayTra());
         query.setParameter("SoLuongMuon", phieumuon.getSoLuongMuon());
         query.setParameter("MaPhieuMuon",phieumuon.getMaPhieuMuon());
-        query.executeUpdate();
+        query.executeUpdate();*/
+        pmSession.setHanTra(phieumuon.getHanTra());
+        pmSession.setKhachhang(phieumuon.getKhachhang());
+        //pmSession.setNgayMuon(phieumuon.getNgayMuon());
+        pmSession.setNgayTra(phieumuon.getNgayTra());
+        pmSession.setNhanvien(phieumuon.getNhanvien());
+        pmSession.setSach(phieumuon.getSach());
+        pmSession.setSoLuongMuon(phieumuon.getSoLuongMuon());
+        pmSession.setTienBoiThuong(phieumuon.getTienBoiThuong());
+        pmSession.setTienPhat(phieumuon.getTienPhat());
+        pmSession.setMatSach(phieumuon.isMatSach());
+        session.update(pmSession);
         tx.commit();
         session.close();
      }

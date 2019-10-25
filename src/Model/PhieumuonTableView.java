@@ -20,9 +20,17 @@ public class PhieumuonTableView {
     private String tenKh;
     private String tenNV;
     private Date ngayMuon;
+    private Boolean matSach;
 
-
-    
+    public Boolean isMatSach()
+   {
+       return this.matSach;
+   }
+   public void setMatSach(Boolean status)
+   {
+       this.matSach = status;
+   }
+   
     public Integer getMaNV() {
         return maNV;
     }

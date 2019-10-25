@@ -44,110 +44,114 @@ public class Login implements Initializable {
     @FXML
     private RadioButton rdCustomers;
     @FXML
-    String radioStatus = "";
-    @FXML
     private void handleButtonAction(ActionEvent event) throws IOException {
         
-        QuanTriDAO user = new QuanTriDAO();
-        StaffDAO staff = new StaffDAO();
-        List<Administrator> quantri = user.quanTriLogin(txtUserName.getText().toLowerCase());
-        List<Nhanvien> Staff = staff.staffLogin(txtUserName.getText().toLowerCase());
-         if(quantri.isEmpty() && Staff.isEmpty())
-            {
-                AlertMissingAccountName();
-            }
+        
+        if(radioSelectStatus().isEmpty())
+        {
+            AlertMessageError("Error", "Chọn tư cách đăng nhập");
+        }
+        else if(txtUserName.getText().isEmpty() && txtPassword.getText().isEmpty())
+        {
+            AlertMessageError("Error","Nhập tài khoản hoặc mật khẩu");
+        }
         else
-            {
-                if(radioStatus.trim().equals("admin"))
+        {
+            QuanTriDAO user = new QuanTriDAO();
+            StaffDAO staff = new StaffDAO();
+            List<Administrator> quantri = user.quanTriLogin(txtUserName.getText().toLowerCase());
+            List<Nhanvien> Staff = staff.staffLogin(txtUserName.getText().toLowerCase());
+                if(quantri.isEmpty() && Staff.isEmpty())
                 {
-                    if(quantri.isEmpty())
+                        
+                    AlertMessageError("Login Error", "Account Name không tồn tại");
+                }
+                else
                     {
-                              AlertMissingAccountName();
-                    }
-                    else
-                    {
-                        for(Administrator s : quantri)
+                        if(radioSelectStatus().trim().equals("admin"))
                         {
-
-                            if(txtUserName.getText().trim().toLowerCase().equals(s.getAccountAdmin().trim()) && txtPassword.getText().trim().toLowerCase().equals(s.getPasswordAdmin().trim()))
+                            if(quantri.isEmpty())
                             {
-                               
-                                 Stage loginStage = (Stage) txtUserName.getScene().getWindow();
-                                    loginStage.hide();
-                                    FXMLLoader fxmloader = new FXMLLoader(getClass().getResource("AdminApp.fxml"));
-                                    Parent root1 = (Parent) fxmloader.load();
-                                    Stage stage = new Stage();
-                                    stage.setTitle("Administrator Manager");
-                                    stage.setScene(new Scene(root1));
-                                    stage.show();
+                                AlertMessageError("Login Error", "Account Name không tồn tại");
                             }
                             else
                             {
-                                AlertWrongPassword();
+                                for(Administrator s : quantri)
+                                {
+
+                                    if(txtUserName.getText().trim().toLowerCase().equals(s.getAccountAdmin().trim()) && txtPassword.getText().trim().toLowerCase().equals(s.getPasswordAdmin().trim()))
+                                    {
+
+                                        Stage loginStage = (Stage) txtUserName.getScene().getWindow();
+                                        loginStage.hide();
+                                        FXMLLoader fxmloader = new FXMLLoader(getClass().getResource("AdminApp.fxml"));
+                                        Parent root1 = (Parent) fxmloader.load();
+                                        Stage stage = new Stage();
+                                        stage.setTitle("Administrator Manager");
+                                        stage.setScene(new Scene(root1));
+                                        stage.show();
+                                    }
+                                    else
+                                    {
+                                         
+                                        AlertMessageError("Login Error", "Sai mật khẩu!");
+                                    }
+                                }
+                            }
+                        }
+                        if(radioSelectStatus().trim().equals("staff"))
+                        {
+                            if(Staff.isEmpty())
+                            {
+                                 AlertMessageError("Login Error", "Account Name không tồn tại");
+                            }
+                            else
+                            {
+                                for(Nhanvien s : Staff)
+                                {
+                                   if(txtUserName.getText().trim().toLowerCase().equals(s.getAccountNv().trim()) && txtPassword.getText().trim().toLowerCase().equals(s.getPasswordNv().trim())) 
+                                   {
+                                       Stage loginStage = (Stage) txtUserName.getScene().getWindow();
+                                       loginStage.hide();
+                                       FXMLLoader fxmloader = new FXMLLoader(getClass().getResource("StaffApp.fxml"));
+                                       Parent root1 = (Parent) fxmloader.load();
+                                       Stage stage = new Stage();
+                                       stage.setTitle("Staff Manager");
+                                       stage.setScene(new Scene(root1));
+                                       stage.show();
+                                   }
+                                   else
+                                   {
+                                        AlertMessageError("Login Error", "Sai mật khẩu!");
+                                   }
+                                }
                             }
                         }
                     }
-                }
-                if(radioStatus.trim().equals("staff"))
-                {
-                    if(Staff.isEmpty())
-                    {
-                        AlertMissingAccountName();
-                    }
-                    else
-                    {
-                        for(Nhanvien s : Staff)
-                        {
-                          if(txtUserName.getText().trim().toLowerCase().equals(s.getAccountNv().trim()) && txtPassword.getText().trim().toLowerCase().equals(s.getPasswordNv().trim())) 
-                          {
-                              Stage loginStage = (Stage) txtUserName.getScene().getWindow();
-                              loginStage.hide();
-                              FXMLLoader fxmloader = new FXMLLoader(getClass().getResource("StaffApp.fxml"));
-                              Parent root1 = (Parent) fxmloader.load();
-                              Stage stage = new Stage();
-                              stage.setTitle("Staff Manager");
-                              stage.setScene(new Scene(root1));
-                              stage.show();
-                          }
-                          else
-                          {
-                                AlertWrongPassword();
-                          }
-                        }
-                    }
-                }
-            }
+        }
     }
-    @FXML
-    private void AlertWrongPassword()
+    
+    private void AlertMessageError(String title, String content)
     {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Login Information");
-        alert.setHeaderText(null);
-        alert.setContentText("Login Failed. Please check your password");
-        alert.showAndWait();
-    }
-    @FXML
-    private void AlertMissingAccountName()
-    {
-         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-         alert.setTitle("Login Information");
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+         alert.setTitle(title);
          alert.setHeaderText(null);
-         alert.setContentText("Your Account Name is not exist in database");
+         alert.setContentText(content);
          alert.showAndWait();
     }
-    @FXML
-    private void radioSelect(ActionEvent event)
+    private String radioSelectStatus()
     {
+        String rs = "";
         if(rdAdmin.isSelected())
-            radioStatus = "admin";
+            rs = "admin";
         if(rdCustomers.isSelected())
-            radioStatus = "staff";
+            rs = "staff";
+        return rs;
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        //rdAdmin.setSelected(true);
     }    
     
 }

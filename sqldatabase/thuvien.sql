@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 10, 2019 at 09:25 AM
+-- Generation Time: Oct 25, 2019 at 09:36 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -94,8 +94,8 @@ CREATE TABLE IF NOT EXISTS `nhanvien` (
 --
 
 INSERT INTO `nhanvien` (`MaNV`, `AccountNV`, `PasswordNV`, `TenNV`, `SDTNV`, `StatusNV`) VALUES
-(1, 'quangdeptrai', 'choquang', 'Quảng', '123456789', 'Đang Làm'),
-(2, 'quandeptrai', 'quan123', 'Quân', '0123456', 'Đang Làm');
+(1, 'quangdeptrai', 'quang123', 'Quảng', '1234567890', 'Đang Làm'),
+(2, 'quandeptrai', 'quan123', 'Quân', '0123456789', 'Đang Làm');
 
 -- --------------------------------------------------------
 
@@ -113,23 +113,24 @@ CREATE TABLE IF NOT EXISTS `phieumuon` (
   `HanTra` date DEFAULT NULL,
   `NgayTra` date DEFAULT NULL,
   `SoLuongMuon` int(11) NOT NULL,
-  `TienBoiThuong` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `TienPhat` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TienBoiThuong` varchar(45) COLLATE utf8_unicode_ci DEFAULT '0',
+  `TienPhat` varchar(45) COLLATE utf8_unicode_ci DEFAULT '0',
+  `MatSach` bit(1) DEFAULT b'0',
   PRIMARY KEY (`MaPhieuMuon`),
   KEY `MaSach_idx` (`MaSach`),
   KEY `MaKH_idx` (`MaKH`),
   KEY `MaNV_idx` (`MaNV`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `phieumuon`
 --
 
-INSERT INTO `phieumuon` (`MaPhieuMuon`, `MaKH`, `MaSach`, `MaNV`, `NgayMuon`, `HanTra`, `NgayTra`, `SoLuongMuon`, `TienBoiThuong`, `TienPhat`) VALUES
-(2, 1, 13, 1, '2019-09-23', '2019-10-26', '2019-10-26', 2, '50000', NULL),
-(20, 3, 1, 1, '2019-10-08', '2019-10-22', '2019-10-23', 5, NULL, NULL),
-(22, 2, 12, 1, '2019-10-08', '2019-10-22', '2019-10-23', 2, NULL, NULL),
-(23, 3, 14, 1, '2019-10-08', '2019-10-25', '2019-11-01', 2, NULL, NULL);
+INSERT INTO `phieumuon` (`MaPhieuMuon`, `MaKH`, `MaSach`, `MaNV`, `NgayMuon`, `HanTra`, `NgayTra`, `SoLuongMuon`, `TienBoiThuong`, `TienPhat`, `MatSach`) VALUES
+(2, 1, 4, 2, '2019-09-23', '2019-10-26', '2019-10-26', 2, '50000', NULL, b'0'),
+(20, 3, 1, 1, '2019-10-15', '2019-10-22', '2019-10-23', 6, '', NULL, b'0'),
+(22, 2, 12, 1, '2019-10-17', '2019-10-22', '2019-10-23', 2, '', NULL, b'0'),
+(24, 3, 3, 2, '2019-10-17', '2019-10-22', '2019-10-23', 3, '', NULL, b'0');
 
 -- --------------------------------------------------------
 
@@ -153,13 +154,13 @@ CREATE TABLE IF NOT EXISTS `sach` (
 --
 
 INSERT INTO `sach` (`MaSach`, `TenSach`, `TenTacGia`, `NXB`, `SoLuong`, `GiaSach`) VALUES
-(1, 'Lập trình hướng đối tượng ', 'Tô Oai Hùng ', '371 Nguyễn Kiệm', 5, '50'),
-(2, 'Lập Trình Java', 'Dương Hữu Thành', '371 Nguyễn Kiệm', 10, '70'),
-(3, 'Lập Trình Mạng', 'Lưu Quang Phương', '371 Nguyễn Kiệm', 10, '12'),
+(1, 'Lập trình hướng đối tượng ', 'Tô Oai Hùng ', '371 Nguyễn Kiệm', 2, '50'),
+(2, 'Lập Trình Java', 'Dương Hữu Thành', '371 Nguyễn Kiệm', 20, '70'),
+(3, 'Lập Trình Mạng', 'Lưu Quang Phương', '371 Nguyễn Kiệm', 5, '12'),
 (4, 'Quản Trị Hệ CSDL', 'Hồ Quang Khải', '371 Nguyễn Kiệm', 10, '60'),
 (12, 'Quản Trị Mạng', 'Lưu Quang Phương', '371 Nguyễn Kiệm', 98, '200'),
 (13, 'Kiến Trúc Máy Tính', 'Tô Oai Hùng', '371 Nguyễn Kiệm', 100, '300'),
-(14, 'Xử Lý Ảnh', 'Lê Viết Tuấn', '371 Nguyễn Kiệm', 98, '400');
+(14, 'Xử Lý Ảnh', 'Lê Viết Tuấn', '371 Nguyễn Kiệm', 90, '400');
 
 -- --------------------------------------------------------
 
@@ -173,8 +174,20 @@ CREATE TABLE IF NOT EXISTS `thongke` (
   `SoPhieuQuaHan` int(11) DEFAULT NULL,
   `SoPhieuMuon` int(11) DEFAULT NULL,
   `TongTienPhat` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `NgayThongKe` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`MaPhieuTK`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `thongke`
+--
+
+INSERT INTO `thongke` (`MaPhieuTK`, `SoPhieuQuaHan`, `SoPhieuMuon`, `TongTienPhat`, `NgayThongKe`) VALUES
+(13, 0, 1, '0', 'Quý 3-2019'),
+(14, 3, 3, '45000', 'Quý 4-2019'),
+(15, 3, 4, '45000', '2019'),
+(17, 0, 0, '0', 'Quý 2-2019'),
+(18, 0, 0, '0', 'Quý 1-2019');
 
 --
 -- Constraints for dumped tables

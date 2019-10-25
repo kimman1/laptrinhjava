@@ -17,10 +17,27 @@ GridPane.gridPM{
     -fx-background-color: linear-gradient(to bottom left, #4DA0B0, #D39D38);
 }
 Button.btnPM{
-    -fx-pref-width: 80px;
+    -fx-pref-width: 100px;
     -fx-background-radius: 20;
     -fx-border-radius: 20;
     -fx-border-width: 2;
-    -fx-pref-width : 90px;
 }
 
+Pane.paneADSach {
+   -fx-background-color: linear-gradient(to bottom right, #E56DE7, #0CF9BF);
+}
+   
+Label.labelChu{
+     -fx-font-family: tahoma;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-font-size: 15;
+}
+Button.btnTimKiem{
+     -fx-pref-width: 130px;
+    -fx-background-radius: 10;
+    -fx-border-radius: 20;
+    -fx-border-width: 2;
+    -fx-background-color: #40C6B8;
+    -fx-text-fill: Black;
+    }
