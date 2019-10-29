@@ -41,3 +41,65 @@ Button.btnTimKiem{
     -fx-background-color: #40C6B8;
     -fx-text-fill: Black;
     }
+VBox.VBoxAdminTK{
+    -fx-alignment: CENTER;
+    -fx-spacing: 10;
+}
+VBox.VBoxAdminTK > HBox
+{
+    -fx-alignment: center;
+    -fx-spacing: 10;
+    -fx-pref-height : 70px;
+    -fx-font-weight : bold;
+    -fx-font-size : 14px;
+    -fx-font-family : tahoma;
+}
+VBox.VBoxAdminTK > Label
+{
+    -fx-alignment: CENTER_RIGHT;
+    
+}
+BoderPane.borderPaneAdminNV
+{
+    -fx-font-weight : bold;
+    -fx-font-family : tahoma;
+    -fx-background-color: red;
+}
+BorderPane.borderPaneAdminNV > GridPane
+{
+       -fx-background-color: linear-gradient(to bottom right, #E56DE7, #0CF9BF);
+
+}
+BorderPane.borderPaneAdminNV > GridPane > VBox
+{
+      /* -fx-background-color: linear-gradient(to bottom right, #E56DE7, #0CF9BF);*/
+       -fx-alignment: center;
+       -fx-spacing: 20;
+
+}
+BorderPane.borderPaneAdminNV > GridPane > FlowPane
+{
+      /* -fx-background-color: linear-gradient(to bottom right, #E56DE7, #0CF9BF);*/
+       
+      -fx-hgap: 50;
+
+}
+BorderPane.borderPaneAdminNV > GridPane > Label
+{
+   -fx-hgap: 10;
+   -fx-padding: 5;
+   -fx-pref-width : 120;
+  
+}
+BorderPane.borderPaneAdminNV > VBox
+{
+    -fx-alignment: center;
+    -fx-spacing: 10;
+   -fx-background-color: linear-gradient(to bottom left, #E56DE7, #0CF9BF); 
+    
+}
+BorderPane.borderPaneAdminNV > VBox > FlowPane
+{
+    -fx-alignment: center;
+    -fx-hgap: 10;
+}

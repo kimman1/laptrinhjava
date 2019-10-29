@@ -18,19 +18,65 @@
 <?import javafx.scene.effect.FloatMap?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="797.0" prefWidth="1203.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="qltv.AdminAppController">
+<Pane stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="qltv.AdminAppController">
    <children>
       <TabPane fx:id="tabPaneContainer" prefHeight="796.0" prefWidth="1064.0" stylesheets="@../css/style.css" tabClosingPolicy="UNAVAILABLE">
         <tabs>
              <Tab text="Thống kê">
                <content>
-                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #abd7e5;">
-                     <children>
-                        <BarChart fx:id="barchartThongKe" layoutX="-2.0" layoutY="38.0" prefHeight="405.0" prefWidth="794.0">
+                  <BorderPane id="borderPaneAdminTK" prefHeight="728.0" prefWidth="1144.0">
+                     <right>
+                        <VBox prefHeight="502.0" prefWidth="301.0" styleClass="VBoxAdminTK" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#thongKe" text="Thống Kê" textFill="RED">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="17.0" />
+                                 </font>
+                              </Button>
+                              <HBox prefHeight="71.0" prefWidth="267.0">
+                                 <children>
+                                    <RadioButton fx:id="rdThongKeNam" mnemonicParsing="false" text="Theo Năm">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="15.0" />
+                                       </font>
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="TKTK" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="rdThongKeQuy" mnemonicParsing="false" text="Theo Quý" toggleGroup="$TKTK">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="15.0" />
+                                       </font>
+                                    </RadioButton>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label text="Chọn Quý:" />
+                                    <MenuButton fx:id="menubtnThongKe" alignment="CENTER" mnemonicParsing="false" text="MenuButton" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label prefHeight="18.0" prefWidth="108.0" text="Nhập Năm: " />
+                                    <TextField fx:id="txtNamThongKe" prefHeight="28.0" prefWidth="231.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </right>
+                     <center>
+                        <BarChart fx:id="barchartThongKe" prefHeight="502.0" prefWidth="766.0" BorderPane.alignment="CENTER">
                           <xAxis>
                             <CategoryAxis prefHeight="53.0" prefWidth="443.0" side="BOTTOM" />
                           </xAxis>
@@ -38,121 +84,140 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </BarChart>
-                        <Button layoutX="806.0" layoutY="68.0" mnemonicParsing="false" onAction="#thongKe" text="Thống Kê" textFill="RED">
-                           <font>
-                              <Font name="Tahoma Bold" size="17.0" />
-                           </font></Button>
-                        <RadioButton fx:id="rdThongKeQuy" layoutX="801.0" layoutY="131.0" mnemonicParsing="false" text="Theo Quý">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="TKTK" />
-                           </toggleGroup>
-                           <font>
-                              <Font name="Tahoma Bold" size="15.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton fx:id="rdThongKeNam" layoutX="799.0" layoutY="171.0" mnemonicParsing="false" text="Theo Năm" toggleGroup="$TKTK">
-                           <font>
-                              <Font name="Tahoma Bold" size="15.0" />
-                           </font></RadioButton>
-                        <TableView fx:id="tableViewThongKe" layoutX="14.0" layoutY="456.0" prefHeight="202.0" prefWidth="767.0" />
-                        <MenuButton fx:id="menubtnThongKe" layoutX="790.0" layoutY="225.0" mnemonicParsing="false" text="MenuButton" />
-                        <TextField fx:id="txtNamThongKe" layoutX="913.0" layoutY="225.0" />
-                     </children></Pane>
-               </content></Tab>
+                     </center>
+                     <bottom>
+                        <TableView fx:id="tableViewThongKe" prefHeight="265.0" prefWidth="1203.0" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+               </content>
+            </Tab>
             <Tab text="Quản lý nhân viên">
                <content>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <Pane layoutX="-4.0" prefHeight="820.0" prefWidth="1212.0" style="-fx-background-color: #abd7e5;">
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="borderPaneAdminNV">
+                     <center>
+                        <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="143.0" minWidth="10.0" prefWidth="139.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="10.0" prefWidth="211.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="144.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="295.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="278.0" minWidth="10.0" prefWidth="261.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
                            <children>
-                              <Label layoutX="40.0" layoutY="34.0" prefHeight="21.0" prefWidth="116.0" text="Mã nhân viên:" textFill="#1a07eb">
+                              <Label prefHeight="21.0" prefWidth="116.0" text="Mã nhân viên:" textFill="#1a07eb">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
-                                 </font></Label>
-                              <Label layoutX="40.0" layoutY="148.0" text="Mật khẩu:" textFill="#1a07eb">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
-                              <Label layoutX="40.0" layoutY="87.0" prefHeight="21.0" prefWidth="120.0" text="Tên nhân viên:" textFill="#1a07eb">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font></Label>
-                              <TextField fx:id="txtMaNVNV" layoutX="184.0" layoutY="29.0" />
-                              <TextField fx:id="txttenNVNV" layoutX="184.0" layoutY="82.0" />
-                              <TextField fx:id="txtMKNV" layoutX="184.0" layoutY="143.0" />
-                              <Button layoutX="967.0" layoutY="28.0" mnemonicParsing="false" onAction="#themNV" prefHeight="31.0" prefWidth="103.0" text="Thêm" textFill="#22b246">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="17.0" />
-                                 </font></Button>
-                              <Button layoutX="967.0" layoutY="81.0" mnemonicParsing="false" onAction="#suaNV" prefHeight="31.0" prefWidth="103.0" text="Sửa" textFill="#eda904">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="17.0" />
-                                 </font></Button>
-                              <Button layoutX="967.0" layoutY="142.0" mnemonicParsing="false" onAction="#xoaNV" prefHeight="31.0" prefWidth="103.0" text="Xóa" textFill="#f20000">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="17.0" />
-                                 </font></Button>
-                              <Label layoutX="40.0" layoutY="208.0" prefHeight="21.0" prefWidth="84.0" text="Ngày sinh:" textFill="#1a07eb">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font></Label>
-                              <TextField fx:id="txtngaySinhNV" layoutX="184.0" layoutY="203.0" />
-                              <Label layoutX="40.0" layoutY="270.0" prefHeight="21.0" prefWidth="84.0" text="SDT:" textFill="#1a07eb">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font></Label>
-                              <TextField fx:id="txtSDTNV" layoutX="184.0" layoutY="265.0" />
-                              <Button layoutX="396.0" layoutY="292.0" mnemonicParsing="false" onAction="#timKiemNV" prefHeight="33.0" prefWidth="148.0" text="Tìm kiếm" textFill="#0d1780eb">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="17.0" />
                                  </font>
-                              </Button>
-                              <TextField fx:id="txttimKiemNV" layoutX="544.0" layoutY="293.0" prefHeight="31.0" prefWidth="326.0" />
-                              <RadioButton fx:id="rdTimKiemTenNV" layoutX="992.0" layoutY="299.0" mnemonicParsing="false" text="Theo tên">
-                                 <toggleGroup>
-                                    <ToggleGroup fx:id="TKNV" />
-                                 </toggleGroup>
-                                 <font>
-                                    <Font name="Tahoma Bold" size="15.0" />
-                                 </font></RadioButton>
-                              <RadioButton fx:id="rdTimKiemSDTNV" layoutX="1099.0" layoutY="299.0" mnemonicParsing="false" text="SDT" toggleGroup="$TKNV">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="15.0" />
-                                 </font></RadioButton>
-                              <RadioButton layoutX="887.0" layoutY="298.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="105.0" text="Theo ID" toggleGroup="$TKNV">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="15.0" />
-                                 </font></RadioButton>
-                              <Label layoutX="419.0" layoutY="34.0" prefHeight="21.0" prefWidth="116.0" text="Địa chỉ:" textFill="#1a07eb">
+                              </Label>
+                              <TextField fx:id="txtMaNVNV" GridPane.columnIndex="1" />
+                              <Label prefHeight="21.0" prefWidth="120.0" text="Tên nhân viên:" textFill="#1a07eb" GridPane.rowIndex="1">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
-                                 </font></Label>
-                              <TextField layoutX="591.0" layoutY="29.0" />
-                              <Label layoutX="416.0" layoutY="87.0" prefHeight="21.0" prefWidth="61.0" text="Email:" textFill="#1a07eb">
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txttenNVNV" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="Account NV:" textFill="#1a07eb" GridPane.rowIndex="2">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
-                                 </font></Label>
-                              <TextField layoutX="590.0" layoutY="82.0" />
-                              <TableView fx:id="tableViewNhanVien" layoutY="339.0" prefHeight="418.0" prefWidth="1203.0" />
-                              <Label layoutX="416.0" layoutY="148.0" text="Account NV:" textFill="#1a07eb">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font></Label>
-                              <TextField fx:id="txtAccountNV" layoutX="590.0" layoutY="142.0" />
-                              <MenuButton fx:id="menubtnStatusNV" layoutX="623.0" layoutY="203.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="146.0" text="MenuButton" />
-                              <Button layoutX="966.0" layoutY="202.0" mnemonicParsing="false" onAction="#nhapLaiActionNV" prefHeight="33.0" prefWidth="104.0" text="Nhập Lại" textFill="#190bda">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="17.0" />
-                                 </font></Button>
-                              <Label layoutX="419.0" layoutY="209.0" text="Trạng thái:" textFill="#1a07eb">
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtAccountNV" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label text="Mật khẩu:" textFill="#1a07eb" GridPane.rowIndex="3">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
                                  </font>
                               </Label>
+                              <TextField fx:id="txtMKNV" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label prefHeight="21.0" prefWidth="84.0" text="Ngày sinh:" textFill="#1a07eb" GridPane.columnIndex="2">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtngaySinhNV" GridPane.columnIndex="3" />
+                              <Label prefHeight="21.0" prefWidth="84.0" text="SDT:" textFill="#1a07eb" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txtSDTNV" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <Label prefHeight="21.0" prefWidth="61.0" text="Email:" textFill="#1a07eb" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                              <Label text="Trạng thái:" textFill="#1a07eb" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <MenuButton fx:id="menubtnStatusNV" mnemonicParsing="false" prefHeight="25.0" prefWidth="146.0" text="MenuButton" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                              <Button mnemonicParsing="false" onAction="#timKiemNV" prefHeight="33.0" prefWidth="148.0" text="Tìm kiếm" textFill="#0d1780eb" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="17.0" />
+                                 </font>
+                              </Button>
+                              <TextField fx:id="txttimKiemNV" prefHeight="31.0" prefWidth="326.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                              <FlowPane alignment="CENTER" prefHeight="81.0" prefWidth="276.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                                 <children>
+                                    <RadioButton mnemonicParsing="false" prefHeight="21.0" prefWidth="105.0" text="Theo ID">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="15.0" />
+                                       </font>
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="TKNV" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="rdTimKiemSDTNV" mnemonicParsing="false" text="SDT" toggleGroup="$TKNV">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="15.0" />
+                                       </font>
+                                    </RadioButton>
+                                    <RadioButton fx:id="rdTimKiemTenNV" mnemonicParsing="false" text="Theo tên" toggleGroup="$TKNV">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="15.0" />
+                                       </font>
+                                    </RadioButton>
+                                 </children>
+                              </FlowPane>
+                              <VBox prefHeight="349.0" prefWidth="280.0" GridPane.columnIndex="4" GridPane.rowSpan="4">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#themNV" prefHeight="31.0" prefWidth="103.0" text="Thêm" textFill="#22b246">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="17.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#suaNV" prefHeight="31.0" prefWidth="103.0" text="Sửa" textFill="#eda904">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="17.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#xoaNV" prefHeight="31.0" prefWidth="103.0" text="Xóa" textFill="#f20000">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="17.0" />
+                                       </font>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#nhapLaiActionNV" prefHeight="33.0" prefWidth="104.0" text="Nhập Lại" textFill="#190bda">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="17.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </VBox>
                            </children>
-                        </Pane>
-                     </children>
-                  </Pane>
+                        </GridPane>
+                     </center>
+                     <bottom>
+                        <TableView fx:id="tableViewNhanVien" prefHeight="418.0" prefWidth="1064.0" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
                </content>
             </Tab>
             <Tab text="Quản lý độc giả">
@@ -164,39 +229,47 @@
                               <Label layoutX="40.0" layoutY="34.0" prefHeight="21.0" prefWidth="116.0" text="Mã độc giả:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <Label layoutX="423.0" layoutY="146.0" text="Mật khẩu:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <Label layoutX="40.0" layoutY="87.0" prefHeight="21.0" prefWidth="120.0" text="Tên độc giả:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <TextField fx:id="txtMaDocGiaDG" disable="true" layoutX="184.0" layoutY="29.0" />
                               <TextField fx:id="txtTenDocGiaDG" layoutX="184.0" layoutY="82.0" />
                               <TextField fx:id="txtMatKhauDG" layoutX="530.0" layoutY="140.0" />
                               <Button layoutX="918.0" layoutY="28.0" mnemonicParsing="false" onAction="#themDG" prefHeight="31.0" prefWidth="103.0" text="Thêm" textFill="#22b246">
                                  <font>
                                     <Font name="Tahoma Bold" size="17.0" />
-                                 </font></Button>
+                                 </font>
+                              </Button>
                               <Button layoutX="918.0" layoutY="91.0" mnemonicParsing="false" onAction="#suaDG" prefHeight="31.0" prefWidth="103.0" text="Sửa" textFill="#eda904">
                                  <font>
                                     <Font name="Tahoma Bold" size="17.0" />
-                                 </font></Button>
+                                 </font>
+                              </Button>
                               <Button layoutX="918.0" layoutY="145.0" mnemonicParsing="false" onAction="#xoaDG" prefHeight="31.0" prefWidth="103.0" text="Xóa" textFill="#f20000">
                                  <font>
                                     <Font name="Tahoma Bold" size="17.0" />
-                                 </font></Button>
+                                 </font>
+                              </Button>
                               <Label layoutX="40.0" layoutY="145.0" prefHeight="21.0" prefWidth="84.0" text="Địa chỉ:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <TextField fx:id="txtDiaChiDG" layoutX="184.0" layoutY="140.0" />
                               <Label layoutX="425.0" layoutY="34.0" prefHeight="21.0" prefWidth="84.0" text="SDT:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <TextField fx:id="txtSDTDG" layoutX="530.0" layoutY="29.0" />
                               <TextField fx:id="txtTimKiemDG" layoutX="215.0" layoutY="268.0" prefHeight="31.0" prefWidth="326.0" />
                               <RadioButton fx:id="rdTimKiemTenDG" layoutX="602.0" layoutY="274.0" mnemonicParsing="false" text="Theo tên">
@@ -205,27 +278,31 @@
                                  </toggleGroup>
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></RadioButton>
+                                 </font>
+                              </RadioButton>
                               <RadioButton fx:id="rdTimKiemSDTDG" layoutX="766.0" layoutY="274.0" mnemonicParsing="false" text="Theo SDT" toggleGroup="$TKDG">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></RadioButton>
+                                 </font>
+                              </RadioButton>
                               <TableView fx:id="tableViewDocGia" layoutY="355.0" prefHeight="403.0" prefWidth="1203.0" />
                               <Label layoutX="425.0" layoutY="88.0" text="Account: " textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <TextField fx:id="txtAccountDG" layoutX="530.0" layoutY="82.0" />
                               <Button layoutX="917.0" layoutY="207.0" mnemonicParsing="false" onAction="#nhapLaiActionDG" prefHeight="31.0" prefWidth="105.0" text="Nhập lại" textFill="#190bda">
                                  <font>
                                     <Font name="Tahoma Bold" size="17.0" />
-                                 </font></Button>
+                                 </font>
+                              </Button>
                               <Button fx:id="btnTimKiemPhieuMuon1" blendMode="COLOR_BURN" cache="true" layoutX="20.0" layoutY="266.0" mnemonicParsing="false" onAction="#timKiemPM" prefHeight="31.0" prefWidth="124.0" text="Tìm kiếm" textFill="#0d1780" textOverrun="CLIP">
                                  <font>
                                     <Font name="Tahoma Bold" size="18.0" />
                                  </font>
                                 
-                              </Button>
+                                    </Button>
                            </children>
                         </Pane>
                      </children>
@@ -239,23 +316,28 @@
                         <Button id="btnTimKiem" fx:id="btnTimKiem" layoutX="38.0" layoutY="265.0" mnemonicParsing="false" onAction="#timKiem" prefHeight="26.0" prefWidth="124.0" styleClass="btnTimKiem" text="Tìm kiếm" textFill="#0d1780">
                            <font>
                               <Font name="Tahoma Bold" size="18.0" />
-                           </font></Button>
+                           </font>
+                        </Button>
                         <Label layoutX="37.0" layoutY="29.0" prefHeight="27.0" prefWidth="88.0" styleClass="labelChu" text="Mã Sách:" textFill="#1a07eb">
                            <font>
                               <Font name="Tahoma Bold" size="15.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <Label layoutX="36.0" layoutY="134.0" prefHeight="27.0" prefWidth="88.0" styleClass="labelChu" text="Tác giả:" textFill="#1a07eb">
                            <font>
                               <Font name="Tahoma Bold" size="15.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <Label layoutX="36.0" layoutY="82.0" prefHeight="27.0" prefWidth="88.0" styleClass="labelChu" text="Tên Sách:" textFill="#1a07eb">
                            <font>
                               <Font name="Tahoma Bold" size="15.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <Label layoutX="38.0" layoutY="188.0" prefHeight="27.0" prefWidth="86.0" styleClass="labelChu" text="Số Lượng:" textFill="#1a07eb">
                            <font>
                               <Font name="Tahoma Bold" size="15.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <TextField id="txtIdSach" fx:id="txtIdSach" disable="true" layoutX="124.0" layoutY="29.0" prefHeight="25.0" prefWidth="172.0" />
                         <TextField id="txtTenSach" fx:id="txtTenSach" layoutX="124.0" layoutY="82.0" prefHeight="25.0" prefWidth="172.0" />
                         <TextField id="txtTacGia" fx:id="txtTacGia" layoutX="124.0" layoutY="133.0" prefHeight="25.0" prefWidth="171.0" />
@@ -263,25 +345,30 @@
                         <Button id="btnSuaSach" fx:id="btnSuaSach" layoutX="861.0" layoutY="97.0" mnemonicParsing="false" onAction="#suaSach" prefHeight="31.0" prefWidth="103.0" text="Sửa" textFill="#eda904">
                            <font>
                               <Font name="Tahoma Bold" size="17.0" />
-                           </font></Button>
+                           </font>
+                        </Button>
                         <Button fx:id="btnXoaSach" alignment="CENTER" layoutX="862.0" layoutY="160.0" mnemonicParsing="false" onAction="#xoaSach" prefHeight="31.0" prefWidth="103.0" text="Xóa" textFill="#f20000">
                            <font>
                               <Font name="Tahoma Bold" size="17.0" />
-                           </font></Button>
+                           </font>
+                        </Button>
                         <Label layoutX="356.0" layoutY="81.0" prefHeight="27.0" prefWidth="129.0" styleClass="labelChu" text="Nhà xuất bản:" textFill="#1a07eb">
                            <font>
                               <Font name="Tahoma Bold" size="15.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <Label layoutX="357.0" layoutY="133.0" prefHeight="27.0" prefWidth="100.0" styleClass="labelChu" text="Giá sách:" textFill="#1a07eb">
                            <font>
                               <Font name="Tahoma Bold" size="15.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <TextField id="txtNXB" fx:id="txtNXB" layoutX="509.0" layoutY="82.0" />
                         <TextField id="txtGiaSach" fx:id="txtGiaSach" layoutX="509.0" layoutY="131.0" />
                         <Button id="btnThemSach" fx:id="btnThemSach" alignment="CENTER" layoutX="864.0" layoutY="40.0" mnemonicParsing="false" onAction="#addSach" prefHeight="30.0" prefWidth="99.0" text="Thêm" textFill="#22b246">
                            <font>
                               <Font name="Tahoma Bold" size="17.0" />
-                           </font></Button>
+                           </font>
+                        </Button>
                         <TextField id="txtTImKiem" fx:id="txtTimKiem" layoutX="197.0" layoutY="265.0" prefHeight="36.0" prefWidth="326.0" />
                         <RadioButton id="rdTimKiemTen" fx:id="rdTimKiemTen" layoutX="584.0" layoutY="274.0" mnemonicParsing="false" text="Theo tên">
                            <toggleGroup>
@@ -294,15 +381,18 @@
                         <RadioButton id="rdTimKiemTacGIa" fx:id="rdTimKiemTacGIa" layoutX="705.0" layoutY="274.0" mnemonicParsing="false" text="Theo tác giả" toggleGroup="$groupTImKiem">
                            <font>
                               <Font name="Tahoma Bold" size="14.0" />
-                           </font></RadioButton>
+                           </font>
+                        </RadioButton>
                         <TableView id="tableView" fx:id="tableView" layoutX="12.0" layoutY="316.0" prefHeight="435.0" prefWidth="1039.0" />
                         <Button fx:id="btnNhapLai" layoutX="861.0" layoutY="220.0" mnemonicParsing="false" onAction="#nhapLai" prefHeight="31.0" prefWidth="103.0" text="Nhập Lại" textFill="#190bda">
                            <font>
                               <Font name="Tahoma Bold" size="17.0" />
-                           </font></Button>
+                           </font>
+                        </Button>
                      </children>
                   </Pane>
-               </content></Tab>
+               </content>
+            </Tab>
             <Tab fx:id="tabQuanLyPhieuMuon" text="Quản lý phiếu mượn">
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0">
@@ -327,52 +417,63 @@
                                           </Glow>
                                        </bumpInput>
                                        
-                                    </Lighting>
-                                 </effect></Button>
+                                          </Lighting>
+                                 </effect>
+                              </Button>
                               <Label layoutX="14.0" layoutY="50.0" prefHeight="21.0" prefWidth="146.0" text="Mã phiếu mượn:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <Label layoutX="16.0" layoutY="157.0" prefHeight="21.0" prefWidth="124.0" text="Mã sách:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <Label layoutX="16.0" layoutY="100.0" prefHeight="21.0" prefWidth="124.0" text="Mã độc giả:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <Label layoutX="16.0" layoutY="220.0" prefHeight="21.0" prefWidth="78.0" text="Tên sách:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <TextField fx:id="txtMaPhieuMuon" layoutX="140.0" layoutY="45.0" />
                               <TextField fx:id="txtMaDocGiaPM" layoutX="140.0" layoutY="95.0" />
                               <TextField fx:id="txtMaSachPM" layoutX="140.0" layoutY="153.0" />
                               <Button layoutX="1069.0" layoutY="94.0" mnemonicParsing="false" onAction="#suaPM" prefHeight="31.0" prefWidth="103.0" text="Sửa" textFill="#eda904">
                                  <font>
                                     <Font name="Tahoma Bold" size="17.0" />
-                                 </font></Button>
+                                 </font>
+                              </Button>
                               <Button layoutX="1069.0" layoutY="152.0" mnemonicParsing="false" onAction="#xoaPM" prefHeight="31.0" prefWidth="103.0" text="Xóa" textFill="#f20000">
                                  <font>
                                     <Font name="Tahoma Bold" size="17.0" />
-                                 </font></Button>
+                                 </font>
+                              </Button>
                               <Label layoutX="369.0" layoutY="52.0" prefHeight="21.0" prefWidth="114.0" text="Tên độc giả:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <Label layoutX="371.0" layoutY="100.0" prefHeight="21.0" prefWidth="109.0" text="Ngày mượn:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <TextField fx:id="txtNgayMuonPM" disable="true" layoutX="478.0" layoutY="94.0" />
                               <Button id="btnThemPhieuMuon" fx:id="btnThemPhieuMuon" layoutX="1069.0" layoutY="46.0" mnemonicParsing="false" onAction="#themPM" prefHeight="31.0" prefWidth="103.0" text="Thêm" textFill="#22b246">
                                  <font>
                                     <Font name="Tahoma Bold" size="17.0" />
-                                 </font></Button>
+                                 </font>
+                              </Button>
                               <Label layoutX="373.0" layoutY="157.0" prefHeight="21.0" prefWidth="106.0" text="Ngày hẹn trả:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <TextField fx:id="txtTimKiemPhieuMuon" layoutX="163.0" layoutY="330.0" prefHeight="31.0" prefWidth="326.0" />
                               <RadioButton fx:id="rdTimKiemPMMaDocGia" layoutX="1059.0" layoutY="336.0" mnemonicParsing="false" text="Theo độc giả">
                                  <toggleGroup>
@@ -380,15 +481,18 @@
                                  </toggleGroup>
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></RadioButton>
+                                 </font>
+                              </RadioButton>
                               <RadioButton fx:id="rdTimKiemPMTenSach" layoutX="920.0" layoutY="336.0" mnemonicParsing="false" text="Theo tên sách" toggleGroup="$TKPM">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></RadioButton>
+                                 </font>
+                              </RadioButton>
                               <Label layoutX="373.0" layoutY="276.0" prefHeight="21.0" prefWidth="106.0" text="Nhân viên:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <TableView fx:id="tableViewPhieuMuon" layoutX="-4.0" layoutY="392.0" prefHeight="362.0" prefWidth="1209.0">
                                 
                               </TableView>
@@ -401,15 +505,18 @@
                               <Label layoutX="373.0" layoutY="220.0" prefHeight="21.0" prefWidth="106.0" text="Ngày trả:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <Label layoutX="712.0" layoutY="99.0" prefHeight="21.0" prefWidth="124.0" text="Số Lượng Mượn:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
-                                 </font></Label>
+                                 </font>
+                              </Label>
                               <Button layoutX="1070.0" layoutY="201.0" mnemonicParsing="false" onAction="#nhapLaiPM" prefHeight="32.0" prefWidth="101.0" text="Nhập lại" textFill="#190bda">
                                  <font>
                                     <Font name="System Bold" size="17.0" />
-                                 </font></Button>
+                                 </font>
+                              </Button>
                               <TextField fx:id="txtTienBoiThuong" layoutX="860.0" layoutY="153.0" prefHeight="31.0" prefWidth="191.0" />
                               <TextField fx:id="txtTienPhat" layoutX="860.0" layoutY="209.0" prefHeight="31.0" prefWidth="193.0" />
                               <Label layoutX="709.0" layoutY="157.0" text="Tiền bồi thường:" textFill="#1a07eb">
@@ -427,8 +534,9 @@
                         </Pane>
                      </children>
                   </Pane>
-               </content></Tab>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>
-</VBox>
+</Pane>
