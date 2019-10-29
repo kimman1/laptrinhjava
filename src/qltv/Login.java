@@ -6,6 +6,7 @@
 package qltv;
 
 
+import Common.Utils;
 import DAO.QuanTriDAO;
 import DAO.StaffDAO;
 import Model.Administrator;
@@ -20,7 +21,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
@@ -49,11 +49,11 @@ public class Login implements Initializable {
         
         if(radioSelectStatus().isEmpty())
         {
-            AlertMessageError("Error", "Chọn tư cách đăng nhập");
+            Utils.AlertMessageError("Error", "Chọn tư cách đăng nhập");
         }
         else if(txtUserName.getText().isEmpty() && txtPassword.getText().isEmpty())
         {
-            AlertMessageError("Error","Nhập tài khoản hoặc mật khẩu");
+            Utils.AlertMessageError("Error","Nhập tài khoản hoặc mật khẩu");
         }
         else
         {
@@ -64,7 +64,7 @@ public class Login implements Initializable {
                 if(quantri.isEmpty() && Staff.isEmpty())
                 {
                         
-                    AlertMessageError("Login Error", "Account Name không tồn tại");
+                    Utils.AlertMessageError("Login Error", "Account Name không tồn tại");
                 }
                 else
                     {
@@ -72,7 +72,7 @@ public class Login implements Initializable {
                         {
                             if(quantri.isEmpty())
                             {
-                                AlertMessageError("Login Error", "Account Name không tồn tại");
+                               Utils.AlertMessageError("Login Error", "Account Name không tồn tại");
                             }
                             else
                             {
@@ -94,7 +94,7 @@ public class Login implements Initializable {
                                     else
                                     {
                                          
-                                        AlertMessageError("Login Error", "Sai mật khẩu!");
+                                        Utils.AlertMessageError("Login Error", "Sai mật khẩu!");
                                     }
                                 }
                             }
@@ -103,7 +103,7 @@ public class Login implements Initializable {
                         {
                             if(Staff.isEmpty())
                             {
-                                 AlertMessageError("Login Error", "Account Name không tồn tại");
+                                 Utils.AlertMessageError("Login Error", "Account Name không tồn tại");
                             }
                             else
                             {
@@ -122,7 +122,7 @@ public class Login implements Initializable {
                                    }
                                    else
                                    {
-                                        AlertMessageError("Login Error", "Sai mật khẩu!");
+                                        Utils.AlertMessageError("Login Error", "Sai mật khẩu!");
                                    }
                                 }
                             }
@@ -131,14 +131,6 @@ public class Login implements Initializable {
         }
     }
     
-    private void AlertMessageError(String title, String content)
-    {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-         alert.setTitle(title);
-         alert.setHeaderText(null);
-         alert.setContentText(content);
-         alert.showAndWait();
-    }
     private String radioSelectStatus()
     {
         String rs = "";
@@ -151,7 +143,7 @@ public class Login implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //rdAdmin.setSelected(true);
+        
     }    
     
 }

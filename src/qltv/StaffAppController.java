@@ -5,6 +5,7 @@
  */
 package qltv;
 
+import Common.Utils;
 import DAO.KhachHangDAO;
 import DAO.NhanVienDAO;
 import DAO.PhieuMuonDAO;
@@ -290,15 +291,15 @@ public class StaffAppController implements Initializable {
         if(menuBtnTenSachPM.getText().equalsIgnoreCase(TENSACHDEFAULT_MENUBTN))
         {
              //sach = sachDao.readIdSach(menubtn.getText());
-            AlertMessageError("Error", "Chưa Chọn Tên Sách");
+            Utils.AlertMessageError("Error", "Chưa Chọn Tên Sách");
         }
         else if(menuBtnTenDocGiaPM.getText().equalsIgnoreCase(TENDGDEFAULT_MENUBTN))
         {
-             AlertMessageError("Error", "Chưa Chọn Tên Độc Giả");
+             Utils.AlertMessageError("Error", "Chưa Chọn Tên Độc Giả");
         }
         else if(menuBtnTenNVPM.getText().equalsIgnoreCase(TENNVDEFAULT_MENUBTN))
         {
-             AlertMessageError("Error","Chưa chọn Nhân Viên");
+             Utils.AlertMessageError("Error","Chưa chọn Nhân Viên");
         }
         else
         {
@@ -322,12 +323,12 @@ public class StaffAppController implements Initializable {
              if(sachPM.getSoLuong() == 0)
              {
                  //System.out.println("Sách trong thư viện đã hết");
-                 AlertMessageError("Lỗi thêm sách", "Sách bạn chọn đã hết");
+                 Utils.AlertMessageError("Lỗi thêm sách", "Sách bạn chọn đã hết");
              }
              else if(sachPM.getSoLuong() < Integer.parseInt(txtSoLuongMuonPM.getText()))
              {
                  //System.out.println("Số lượng sách mượn không đủ cung cấp");
-                 AlertMessageError("Lỗi thêm sách", "Không đủ số lượng sách cho mượn");
+                 Utils.AlertMessageError("Lỗi thêm sách", "Không đủ số lượng sách cho mượn");
              }
              else
              {
@@ -426,14 +427,6 @@ public class StaffAppController implements Initializable {
         txtTienBoiThuongPM.clear();
         txtTienPhatPM.clear();
         ckMatSach.setSelected(false);
-    }
-    private void AlertMessageError(String title, String content)
-    {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-         alert.setTitle(title);
-         alert.setHeaderText(null);
-         alert.setContentText(content);
-         alert.showAndWait();
     }
     private void reloadTabPM(PhieuMuonDAO pmDAO)
     {

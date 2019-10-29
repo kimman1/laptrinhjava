@@ -396,7 +396,6 @@
                               <MenuButton fx:id="menubtnTenDocGiaPM" layoutX="479.0" layoutY="45.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="182.0" text="MenuButton" />
                               <MenuButton fx:id="menubtnNVPM" layoutX="479.0" layoutY="271.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="191.0" text="MenuButton" />
                               <TextField fx:id="txtSoLuongMuonPM" layoutX="860.0" layoutY="95.0" prefHeight="31.0" prefWidth="191.0" />
-                              <DatePicker fx:id="datePickerNgayMuonPM" layoutX="859.0" layoutY="47.0" prefHeight="31.0" prefWidth="193.0" />
                               <DatePicker fx:id="datePickerNgayHenTraPM" layoutX="478.0" layoutY="152.0" prefHeight="31.0" prefWidth="191.0" />
                               <DatePicker fx:id="datePickerNgayTraPM" layoutX="478.0" layoutY="215.0" prefHeight="31.0" prefWidth="193.0" />
                               <Label layoutX="373.0" layoutY="220.0" prefHeight="21.0" prefWidth="106.0" text="Ngày trả:" textFill="#1a07eb">
@@ -419,11 +418,6 @@
                                  </font>
                               </Label>
                               <Label layoutX="708.0" layoutY="215.0" prefHeight="32.0" prefWidth="127.0" text="Tiền phạt:" textFill="#1a07eb">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="709.0" layoutY="50.0" prefHeight="26.0" prefWidth="111.0" text="Ngày mượn:" textFill="#1a07eb">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
                                  </font>

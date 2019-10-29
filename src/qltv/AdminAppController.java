@@ -5,6 +5,7 @@
  */
 package qltv;
 
+import Common.Utils;
 import DAO.KhachHangDAO;
 import DAO.NhanVienDAO;
 import DAO.PhieuMuonDAO;
@@ -148,12 +149,12 @@ public class AdminAppController implements Initializable {
     @FXML
     private final String TENDGDEFAULT_MENUBTN = "Chọn tên độc giả...";
     @FXML
-    private String selectTenSachItem = "";
+   /* private String selectTenSachItem = "";
     @FXML
     private String selectTenDocGiaPMItem = "";
     @FXML
     private String selectTenNVPMItem = "";
-    @FXML
+    @FXML*/
     private TextField txtTienBoiThuong;
     @FXML
     private TextField txtTienPhat;
@@ -336,8 +337,8 @@ public class AdminAppController implements Initializable {
                     {
                         s.setOnAction(e ->{
                             menubtnTenDocGiaPM.setText(s.getText());
-                            selectTenDocGiaPMItem = "";
-                            selectTenDocGiaPMItem = s.getText();
+                            /*selectTenDocGiaPMItem = "";
+                            selectTenDocGiaPMItem = s.getText();*/
                         });
                     }
                     /*===============MENU BTN Tên NV==========*/
@@ -353,8 +354,8 @@ public class AdminAppController implements Initializable {
                         {
                             s.setOnAction(e ->{
                                 menubtnNVPM.setText(s.getText());
-                                selectTenNVPMItem = "";
-                                selectTenNVPMItem = s.getText();
+                               /* selectTenNVPMItem = "";
+                                selectTenNVPMItem = s.getText();*/
                             });
                         }
                        /*======================Date picker*=================*/
@@ -379,8 +380,8 @@ public class AdminAppController implements Initializable {
                                  }
                              }
                          }; 
-                        datePickerNgayMuonPM.setConverter(converter);
-                        datePickerNgayMuonPM.setPromptText("dd-MM-yyyy");
+                        /*datePickerNgayMuonPM.setConverter(converter);
+                        datePickerNgayMuonPM.setPromptText("dd-MM-yyyy");*/
                         datePickerNgayTraPM.setConverter(converter);
                         datePickerNgayTraPM.setPromptText("dd-MM-yyyy");
                         datePickerNgayHenTraPM.setConverter(converter);
@@ -546,7 +547,7 @@ public class AdminAppController implements Initializable {
               }
               else
               {
-                  AlertMessageError("Database", "Sách bạn thêm đã có trong thư viện");
+                  Utils.AlertMessageError("Database", "Sách bạn thêm đã có trong thư viện");
               }
             }   
     }
@@ -568,15 +569,15 @@ public class AdminAppController implements Initializable {
     {
         if(rdTimKiemStatus().trim().isEmpty())
         {
-            AlertMessageError("Thiếu lựa chọn tìm kiếm", "Hãy chọn điều kiện tìm kiếm");
+            Utils.AlertMessageError("Thiếu lựa chọn tìm kiếm", "Hãy chọn điều kiện tìm kiếm");
         }
         else
         {
             SachDAO sachDao = new SachDAO();
-            List<Sach> listSachTimKiem = sachDao.searchSach(txtTimKiem.getText(),rdTimKiemStatus());
+            List<Sach> listSachTimKiem = sachDao.searchSach(txtTimKiem.getText().trim(),rdTimKiemStatus());
             if(listSachTimKiem.isEmpty())
             {
-                AlertMessageError("Lỗi tìm kiếm", "Không tìm thấy sách bạn muốn trong thư viện");
+                Utils.AlertMessageError("Lỗi tìm kiếm", "Không tìm thấy sách bạn muốn trong thư viện");
             }
             else
             {
@@ -611,7 +612,7 @@ public class AdminAppController implements Initializable {
         }
         else
         {
-            AlertMessageError("Error", "Xoá lỗi. Contact Administrator");
+            Utils.AlertMessageError("Error", "Xoá lỗi. Contact Administrator");
         }
     }
     @FXML
@@ -626,22 +627,7 @@ public class AdminAppController implements Initializable {
         txtTimKiem.clear();
     }
     
-    private void AlertMessage(String title, String content)
-    {
-         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-         alert.setTitle(title);
-         alert.setHeaderText(null);
-         alert.setContentText(content);
-         alert.showAndWait();
-    }
-    private void AlertMessageError(String title, String content)
-    {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-         alert.setTitle(title);
-         alert.setHeaderText(null);
-         alert.setContentText(content);
-         alert.showAndWait();
-    }
+    
      
     private String rdTimKiemStatus()
     {
@@ -661,31 +647,31 @@ public class AdminAppController implements Initializable {
         boolean check = false;
         if(txtTenSach.getText().trim().isEmpty())
         {
-            AlertMessage("Data Feild", "Tên sách trống");
+            Utils.AlertMessage("Data Feild", "Tên sách trống");
             txtTenSach.requestFocus();
             check = true;
         }
         else if(txtTacGia.getText().trim().isEmpty())
         {
-            AlertMessage("Data Feild", "Tác giả trống");
+            Utils.AlertMessage("Data Feild", "Tác giả trống");
             txtTacGia.requestFocus();
             check = true;
         }
         else if(txtSoLuong.getText().trim().isEmpty())
         {
-            AlertMessage("Data Feild", "Số lượng trống");
+            Utils.AlertMessage("Data Feild", "Số lượng trống");
             txtSoLuong.requestFocus();
             check = true;
         }
         else if(txtNXB.getText().trim().isEmpty())
         {
-            AlertMessage("Data Feild", "Nhà Xuất Bản trống");
+            Utils.AlertMessage("Data Feild", "Nhà Xuất Bản trống");
             txtNXB.requestFocus();
             check = true;
         }
         else if(txtGiaSach.getText().trim().isEmpty())
         {
-            AlertMessage("Data Feild", "Giá sách trống");
+            Utils.AlertMessage("Data Feild", "Giá sách trống");
             txtGiaSach.requestFocus();
             check = true;
         }
@@ -708,15 +694,15 @@ public class AdminAppController implements Initializable {
         if(menubtn.getText().equalsIgnoreCase(TENSACHDEFAULT_MENUBTN))
         {
              //sach = sachDao.readIdSach(menubtn.getText());
-            AlertMessageError("Error", "Chưa Chọn Tên Sách");
+            Utils.AlertMessageError("Error", "Chưa Chọn Tên Sách");
         }
         else if(menubtnTenDocGiaPM.getText().equalsIgnoreCase(TENDGDEFAULT_MENUBTN))
         {
-             AlertMessageError("Error", "Chưa Chọn Tên Độc Giả");
+             Utils.AlertMessageError("Error", "Chưa Chọn Tên Độc Giả");
         }
         else if(menubtnNVPM.getText().equalsIgnoreCase(TENNVDEFAULT_MENUBTN))
         {
-             AlertMessageError("Error","Chưa chọn Nhân Viên");
+             Utils.AlertMessageError("Error","Chưa chọn Nhân Viên");
         }
         else
         {
@@ -740,12 +726,12 @@ public class AdminAppController implements Initializable {
              if(sachPM.getSoLuong() == 0)
              {
                  //System.out.println("Sách trong thư viện đã hết");
-                 AlertMessageError("Lỗi thêm sách", "Sách bạn chọn đã hết");
+                 Utils.AlertMessageError("Lỗi thêm sách", "Sách bạn chọn đã hết");
              }
              else if(sachPM.getSoLuong() < Integer.parseInt(txtSoLuongMuonPM.getText()))
              {
                  //System.out.println("Số lượng sách mượn không đủ cung cấp");
-                 AlertMessageError("Lỗi thêm sách", "Không đủ số lượng sách cho mượn");
+                 Utils.AlertMessageError("Lỗi thêm sách", "Không đủ số lượng sách cho mượn");
              }
              else
              {
@@ -845,7 +831,7 @@ public class AdminAppController implements Initializable {
         PhieuMuonDAO pmDAO = new PhieuMuonDAO();
          tableViewPhieuMuon.getItems().clear();
         List<PhieumuonTableView> listPMTBV = new ArrayList<>();
-        List<Object[]> result = pmDAO.searchPM(txtTimKiemPhieuMuon.getText(),rdTimKiemPMStatus());
+        List<Object[]> result = pmDAO.searchPM(txtTimKiemPhieuMuon.getText().trim(),rdTimKiemPMStatus());
         int indexResultPM = 0;
         for(Object[] s : result)
         {
@@ -935,8 +921,8 @@ public class AdminAppController implements Initializable {
         {
             s.setOnAction( e-> {
                 menubtn.setText(s.getText());
-                selectTenSachItem = "";
-                selectTenSachItem = s.getText();
+                /*selectTenSachItem = "";
+                selectTenSachItem = s.getText();*/
             });
         }
         KhachHangDAO kh = new KhachHangDAO();
@@ -950,8 +936,8 @@ public class AdminAppController implements Initializable {
                         {
                             s.setOnAction( e-> {
                                 menubtnTenDocGiaPM.setText(s.getText());
-                                selectTenDocGiaPMItem= "";
-                                selectTenDocGiaPMItem = s.getText();
+                                /*selectTenDocGiaPMItem= "";
+                                selectTenDocGiaPMItem = s.getText();*/
                             });
                         }
                     NhanVienDAO nv = new NhanVienDAO();
@@ -965,8 +951,8 @@ public class AdminAppController implements Initializable {
                             {
                                 s.setOnAction( e-> {
                                     menubtnNVPM.setText(s.getText());
-                                    selectTenNVPMItem = "";
-                                    selectTenNVPMItem = s.getText();
+                                    /*selectTenNVPMItem = "";
+                                    selectTenNVPMItem = s.getText();*/
                                 });
                             }
     }
@@ -1030,7 +1016,7 @@ public class AdminAppController implements Initializable {
     private void timKiemDG(ActionEvent e)
     {
         KhachHangDAO kh = new KhachHangDAO();
-        List<Khachhang> listKh =  kh.searchKH(txtTimKiemDG.getText(), rdTimKiemDGStatus());
+        List<Khachhang> listKh =  kh.searchKH(txtTimKiemDG.getText().trim(), rdTimKiemDGStatus());
         tableViewDocGia.getItems().clear();
         for(Khachhang s : listKh)
         {
@@ -1076,20 +1062,23 @@ public class AdminAppController implements Initializable {
     @FXML
     private void themNV(ActionEvent e)
     {
+        // create model
         Nhanvien nv = new Nhanvien();
+        NhanVienDAO nvDao = new NhanVienDAO();
+        // set data for model
         nv.setAccountNv(txtAccountNV.getText());
         nv.setPasswordNv(txtMKNV.getText());
         nv.setSdtnv(txtSDTNV.getText());
         nv.setTenNv(txttenNVNV.getText());
         nv.setStatusNv(menubtnStatusNV.getText());
-        NhanVienDAO nvDao = new NhanVienDAO();
+        // Proccess
         if(nvDao.checkDuplicateNV(txtAccountNV.getText()) == false)
         {
             nvDao.addNV(nv);
         }
         else
         {
-            AlertMessageError("Error", "Account name đã tồn tại");
+            Utils.AlertMessageError("Error", "Account name đã tồn tại");
         }
         reloadTabNV(nvDao);
     }
@@ -1125,7 +1114,7 @@ public class AdminAppController implements Initializable {
     private void timKiemNV(ActionEvent event)
     {
         NhanVienDAO nvDao = new NhanVienDAO();
-       List<Nhanvien> listnv =   nvDao.searchNV(txttimKiemNV.getText(), rdTimKiemNVStatus());
+       List<Nhanvien> listnv =   nvDao.searchNV(txttimKiemNV.getText().trim(), rdTimKiemNVStatus());
         tableViewNhanVien.getItems().clear();
       
          for(Nhanvien s : listnv)
@@ -1274,6 +1263,8 @@ public class AdminAppController implements Initializable {
                                 calNgayTra.setTime(dateNgayTra);
                                 // Calculate day between 2 date
                                 long diff = calNgayTra.getTimeInMillis() - calHanTra.getTimeInMillis();
+                                // 24 hours per day, 60 minutes per hour, 60 seconds per hour
+                                // 1000ms per second
                                 float dayCount = (float) diff / (24 * 60 * 60 * 1000);
                                     if(dayCount > 0.0)
                                     {
@@ -1283,7 +1274,6 @@ public class AdminAppController implements Initializable {
                                 tongPhieuMuon++;
                             }
 
-                            
                             List<Thongke> readAllTK = tkDao.readAllTK();
                             for(Thongke s : readAllTK)
                             {
@@ -1331,7 +1321,7 @@ public class AdminAppController implements Initializable {
                         }
                         else
                         {
-                            AlertMessageError("Error", "Năm bạn chọn không có trong hệ thống");
+                            Utils.AlertMessageError("Error", "Năm bạn chọn không có trong hệ thống");
                         }
              
             List<Thongke> listTKChart = tkDao.readAllTK();
@@ -1390,5 +1380,4 @@ public class AdminAppController implements Initializable {
         }
         return quy;
     }
-    
 }
