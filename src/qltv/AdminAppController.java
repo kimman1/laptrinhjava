@@ -49,7 +49,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
+
 
 
 /**
@@ -219,6 +222,10 @@ public class AdminAppController implements Initializable {
     private MenuButton menubtnThongKe;
     @FXML
     private TextField txtNamThongKe;
+    @FXML
+    private BorderPane borderPaneTK;
+    @FXML
+    private Pane pane;
 
     /*=============================Main process================================*/
     @Override
@@ -277,28 +284,7 @@ public class AdminAppController implements Initializable {
         PhieuMuonDAO PM = new PhieuMuonDAO();
         List<PhieumuonTableView> listPMTBV = new ArrayList<>();
         List<Object[]> result = PM.readAllPM();
-        int indexResultPM = 0;
-        for(Object[] s : result)
-        {
-             Object[] row = result.get(indexResultPM);
-           PhieumuonTableView temp = new PhieumuonTableView();
-             temp.setMaNV((Integer)row[0]);
-             temp.setMaPhieuMuon((Integer)row[1]);
-             temp.setMaDocGia((Integer)row[2]);
-             temp.setMaSach((Integer)row[3]);
-             temp.setTenSach((String)row[4]);
-             temp.setTenKh((String)row[5]);
-             temp.setNgayMuon((Date)row[6]);
-             temp.setNgayHenTra((Date)row[7]);
-             temp.setNgayTra((Date)row[8]);
-             temp.setSoLuongMuon((Integer)row[9]);
-             temp.setTienBoiThuong((String)row[10]);
-             temp.setTienPhat((String)row[11]);
-             temp.setTenNV((String)row[12]);
-             temp.setMatSach((Boolean)row[13]);
-             listPMTBV.add(temp);
-             indexResultPM++;
-        }
+        Utils.convertPMtoTBVPM(result, listPMTBV);
         for(PhieumuonTableView s : listPMTBV)
         {
             tableViewPhieuMuon.getItems().add(s);
@@ -319,8 +305,6 @@ public class AdminAppController implements Initializable {
                 {
                     s.setOnAction(e -> {
                         menubtn.setText(s.getText());
-                        /*selectTenSachItem = "";
-                        selectTenSachItem = s.getText();*/
                      
                     });
                 }
@@ -337,8 +321,7 @@ public class AdminAppController implements Initializable {
                     {
                         s.setOnAction(e ->{
                             menubtnTenDocGiaPM.setText(s.getText());
-                            /*selectTenDocGiaPMItem = "";
-                            selectTenDocGiaPMItem = s.getText();*/
+                          
                         });
                     }
                     /*===============MENU BTN Tên NV==========*/
@@ -354,8 +337,7 @@ public class AdminAppController implements Initializable {
                         {
                             s.setOnAction(e ->{
                                 menubtnNVPM.setText(s.getText());
-                               /* selectTenNVPMItem = "";
-                                selectTenNVPMItem = s.getText();*/
+                               
                             });
                         }
                        /*======================Date picker*=================*/
@@ -380,8 +362,7 @@ public class AdminAppController implements Initializable {
                                  }
                              }
                          }; 
-                        /*datePickerNgayMuonPM.setConverter(converter);
-                        datePickerNgayMuonPM.setPromptText("dd-MM-yyyy");*/
+                        
                         datePickerNgayTraPM.setConverter(converter);
                         datePickerNgayTraPM.setPromptText("dd-MM-yyyy");
                         datePickerNgayHenTraPM.setConverter(converter);
@@ -471,7 +452,8 @@ public class AdminAppController implements Initializable {
                                         });
                                         
                                     }
-                                    
+      /*==================Binding Property=======================*/
+           
     }                       
     public void eventOnClickItem()
     {
@@ -881,28 +863,7 @@ public class AdminAppController implements Initializable {
         tableViewPhieuMuon.getItems().clear();
         List<PhieumuonTableView> listPMTBV = new ArrayList<>();
         List<Object[]> result = pmDAO.readAllPM();
-        int indexResultPM = 0;
-        for(Object[] s : result)
-        {
-             Object[] row = result.get(indexResultPM);
-           PhieumuonTableView temp = new PhieumuonTableView();
-             temp.setMaNV((Integer)row[0]);
-             temp.setMaPhieuMuon((Integer)row[1]);
-             temp.setMaDocGia((Integer)row[2]);
-             temp.setMaSach((Integer)row[3]);
-             temp.setTenSach((String)row[4]);
-             temp.setTenKh((String)row[5]);
-             temp.setNgayMuon((Date)row[6]);
-             temp.setNgayHenTra((Date)row[7]);
-             temp.setNgayTra((Date)row[8]);
-             temp.setSoLuongMuon((Integer)row[9]);
-             temp.setTienBoiThuong((String)row[10]);
-             temp.setTienPhat((String)row[11]);
-             temp.setTenNV((String)row[12]);
-             temp.setMatSach((Boolean)row[13]);
-             listPMTBV.add(temp);
-             indexResultPM++;
-        }
+        Utils.convertPMtoTBVPM(result, listPMTBV);
         for(PhieumuonTableView s : listPMTBV)
         {
             tableViewPhieuMuon.getItems().add(s);
@@ -921,8 +882,7 @@ public class AdminAppController implements Initializable {
         {
             s.setOnAction( e-> {
                 menubtn.setText(s.getText());
-                /*selectTenSachItem = "";
-                selectTenSachItem = s.getText();*/
+              
             });
         }
         KhachHangDAO kh = new KhachHangDAO();

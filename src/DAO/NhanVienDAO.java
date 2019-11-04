@@ -7,11 +7,13 @@ package DAO;
 
 import Model.Nhanvien;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -23,9 +25,10 @@ public class NhanVienDAO {
     {
         Session session  = sessionFactory.openSession();
         session.beginTransaction();
-        String hql = "FROM Nhanvien";
-        Query query = session.createQuery(hql);
-        List<Nhanvien> result = query.list();
+       /* String hql = "FROM Nhanvien";
+        Query query = session.createQuery(hql);*/
+        Criteria cr = session.createCriteria(Nhanvien.class);
+        List<Nhanvien> result = cr.list();
         session.close();
         return result;
     }
@@ -63,6 +66,7 @@ public class NhanVienDAO {
      {
           Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
+        
         String hql =  "update Nhanvien set statusNv= :StatusNV where maNv = :maNVDelete";
         Query query = session.createQuery(hql);
         query.setParameter("StatusNV","Đã Nghỉ");
@@ -100,10 +104,12 @@ public class NhanVienDAO {
      {
          Session session = sessionFactory.openSession();
         session.beginTransaction();
-        String hql = "FROM Nhanvien where accountNv = :accountNV";
+         Criteria cr = session.createCriteria(Nhanvien.class);
+         cr.add(Restrictions.eq("accountNv", accountNV));
+        /*String hql = "FROM Nhanvien where accountNv = :accountNV";
         Query query = session.createQuery(hql);
-        query.setParameter("accountNV", accountNV);
-        List<Nhanvien> result = query.list();
+        query.setParameter("accountNV", accountNV);*/
+        List<Nhanvien> result = cr.list();
         if(result.isEmpty())
         {
             return false;
