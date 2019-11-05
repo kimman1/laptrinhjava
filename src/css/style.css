@@ -44,6 +44,7 @@ Label.labelChu{
     -fx-font-weight: bold;
     -fx-text-fill: black;
     -fx-font-size: 15;
+    -fx-arc-width: 150px;
 }
 Button.btnTimKiem{
      -fx-pref-width: 130px;
@@ -61,7 +62,7 @@ VBox.VBoxAdminTK > HBox
 {
     -fx-alignment: center;
     -fx-spacing: 10;
-    -fx-pref-height : 70px;
+    -fx-pref-height : 50px;
     -fx-font-weight : bold;
     -fx-font-size : 14px;
     -fx-font-family : tahoma;
@@ -76,11 +77,13 @@ BoderPane.borderPaneAdminNV
     -fx-font-weight : bold;
     -fx-font-family : tahoma;
     -fx-background-color: red;
+    -fx-hgap: 10;
 }
 BorderPane.borderPaneAdminNV > GridPane
 {
        -fx-background-color: linear-gradient(to bottom right, #E56DE7, #0CF9BF);
-
+       -fx-hgap: 10;
+       -fx-padding: 5;
 }
 BorderPane.borderPaneAdminNV > GridPane > VBox
 {
@@ -98,9 +101,11 @@ BorderPane.borderPaneAdminNV > GridPane > FlowPane
 }
 BorderPane.borderPaneAdminNV > GridPane > Label
 {
+   
    -fx-hgap: 10;
    -fx-padding: 5;
-   -fx-pref-width : 120;
+   -fx-pref-width : 150;
+   -fx-text-fill: black;
   
 }
 BorderPane.borderPaneAdminNV > VBox
@@ -114,4 +119,12 @@ BorderPane.borderPaneAdminNV > VBox > FlowPane
 {
     -fx-alignment: center;
     -fx-hgap: 10;
+}
+BorderPane.borderPaneAdminNV > GridPane > Label.labelPaddingFix
+{
+   -fx-hgap: 10;
+   -fx-padding: 40;
+   -fx-pref-width : 230;
+   -fx-text-fill: black;
+  
 }
