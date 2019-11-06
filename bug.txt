@@ -1,0 +1,17 @@
+Lỗi:
+//fixed //	1. Quanlydocgia - admin : => tạo được tài khoản độc giả trung Account.
+//fixed//	2. Quanlydocgia - admin : => sửa "Account" trung tên được.
+//fixed// 	3. Quanlydocgia - admin : => sửa action "nút tìm kiếm".
+//fixed//	4. Quanlynhanvien-admin : =>Thêm được nhân viên mà không có trường 
+//fixed//	5. Quanlysach - admin : => Chỉnh lại thêm được Tên sách khác tác giả.
+
+
+	
+
+Thiếu:
+A
+//fixed//	Quanlynhanvien - admin: tableview chưa hiện Tab "ngày sinh".
+// fixed//	Quanlynhanvien - admin: ẩn trường "Mã nhân viên" khi người dùng tạo tài khoản nhân viên.
+//fixed//	Quanlynhanvien - admin : xóa "theoID" của "tìm kiếm".
+	
+
