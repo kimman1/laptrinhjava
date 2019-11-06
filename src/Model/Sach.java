@@ -1,5 +1,5 @@
 package Model;
-// Generated Oct 15, 2019 2:26:15 PM by Hibernate Tools 4.3.1
+// Generated Nov 6, 2019 9:03:51 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -19,25 +19,16 @@ public class Sach  implements java.io.Serializable {
      private String giaSach;
      private Set<Phieumuon> phieumuons = new HashSet<Phieumuon>(0);
 
-    public Sach()
-    {
+    public Sach() {
     }
-    public Sach(String tenSach, String tenTacGia, String nxb, int soLuong, String giaSach)
-    {
-       this.tenSach = tenSach;
-       this.tenTacGia = tenTacGia;
-       this.nxb = nxb;
-       this.soLuong = soLuong;
-       this.giaSach = giaSach;
-       
-    }
+
 	
-    /*public Sach(String tenSach, String tenTacGia, int soLuong, String giaSach) {
+    public Sach(String tenSach, String tenTacGia, int soLuong, String giaSach) {
         this.tenSach = tenSach;
         this.tenTacGia = tenTacGia;
         this.soLuong = soLuong;
         this.giaSach = giaSach;
-    }*/
+    }
     public Sach(String tenSach, String tenTacGia, String nxb, int soLuong, String giaSach, Set<Phieumuon> phieumuons) {
        this.tenSach = tenSach;
        this.tenTacGia = tenTacGia;
@@ -96,11 +87,7 @@ public class Sach  implements java.io.Serializable {
     public void setPhieumuons(Set<Phieumuon> phieumuons) {
         this.phieumuons = phieumuons;
     }
-    @Override
-    public String toString()
-    {
-        return this.tenSach;
-    }
+
 
 
 

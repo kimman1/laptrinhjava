@@ -53,6 +53,21 @@ public class SachDAO {
         else
             return false;
     }
+    public boolean checkDuplicate(String tenSach, String tenTacGia)
+    {
+        Session session  = sessionFactory.openSession();
+        session.beginTransaction();
+        String hql = "FROM Sach where tenSach = :TenSach and tenTacGia = :TenTacGia";
+        Query query = session.createQuery(hql);
+        query.setParameter("TenSach", tenSach);
+        query.setParameter("TenTacGia",tenTacGia);
+        List<Sach> result = query.list();
+        session.close();
+        if(result.isEmpty())
+            return true;
+        else
+            return false;
+    }
     public Sach readIdSach(String tenSach)
     {
         Session session = sessionFactory.openSession();

@@ -1,5 +1,5 @@
 package Model;
-// Generated Oct 15, 2019 2:26:15 PM by Hibernate Tools 4.3.1
+// Generated Nov 6, 2019 9:03:51 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -21,6 +21,7 @@ public class Phieumuon  implements java.io.Serializable {
      private String tienBoiThuong;
      private String tienPhat;
      private Boolean matSach;
+
     public Phieumuon() {
     }
 
@@ -31,7 +32,7 @@ public class Phieumuon  implements java.io.Serializable {
         this.sach = sach;
         this.soLuongMuon = soLuongMuon;
     }
-    public Phieumuon(Khachhang khachhang, Nhanvien nhanvien, Sach sach, Date ngayMuon, Date hanTra, Date ngayTra, int soLuongMuon, String tienBoiThuong, String tienPhat) {
+    public Phieumuon(Khachhang khachhang, Nhanvien nhanvien, Sach sach, Date ngayMuon, Date hanTra, Date ngayTra, int soLuongMuon, String tienBoiThuong, String tienPhat, Boolean matSach) {
        this.khachhang = khachhang;
        this.nhanvien = nhanvien;
        this.sach = sach;
@@ -41,17 +42,9 @@ public class Phieumuon  implements java.io.Serializable {
        this.soLuongMuon = soLuongMuon;
        this.tienBoiThuong = tienBoiThuong;
        this.tienPhat = tienPhat;
+       this.matSach = matSach;
     }
-
-   public Boolean isMatSach()
-   {
-       return this.matSach;
-   }
-   public void setMatSach(Boolean status)
-   {
-       this.matSach = status;
-   }
-    
+   
     public Integer getMaPhieuMuon() {
         return this.maPhieuMuon;
     }
@@ -121,6 +114,13 @@ public class Phieumuon  implements java.io.Serializable {
     
     public void setTienPhat(String tienPhat) {
         this.tienPhat = tienPhat;
+    }
+    public Boolean isMatSach() {
+        return this.matSach;
+    }
+    
+    public void setMatSach(Boolean matSach) {
+        this.matSach = matSach;
     }
 
 

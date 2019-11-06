@@ -96,6 +96,7 @@ public class NhanVienDAO {
         nvSession.setSdtnv(nv.getSdtnv());
         nvSession.setStatusNv(nv.getStatusNv());
         nvSession.setTenNv(nv.getTenNv());
+        nvSession.setNgaySinhNv(nv.getNgaySinhNv());
         session.update(nvSession);
         tx.commit();
         session.close();

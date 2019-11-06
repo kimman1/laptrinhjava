@@ -396,13 +396,15 @@ public class AdminAppController implements Initializable {
                         TableColumn AccountNVNV = new TableColumn("Account Nhân Viên");
                         TableColumn SDTNVNV = new TableColumn("SDT Nhân Viên");
                         TableColumn StatusNV = new TableColumn("Trạng Thái");
+                        TableColumn NgaySinhNV = new TableColumn("Ngày sinh NV");
                         idNVNV.setCellValueFactory(new PropertyValueFactory<>("maNv"));
                         TenNVNV.setCellValueFactory(new PropertyValueFactory<>("tenNv"));
                         MKNVNV.setCellValueFactory(new PropertyValueFactory<>("passwordNv"));
                         AccountNVNV.setCellValueFactory(new PropertyValueFactory<>("accountNv"));
                         SDTNVNV.setCellValueFactory(new PropertyValueFactory<>("sdtnv"));
                         StatusNV.setCellValueFactory(new PropertyValueFactory<>("statusNv"));
-                        tableViewNhanVien.getColumns().addAll(idNVNV,TenNVNV,AccountNVNV,MKNVNV,SDTNVNV,StatusNV);
+                        NgaySinhNV.setCellValueFactory(new PropertyValueFactory<>("ngaySinhNv"));
+                        tableViewNhanVien.getColumns().addAll(idNVNV,TenNVNV,AccountNVNV,MKNVNV,SDTNVNV,StatusNV,NgaySinhNV);
                          
                         NhanVienDAO nvDao = new NhanVienDAO();
                         List<Nhanvien> listNVNV = nvDao.readAllNV();
@@ -502,6 +504,7 @@ public class AdminAppController implements Initializable {
         txtSDTNV.setText(String.valueOf(tableViewNhanVien.getSelectionModel().getSelectedItems().get(0).getSdtnv()));
         txtAccountNV.setText(tableViewNhanVien.getSelectionModel().getSelectedItems().get(0).getAccountNv());
         menubtnStatusNV.setText(tableViewNhanVien.getSelectionModel().getSelectedItems().get(0).getStatusNv());
+        txtngaySinhNV.setText(tableViewNhanVien.getSelectionModel().getSelectedItems().get(0).getNgaySinhNv());
     }
     @FXML
     private void addSach(ActionEvent event)
@@ -509,7 +512,7 @@ public class AdminAppController implements Initializable {
             if(checkTextFieldEmpty()!= true)
             {
                 SachDAO sachDao = new SachDAO();
-              if(sachDao.checkDuplicate(txtTenSach.getText()))
+              if(sachDao.checkDuplicate(txtTenSach.getText(),txtTacGia.getText()))
               {
                   Sach sach = new Sach();
                   sach.setTenSach(txtTenSach.getText());
@@ -519,7 +522,6 @@ public class AdminAppController implements Initializable {
                   sach.setGiaSach(txtGiaSach.getText());
                   sachDao.addSach(sach);
                     tableView.getItems().clear();
-                    //SachDAO sachreload = new SachDAO();
                     List<Sach> listSachReload =  sachDao.readAllSach();
                     for(Sach s : listSachReload)
                     {
@@ -940,29 +942,44 @@ public class AdminAppController implements Initializable {
     @FXML
     private void themDG(ActionEvent e)
     {
-        Khachhang kh  = new Khachhang();
+       KhachHangDAO khDao = new KhachHangDAO();
+       if(khDao.checkDuplicateKH(txtAccountDG.getText()) != true)
+       {
+           Khachhang kh  = new Khachhang();
         kh.setAccountKh(txtAccountDG.getText());
         kh.setDiaChi(txtDiaChiDG.getText());
         kh.setPasswordKh(txtMatKhauDG.getText());
         kh.setSdtkh(txtSDTDG.getText());
         kh.setTenKh(txtTenDocGiaDG.getText());
-        KhachHangDAO khDao = new KhachHangDAO();
         khDao.addKhachHang(kh);
         reloadTabQLDG(khDao);
+       }
+       else
+       {
+           Utils.AlertMessageError("Error", "Account name đã tồn tại. Vui lòng chọn account khác!");
+       }
     }
     @FXML
     private void suaDG(ActionEvent e)
     {
-        Khachhang kh  = new Khachhang();
-        kh.setAccountKh(txtAccountDG.getText());
-        kh.setDiaChi(txtDiaChiDG.getText());
-        kh.setPasswordKh(txtMatKhauDG.getText());
-        kh.setSdtkh(txtSDTDG.getText());
-        kh.setTenKh(txtTenDocGiaDG.getText());
-        kh.setMaKh(Integer.parseInt(txtMaDocGiaDG.getText()));
         KhachHangDAO khDao = new KhachHangDAO();
-        khDao.modifedKH(kh);
-        reloadTabQLDG(khDao);
+        if(khDao.checkDuplicateKH(txtAccountDG.getText()) != true)
+        {
+            Khachhang kh  = new Khachhang();
+            kh.setAccountKh(txtAccountDG.getText());
+            kh.setDiaChi(txtDiaChiDG.getText());
+            kh.setPasswordKh(txtMatKhauDG.getText());
+            kh.setSdtkh(txtSDTDG.getText());
+            kh.setTenKh(txtTenDocGiaDG.getText());
+            kh.setMaKh(Integer.parseInt(txtMaDocGiaDG.getText()));
+            khDao.modifedKH(kh);
+            reloadTabQLDG(khDao);
+        }
+        else
+        {
+            Utils.AlertMessageError("Error", "Account name đã tồn tại. Vui lòng chọn account name khác!");
+        }
+        
     }
     @FXML
     private void xoaDG(ActionEvent e)
@@ -1024,22 +1041,28 @@ public class AdminAppController implements Initializable {
         // create model
         Nhanvien nv = new Nhanvien();
         NhanVienDAO nvDao = new NhanVienDAO();
+        if(checkEmptyTextField("tabNV")!= true)
+        {
+            nv.setAccountNv(txtAccountNV.getText());
+           nv.setPasswordNv(txtMKNV.getText());
+              nv.setSdtnv(txtSDTNV.getText());
+            nv.setTenNv(txttenNVNV.getText());
+            nv.setStatusNv(menubtnStatusNV.getText());
+            nv.setNgaySinhNv(txtngaySinhNV.getText());
+            // Proccess
+             if(nvDao.checkDuplicateNV(txtAccountNV.getText()) == false)
+            {
+                nvDao.addNV(nv);
+            }
+            else
+            {
+                Utils.AlertMessageError("Error", "Account name đã tồn tại");
+            }
+                reloadTabNV(nvDao);
+         }
+        
         // set data for model
-        nv.setAccountNv(txtAccountNV.getText());
-        nv.setPasswordNv(txtMKNV.getText());
-        nv.setSdtnv(txtSDTNV.getText());
-        nv.setTenNv(txttenNVNV.getText());
-        nv.setStatusNv(menubtnStatusNV.getText());
-        // Proccess
-        if(nvDao.checkDuplicateNV(txtAccountNV.getText()) == false)
-        {
-            nvDao.addNV(nv);
-        }
-        else
-        {
-            Utils.AlertMessageError("Error", "Account name đã tồn tại");
-        }
-        reloadTabNV(nvDao);
+        
     }
     @FXML
     private void xoaNV(ActionEvent e)
@@ -1060,6 +1083,7 @@ public class AdminAppController implements Initializable {
         nv.setSdtnv(txtSDTNV.getText());
         nv.setStatusNv(menubtnStatusNV.getText());
         nv.setTenNv(txttenNVNV.getText());
+        nv.setNgaySinhNv(txtngaySinhNV.getText());
         nvDao.modifedNV(nv);
         reloadTabNV(nvDao);
     }
@@ -1091,6 +1115,7 @@ public class AdminAppController implements Initializable {
         txttenNVNV.clear();
         txtMKNV.clear();
         txtSDTNV.clear();
+        txtngaySinhNV.clear();
         menubtnStatusNV.getItems().clear();
         tableViewNhanVien.getItems().clear();
         List<Nhanvien> listNVNV = nvDao.readAllNV();
@@ -1338,5 +1363,158 @@ public class AdminAppController implements Initializable {
             quy = 4;
         }
         return quy;
+    }
+    
+    /*=============================Common Function====================*/
+     public  boolean checkEmptyTextField(String tabName)
+    {
+        boolean status = false;
+        String temp = tabName.trim();
+        if(temp.equalsIgnoreCase("tabTK"))
+        {
+            if(txtNamThongKe.getText().isEmpty())
+               status = true;
+        }
+        if(temp.equalsIgnoreCase("tabNV"))
+        {
+            if(txttenNVNV.getText().isEmpty())
+            {
+                Utils.AlertMessageError("Error", "Nhập tên NV");
+                txttenNVNV.requestFocus();
+                status = true;
+            }
+            else if(txtAccountNV.getText().isEmpty())
+            {
+                Utils.AlertMessageError("Error", "Nhập Account NV");
+                txtAccountNV.requestFocus();
+                status = true;
+            }
+            else if(txtMKNV.getText().isEmpty())
+            {
+                Utils.AlertMessageError("Error", "Nhập Mật Khẩu NV");
+                txtMKNV.requestFocus();
+                status = true;
+            }
+            else if(txtSDTNV.getText().isEmpty()) 
+            {
+                Utils.AlertMessageError("Error", "Nhập SDT NV");
+                txtSDTNV.requestFocus();
+                status = true;
+            }
+            else
+            {
+                if(menubtnStatusNV.getText().trim().equalsIgnoreCase("Chọn trạng thái..."))
+                {
+                    Utils.AlertMessageError("Error", "Trạng thái nhân viên trống");
+                    status = true;
+                }
+            }
+            
+            
+        }
+        if(temp.equalsIgnoreCase("tabDG"))
+        {
+            if(txtTenDocGiaDG.getText().isEmpty())
+            {
+                 Utils.AlertMessageError("Error", "Tên độc giả trống!");
+                 txtTenDocGiaDG.requestFocus();
+                    status = true;
+            }
+            else if(txtDiaChiDG.getText().isEmpty())
+            {
+                Utils.AlertMessageError("Error", "Địa chi độc giả trống!");
+                 txtDiaChiDG.requestFocus();
+                    status = true;
+            }
+            else if(txtAccountDG.getText().isEmpty())
+            {
+                Utils.AlertMessageError("Error", "Account name độc giả trống!");
+                 txtAccountDG.requestFocus();
+                    status = true;
+            }
+            else if(txtMatKhauDG.getText().isEmpty())
+            {
+                Utils.AlertMessageError("Error", "Mật khẩu độc giả trống!");
+                 txtMatKhauDG.requestFocus();
+                    status = true;
+            }
+            else
+            {
+                Utils.AlertMessageError("Error", "SDT độc giả trống!");
+                txtSDTDG.requestFocus();
+                status = true;
+            }
+        }
+        if(temp.equalsIgnoreCase("tabSach"))
+        {
+            if(txtTenSach.getText().isEmpty())
+            {
+                Utils.AlertMessageError("Error", "Tên sách trống!");
+                 txtTenSach.requestFocus();
+                    status = true;
+            }
+            else if(txtTacGia.getText().isEmpty())
+            {
+                Utils.AlertMessageError("Error", "Tên tác giả trống!");
+                 txtTacGia.requestFocus();
+                    status = true;
+            }
+            else if(txtNXB.getText().isEmpty())
+            {
+                Utils.AlertMessageError("Error", "Tên NXB trống!");
+                 txtNXB.requestFocus();
+                    status = true;
+            }
+            else if(txtGiaSach.getText().isEmpty())
+            {
+                Utils.AlertMessageError("Error", "Giá sách trống!");
+                 txtGiaSach.requestFocus();
+                    status = true;
+            }
+            else
+            {
+                Utils.AlertMessageError("Error", "Số lượng trống!. Nếu đang hết sách xin vui lòng điền số 0");
+                 txtSoLuong.requestFocus();
+                    status = true;
+            }
+        }
+        if(temp.equalsIgnoreCase("tabPM"))
+        {
+            if(menubtnTenDocGiaPM.getText().trim().equalsIgnoreCase(TENDGDEFAULT_MENUBTN))
+            {
+                Utils.AlertMessageError("Error", "Tên Độc giả trống!");
+                    status = true;
+            }
+            else if(menubtn.getText().trim().equalsIgnoreCase(TENSACHDEFAULT_MENUBTN))
+            {
+                Utils.AlertMessageError("Error", "Tên Sách trống!");
+                    status = true;
+            }
+            else if(menubtnNVPM.getText().trim().equalsIgnoreCase(TENNVDEFAULT_MENUBTN))
+            {
+                Utils.AlertMessageError("Error", "Nhân viên trống!");
+                    status = true;
+            }
+            else if(txtSoLuongMuonPM.getText().isEmpty() && Integer.parseInt( txtSoLuongMuonPM.getText()) != 0)
+            {
+                Utils.AlertMessageError("Error", "Số lượng mượn trống hoặc số lượng mượn bằng 0!");
+                 txtSoLuongMuonPM.requestFocus();
+                    status = true;
+            }
+            else if(datePickerNgayHenTraPM.getPromptText().equalsIgnoreCase("dd-MM-yyyy"))
+            {
+                 Utils.AlertMessageError("Error", "Vui lòng chọn ngày hẹn trả");
+                    status = true;
+            }
+            else
+            {
+                if(datePickerNgayTraPM.getPromptText().equalsIgnoreCase("dd-MM-yyyy"))
+                {
+                     Utils.AlertMessageError("Error", "Vui lòng chọn ngày trả");
+                    status = true;
+                }
+            }
+        }
+        return status;
     }
 }

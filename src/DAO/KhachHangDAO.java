@@ -5,14 +5,16 @@
  */
 package DAO;
 
-import Model.Administrator;
 import Model.Khachhang;
+import Model.Nhanvien;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -114,5 +116,23 @@ public class KhachHangDAO {
         listResultKH = query.list();
         return listResultKH;
     }
-    
+    public boolean checkDuplicateKH(String accountKh)
+     {
+         Session session = sessionFactory.openSession();
+        session.beginTransaction();
+         Criteria cr = session.createCriteria(Khachhang.class);
+         cr.add(Restrictions.eq("accountKh", accountKh));
+        /*String hql = "FROM Nhanvien where accountNv = :accountNV";
+        Query query = session.createQuery(hql);
+        query.setParameter("accountNV", accountNV);*/
+        List<Khachhang> result = cr.list();
+        if(result.isEmpty())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+     }
 }

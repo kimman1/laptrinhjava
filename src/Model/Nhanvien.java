@@ -1,5 +1,5 @@
 package Model;
-// Generated Oct 15, 2019 2:26:15 PM by Hibernate Tools 4.3.1
+// Generated Nov 6, 2019 9:03:51 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -17,6 +17,7 @@ public class Nhanvien  implements java.io.Serializable {
      private String tenNv;
      private String sdtnv;
      private String statusNv;
+     private String ngaySinhNv;
      private Set<Phieumuon> phieumuons = new HashSet<Phieumuon>(0);
 
     public Nhanvien() {
@@ -29,12 +30,13 @@ public class Nhanvien  implements java.io.Serializable {
         this.tenNv = tenNv;
         this.statusNv = statusNv;
     }
-    public Nhanvien(String accountNv, String passwordNv, String tenNv, String sdtnv, String statusNv, Set<Phieumuon> phieumuons) {
+    public Nhanvien(String accountNv, String passwordNv, String tenNv, String sdtnv, String statusNv, String ngaySinhNv, Set<Phieumuon> phieumuons) {
        this.accountNv = accountNv;
        this.passwordNv = passwordNv;
        this.tenNv = tenNv;
        this.sdtnv = sdtnv;
        this.statusNv = statusNv;
+       this.ngaySinhNv = ngaySinhNv;
        this.phieumuons = phieumuons;
     }
    
@@ -80,6 +82,13 @@ public class Nhanvien  implements java.io.Serializable {
     public void setStatusNv(String statusNv) {
         this.statusNv = statusNv;
     }
+    public String getNgaySinhNv() {
+        return this.ngaySinhNv;
+    }
+    
+    public void setNgaySinhNv(String ngaySinhNv) {
+        this.ngaySinhNv = ngaySinhNv;
+    }
     public Set<Phieumuon> getPhieumuons() {
         return this.phieumuons;
     }
@@ -87,12 +96,8 @@ public class Nhanvien  implements java.io.Serializable {
     public void setPhieumuons(Set<Phieumuon> phieumuons) {
         this.phieumuons = phieumuons;
     }
-    
-    @Override
-    public String toString()
-    {
-        return this.tenNv;
-    }
+
+
 
 
 }

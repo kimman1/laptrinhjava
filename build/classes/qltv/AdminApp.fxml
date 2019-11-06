@@ -24,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="qltv.AdminAppController">
+<Pane stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="qltv.AdminAppController">
    <children>
       <TabPane fx:id="tabPaneContainer" layoutY="7.0" prefHeight="789.0" prefWidth="1111.0" stylesheets="@../css/style.css" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -113,7 +113,7 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txtMaNVNV" GridPane.columnIndex="1" />
+                              <TextField fx:id="txtMaNVNV" disable="true" GridPane.columnIndex="1" />
                               <Label prefHeight="29.0" prefWidth="143.0" text="Tên nhân viên:" textFill="#1a07eb" GridPane.rowIndex="1">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
@@ -164,18 +164,13 @@
                               <TextField fx:id="txttimKiemNV" prefHeight="31.0" prefWidth="326.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
                               <FlowPane alignment="CENTER_LEFT" prefHeight="81.0" prefWidth="276.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="4">
                                  <children>
-                                    <RadioButton mnemonicParsing="false" prefHeight="21.0" prefWidth="105.0" text="Theo ID">
+                                    <RadioButton fx:id="rdTimKiemSDTNV" mnemonicParsing="false" text="SDT">
                                        <font>
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>
                                        <toggleGroup>
                                           <ToggleGroup fx:id="TKNV" />
                                        </toggleGroup>
-                                    </RadioButton>
-                                    <RadioButton fx:id="rdTimKiemSDTNV" mnemonicParsing="false" text="SDT" toggleGroup="$TKNV">
-                                       <font>
-                                          <Font name="Tahoma Bold" size="15.0" />
-                                       </font>
                                     </RadioButton>
                                     <RadioButton fx:id="rdTimKiemTenNV" mnemonicParsing="false" text="Theo tên" toggleGroup="$TKNV">
                                        <font>
@@ -292,7 +287,7 @@
                                     </RadioButton>
                                  </children>
                               </FlowPane>
-                              <Button fx:id="btnTimKiemPhieuMuon1" cache="true" mnemonicParsing="false" onAction="#timKiemPM" prefHeight="31.0" prefWidth="124.0" styleClass="btnTimKiem" text="Tìm kiếm" textFill="#0d1780" textOverrun="CLIP" GridPane.rowIndex="4">
+                              <Button fx:id="btnTimKiemPhieuMuon1" cache="true" mnemonicParsing="false" onAction="#timKiemDG" prefHeight="31.0" prefWidth="124.0" styleClass="btnTimKiem" text="Tìm kiếm" textFill="#0d1780" textOverrun="CLIP" GridPane.rowIndex="4">
                                  <font>
                                     <Font name="Tahoma Bold" size="18.0" />
                                  </font>
@@ -473,7 +468,7 @@
                                     <Font name="Tahoma Bold" size="15.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txtMaDocGiaPM" GridPane.columnIndex="1" />
+                              <TextField fx:id="txtMaDocGiaPM" disable="true" GridPane.columnIndex="1" />
                               <Label prefHeight="21.0" prefWidth="114.0" text="Tên độc giả:" textFill="#1a07eb" GridPane.rowIndex="1">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
