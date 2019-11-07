@@ -51,6 +51,7 @@ public class Utils {
              temp.setTienPhat((String)row[11]);
              temp.setTenNV((String)row[12]);
              temp.setMatSach((Boolean)row[13]);
+             temp.setTenTacGia((String)row[14]);
              listPMTBV.add(temp);
              indexResultPM++;
         }

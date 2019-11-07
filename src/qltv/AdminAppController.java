@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
@@ -144,11 +145,8 @@ public class AdminAppController implements Initializable {
     private DatePicker datePickerNgayTraPM;
     @FXML
     private TextField btnNhapLaiPM;
-    @FXML
     private final String TENSACHDEFAULT_MENUBTN = "Chọn Sách...";
-    @FXML
     private final String TENNVDEFAULT_MENUBTN = "Chọn tên NV...";
-    @FXML
     private final String TENDGDEFAULT_MENUBTN = "Chọn tên độc giả...";
     @FXML
    /* private String selectTenSachItem = "";
@@ -162,6 +160,8 @@ public class AdminAppController implements Initializable {
     private TextField txtTienPhat;
     @FXML 
     private CheckBox ckMatSach;
+    @FXML
+    private TextField txtTenTacGia;
     /*==========================Tab quản lý độc giả============================*/
     @FXML 
     private TextField txtTenDocGiaDG;
@@ -252,7 +252,7 @@ public class AdminAppController implements Initializable {
         tableView.setOnMouseClicked(e -> {
             eventOnClickItem();
         });
-        //Tab Quản Lý Phiếu Mượn
+        /*====================================Tab Quản Lý Phiếu Mượn==========================*/
         TableColumn idPM = new TableColumn("Mã Phiếu Mượn");
         TableColumn idDocGiaPM = new TableColumn("Mã Độc Giả");
         TableColumn idSachPM = new TableColumn("Mã Sách");
@@ -297,14 +297,16 @@ public class AdminAppController implements Initializable {
                 for(Sach s : listSach)
                 {
                     MenuItem temp = new MenuItem(s.getTenSach());
+                    temp.setId(s.getTenTacGia());
                     menubtn.getItems().addAll(temp);
                 }
+                 
                 menubtn.setText(TENSACHDEFAULT_MENUBTN);
                 for(MenuItem s : menubtn.getItems())
                 {
                     s.setOnAction(e -> {
                         menubtn.setText(s.getText());
-                     
+                        txtTenTacGia.setText(s.getId());
                     });
                 }
                 /*===============MENU BTN Tên Độc Giả==========*/
@@ -314,6 +316,7 @@ public class AdminAppController implements Initializable {
                     {
                         MenuItem temp = new MenuItem(s.getTenKh());
                         menubtnTenDocGiaPM.getItems().addAll(temp);
+                        //menubtnTenDocGiaPM.getItems().addAll(null)
                     }
                     menubtnTenDocGiaPM.setText(TENDGDEFAULT_MENUBTN);
                     for(MenuItem s : menubtnTenDocGiaPM.getItems())
@@ -477,6 +480,7 @@ public class AdminAppController implements Initializable {
         txtMaSachPM.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaSach()));
         menubtnTenDocGiaPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenKh());
         menubtnNVPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenNV());
+        
         txtNgayMuonPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNgayMuon().toString());
         txtSoLuongMuonPM.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getSoLuongMuon()));
         Date dateHenTraPM = tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNgayHenTra();
@@ -484,7 +488,7 @@ public class AdminAppController implements Initializable {
         datePickerNgayHenTraPM.setValue(dateHenTraPM.toLocalDate());
         datePickerNgayTraPM.setValue(dateTraPM.toLocalDate());
         ckMatSach.setSelected(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).isMatSach());
-       
+        txtTenTacGia.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenTacGia());
     }
     public void eventOnClickDGItem()
     {
@@ -667,84 +671,65 @@ public class AdminAppController implements Initializable {
     @FXML
     private void themPM(ActionEvent event)
     {
-       
-        SachDAO sachPMDAO = new SachDAO();
-        NhanVienDAO nvDAO = new NhanVienDAO();
-        KhachHangDAO khDAO = new KhachHangDAO();
-        Sach sachPM = null;
-        Khachhang khPM = null;
-        Nhanvien nvPM = null;
-        if(menubtn.getText().equalsIgnoreCase(TENSACHDEFAULT_MENUBTN))
-        {
-             //sach = sachDao.readIdSach(menubtn.getText());
-            Utils.AlertMessageError("Error", "Chưa Chọn Tên Sách");
-        }
-        else if(menubtnTenDocGiaPM.getText().equalsIgnoreCase(TENDGDEFAULT_MENUBTN))
-        {
-             Utils.AlertMessageError("Error", "Chưa Chọn Tên Độc Giả");
-        }
-        else if(menubtnNVPM.getText().equalsIgnoreCase(TENNVDEFAULT_MENUBTN))
-        {
-             Utils.AlertMessageError("Error","Chưa chọn Nhân Viên");
-        }
-        else
-        {
-            sachPM = sachPMDAO.readIdSach(menubtn.getText());
-             khPM = khDAO.readIdKH(menubtnTenDocGiaPM.getText());
-             nvPM = nvDAO.readIdNV(menubtnNVPM.getText());
-        }
-        // check if not null set Data for model
-        if(khPM != null && nvPM != null && sachPM!= null)
-        {
-                long millis = System.currentTimeMillis();
-             Date currentDate = new Date(millis);
-             LocalDate NgayTravalue = datePickerNgayTraPM.getValue();
-             LocalDate HanTravalue = datePickerNgayHenTraPM.getValue();
-             Date hanTraDate = Date.valueOf(HanTravalue);
-             Date ngayTraDate = Date.valueOf(NgayTravalue);
+       if(checkEmptyTextField("tabPM") != true)
+       {
+                SachDAO sachPMDAO = new SachDAO();
+             NhanVienDAO nvDAO = new NhanVienDAO();
+             KhachHangDAO khDAO = new KhachHangDAO();
+             Sach sachPM = null;
+             Khachhang khPM = null;
+             Nhanvien nvPM = null;
+
+                 sachPM = sachPMDAO.readISach(menubtn.getText(),txtTenTacGia.getText());
+                  khPM = khDAO.readIdKH(menubtnTenDocGiaPM.getText());
+                  nvPM = nvDAO.readIdNV(menubtnNVPM.getText());
+
+             // check if not null set Data for model
+             if(khPM != null && nvPM != null && sachPM!= null)
+             {
+                     long millis = System.currentTimeMillis();
+                  Date currentDate = new Date(millis);
+                  LocalDate NgayTravalue = datePickerNgayTraPM.getValue();
+                  LocalDate HanTravalue = datePickerNgayHenTraPM.getValue();
+                  Date hanTraDate = Date.valueOf(HanTravalue);
+                  Date ngayTraDate = Date.valueOf(NgayTravalue);
 
 
-              //SimpleDateFormat simpDate = new SimpleDateFormat("yyyy-MM-dd");
-             // set Data for Phieumuon 
-             if(sachPM.getSoLuong() == 0)
-             {
-                 //System.out.println("Sách trong thư viện đã hết");
-                 Utils.AlertMessageError("Lỗi thêm sách", "Sách bạn chọn đã hết");
-             }
-             else if(sachPM.getSoLuong() < Integer.parseInt(txtSoLuongMuonPM.getText()))
-             {
-                 //System.out.println("Số lượng sách mượn không đủ cung cấp");
-                 Utils.AlertMessageError("Lỗi thêm sách", "Không đủ số lượng sách cho mượn");
-             }
-             else
-             {
-                   Phieumuon PM = new Phieumuon();
-                   PM.setSach(sachPM);
-                   PM.setNhanvien(nvPM);
-                   PM.setKhachhang(khPM);
-                   PM.setSoLuongMuon(Integer.parseInt(txtSoLuongMuonPM.getText()));
-                   PM.setNgayMuon(currentDate);
-                   PM.setHanTra(hanTraDate);
-                   PM.setNgayTra(ngayTraDate);
-                   PM.setMatSach(false);
+                   //SimpleDateFormat simpDate = new SimpleDateFormat("yyyy-MM-dd");
+                  // set Data for Phieumuon 
+                  if(sachPM.getSoLuong() == 0)
+                  {
+                      //System.out.println("Sách trong thư viện đã hết");
+                      Utils.AlertMessageError("Lỗi thêm sách", "Sách bạn chọn đã hết");
+                  }
+                  else if(sachPM.getSoLuong() < Integer.parseInt(txtSoLuongMuonPM.getText()))
+                  {
+                      //System.out.println("Số lượng sách mượn không đủ cung cấp");
+                      Utils.AlertMessageError("Lỗi thêm sách", "Không đủ số lượng sách cho mượn");
+                  }
+                  else
+                  {
+                        Phieumuon PM = new Phieumuon();
+                        PM.setSach(sachPM);
+                        PM.setNhanvien(nvPM);
+                        PM.setKhachhang(khPM);
+                        PM.setSoLuongMuon(Integer.parseInt(txtSoLuongMuonPM.getText()));
+                        PM.setNgayMuon(currentDate);
+                        PM.setHanTra(hanTraDate);
+                        PM.setNgayTra(ngayTraDate);
+                        PM.setMatSach(false);
 
-                   //Add proccess
-                   PhieuMuonDAO pmDao = new PhieuMuonDAO();
-                   pmDao.addPM(PM);
-                   //Update Stock
-                   sachPM.setSoLuong(Integer.parseInt(txtSoLuongMuonPM.getText()));
-                   sachPMDAO.updateStockSach(sachPM,"minus");
-                   //Reload after Added 
-                   reloadTabPM(pmDao);
+                        //Add proccess
+                        PhieuMuonDAO pmDao = new PhieuMuonDAO();
+                        pmDao.addPM(PM);
+                        //Update Stock
+                        sachPM.setSoLuong(Integer.parseInt(txtSoLuongMuonPM.getText()));
+                        sachPMDAO.updateStockSach(sachPM,"minus");
+                        //Reload after Added 
+                        reloadTabPM(pmDao);
+                  }
              }
-        }
-        
-        
-         /*Sach sachPM = sachPMDAO.readIdSach(selectTenSachItem);
-         Nhanvien nvPM = nvDAO.readIdNV(selectTenNVPMItem);
-         Khachhang khPM = khDAO.readIdKH(selectTenDocGiaPMItem);*/
-         //get current date
-         
+       } 
     }
     @FXML
     private void suaPM(ActionEvent event)
@@ -811,35 +796,43 @@ public class AdminAppController implements Initializable {
     @FXML
     private void timKiemPM(ActionEvent e)
     {
-        PhieuMuonDAO pmDAO = new PhieuMuonDAO();
-         tableViewPhieuMuon.getItems().clear();
-        List<PhieumuonTableView> listPMTBV = new ArrayList<>();
-        List<Object[]> result = pmDAO.searchPM(txtTimKiemPhieuMuon.getText().trim(),rdTimKiemPMStatus());
-        int indexResultPM = 0;
-        for(Object[] s : result)
+        if(rdTimKiemPMStatus().trim().isEmpty())
         {
-             Object[] row = result.get(indexResultPM);
-           PhieumuonTableView temp = new PhieumuonTableView();
-             temp.setMaNV((Integer)row[0]);
-             temp.setMaPhieuMuon((Integer)row[1]);
-             temp.setMaDocGia((Integer)row[2]);
-             temp.setMaSach((Integer)row[3]);
-             temp.setTenSach((String)row[4]);
-             temp.setTenKh((String)row[5]);
-             temp.setNgayMuon((Date)row[6]);
-             temp.setNgayHenTra((Date)row[7]);
-             temp.setNgayTra((Date)row[8]);
-             temp.setSoLuongMuon((Integer)row[9]);
-             temp.setTienBoiThuong((String)row[10]);
-             temp.setTienPhat((String)row[11]);
-             temp.setTenNV((String)row[12]);
-             listPMTBV.add(temp);
-             indexResultPM++;
+            Utils.AlertMessageError("Error", "Lựa chọn phương thức tìm kiếm");
         }
-        for(PhieumuonTableView s : listPMTBV)
+        else
         {
-            tableViewPhieuMuon.getItems().add(s);
+                PhieuMuonDAO pmDAO = new PhieuMuonDAO();
+               tableViewPhieuMuon.getItems().clear();
+                List<PhieumuonTableView> listPMTBV = new ArrayList<>();
+                List<Object[]> result = pmDAO.searchPM(txtTimKiemPhieuMuon.getText().trim(),rdTimKiemPMStatus());
+                int indexResultPM = 0;
+                for(Object[] s : result)
+                {
+                     Object[] row = result.get(indexResultPM);
+                   PhieumuonTableView temp = new PhieumuonTableView();
+                     temp.setMaNV((Integer)row[0]);
+                     temp.setMaPhieuMuon((Integer)row[1]);
+                     temp.setMaDocGia((Integer)row[2]);
+                     temp.setMaSach((Integer)row[3]);
+                     temp.setTenSach((String)row[4]);
+                     temp.setTenKh((String)row[5]);
+                     temp.setNgayMuon((Date)row[6]);
+                     temp.setNgayHenTra((Date)row[7]);
+                     temp.setNgayTra((Date)row[8]);
+                     temp.setSoLuongMuon((Integer)row[9]);
+                     temp.setTienBoiThuong((String)row[10]);
+                     temp.setTienPhat((String)row[11]);
+                     temp.setTenNV((String)row[12]);
+                     listPMTBV.add(temp);
+                     indexResultPM++;
+                    }
+                     for(PhieumuonTableView s : listPMTBV)
+                     {
+                        tableViewPhieuMuon.getItems().add(s);
+                     }
         }
+        
     }
     private void reloadTabPM(PhieuMuonDAO pmDAO)
     {
@@ -922,7 +915,11 @@ public class AdminAppController implements Initializable {
         String status = "";
         if(rdTimKiemPMTenSach.isSelected())
         {
-            status = "name";
+            status = "namesach";
+        }
+        if(rdTimKiemPMMaDocGia.isSelected())
+        {
+            status = "namedocgia";
         }
         return status;
     }
@@ -1495,20 +1492,20 @@ public class AdminAppController implements Initializable {
                 Utils.AlertMessageError("Error", "Nhân viên trống!");
                     status = true;
             }
-            else if(txtSoLuongMuonPM.getText().isEmpty() && Integer.parseInt( txtSoLuongMuonPM.getText()) != 0)
+            else if(txtSoLuongMuonPM.getText().isEmpty())
             {
                 Utils.AlertMessageError("Error", "Số lượng mượn trống hoặc số lượng mượn bằng 0!");
                  txtSoLuongMuonPM.requestFocus();
                     status = true;
             }
-            else if(datePickerNgayHenTraPM.getPromptText().equalsIgnoreCase("dd-MM-yyyy"))
+            else if(datePickerNgayHenTraPM.getValue() == null)
             {
                  Utils.AlertMessageError("Error", "Vui lòng chọn ngày hẹn trả");
                     status = true;
             }
             else
             {
-                if(datePickerNgayTraPM.getPromptText().equalsIgnoreCase("dd-MM-yyyy"))
+                if(datePickerNgayTraPM.getValue() == null)
                 {
                      Utils.AlertMessageError("Error", "Vui lòng chọn ngày trả");
                     status = true;

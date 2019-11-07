@@ -25,7 +25,7 @@ public class PhieuMuonDAO {
      {
         Session session  = sessionFactory.openSession();
         session.beginTransaction();
-        String hql = "select nhanvien.maNv,maPhieuMuon ,khachhang.maKh, sach.maSach, sach.tenSach, khachhang.tenKh, ngayMuon, hanTra, ngayTra, soLuongMuon,tienBoiThuong,tienPhat, nhanvien.tenNv, matSach from Phieumuon";
+        String hql = "select nhanvien.maNv,maPhieuMuon ,khachhang.maKh, sach.maSach, sach.tenSach, khachhang.tenKh, ngayMuon, hanTra, ngayTra, soLuongMuon,tienBoiThuong,tienPhat, nhanvien.tenNv, matSach, sach.tenTacGia from Phieumuon";
         Query query = session.createQuery(hql);
         List<Object[]> result = query.list();
         session.close();
@@ -95,11 +95,15 @@ public class PhieuMuonDAO {
          String hql = "";
          Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
-        if(SearchType.trim().equalsIgnoreCase("name"))
+        if(SearchType.trim().equalsIgnoreCase("namesach"))
         {
              hql = "select nhanvien.maNv,maPhieuMuon ,khachhang.maKh, sach.maSach, sach.tenSach, khachhang.tenKh, ngayMuon, hanTra, ngayTra, soLuongMuon,tienBoiThuong,tienPhat, nhanvien.tenNv from Phieumuon where sach.tenSach like :searchString";
              //select nhanvien.maNv,maPhieuMuon ,khachhang.maKh, sach.maSach, sach.tenSach, khachhang.tenKh, ngayMuon, hanTra, ngayTra, soLuongMuon,tienBoiThuong,tienPhat, nhanvien.tenNv from Phieumuon
               
+        }
+        if(SearchType.trim().equalsIgnoreCase("namedocgia"))
+        {
+            hql = "select nhanvien.maNv,maPhieuMuon ,khachhang.maKh, sach.maSach, sach.tenSach, khachhang.tenKh, ngayMuon, hanTra, ngayTra, soLuongMuon,tienBoiThuong,tienPhat, nhanvien.tenNv from Phieumuon where khachhang.tenKh like :searchString";
         }
               Query query = session.createQuery(hql);
               query.setParameter("searchString","%"+SearchString+"%");

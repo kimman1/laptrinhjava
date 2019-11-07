@@ -21,7 +21,15 @@ public class PhieumuonTableView {
     private String tenNV;
     private Date ngayMuon;
     private Boolean matSach;
+    private String tenTacGia;
 
+    public String getTenTacGia() {
+        return tenTacGia;
+    }
+
+    public void setTenTacGia(String tenTacGia) {
+        this.tenTacGia = tenTacGia;
+    }
     public Boolean isMatSach()
    {
        return this.matSach;

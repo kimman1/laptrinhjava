@@ -87,6 +87,23 @@ public class SachDAO {
         
         return sach;
     }
+    public Sach readISach(String tenSach, String tenTacGia)
+    {
+        Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            String hql = "FROM Sach where tenSach = :TenSach and tenTacGia = :TenTacGia";
+            Query query = session.createQuery(hql);
+            query.setParameter("TenSach", tenSach);
+            query.setParameter("TenTacGia", tenTacGia);
+            List<Sach> result = query.list();
+            session.close();
+            Sach sach = new Sach();
+            //sach.setGiaSach(result.get(0).getGiaSach());
+            sach.setMaSach(result.get(0).getMaSach());
+           // sach.setNxb(result.get(0).getNxb());
+            sach.setSoLuong(result.get(0).getSoLuong());
+            return sach;
+    }
     public void modifedSach(Sach sach)
     {
         Session session = sessionFactory.openSession();
