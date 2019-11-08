@@ -38,6 +38,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -131,12 +132,10 @@ public class AdminAppController implements Initializable {
     private TextField txtSoLuongMuonPM;
     @FXML
     private TabPane tabPaneContainer;
-    @FXML
-    private MenuButton menubtn;
-    @FXML
-    private MenuButton menubtnTenDocGiaPM;
-    @FXML
-    private MenuButton menubtnNVPM;
+   /* @FXML
+    private MenuButton menubtnTenDocGiaPM;*/
+   /* @FXML
+    private MenuButton menubtnNVPM;*/
     @FXML
     private DatePicker datePickerNgayMuonPM;
     @FXML
@@ -149,12 +148,6 @@ public class AdminAppController implements Initializable {
     private final String TENNVDEFAULT_MENUBTN = "Chọn tên NV...";
     private final String TENDGDEFAULT_MENUBTN = "Chọn tên độc giả...";
     @FXML
-   /* private String selectTenSachItem = "";
-    @FXML
-    private String selectTenDocGiaPMItem = "";
-    @FXML
-    private String selectTenNVPMItem = "";
-    @FXML*/
     private TextField txtTienBoiThuong;
     @FXML
     private TextField txtTienPhat;
@@ -162,6 +155,12 @@ public class AdminAppController implements Initializable {
     private CheckBox ckMatSach;
     @FXML
     private TextField txtTenTacGia;
+    @FXML
+    private ComboBox<Nhanvien> cbNhanVienPM;
+    @FXML
+    private ComboBox<Sach> cbSachPM;
+    @FXML
+    private ComboBox<Khachhang> cbKhachHangPM;
     /*==========================Tab quản lý độc giả============================*/
     @FXML 
     private TextField txtTenDocGiaDG;
@@ -292,9 +291,29 @@ public class AdminAppController implements Initializable {
         tableViewPhieuMuon.setOnMouseClicked(e -> {
             eventOnClickPMItem();
         });
+        
+            //combo box
+               NhanVienDAO nvVDao = new NhanVienDAO();
+               List<Nhanvien> listNVcb = nvVDao.readAllNV();
+               cbNhanVienPM.getItems().addAll(listNVcb);
+               
+               SachDAO sachDao = new SachDAO();
+               List<Sach> listSachcb = sachDao.readAllSach();
+               cbSachPM.getItems().addAll(listSachcb);
+               cbSachPM.setOnAction(e ->{
+                   if(cbSachPM.getSelectionModel().getSelectedItem() != null)
+                   {
+                       txtTenTacGia.setText(cbSachPM.getSelectionModel().getSelectedItem().getTenTacGia());
+                   }
+                   
+               });
+               
+                    KhachHangDAO khDaocb = new KhachHangDAO();
+                    List<Khachhang> listKHcb = khDaocb.readAllKhachHang();
+                    cbKhachHangPM.getItems().addAll(listKHcb);
             // menu button 
                 /*============ Menu BTN Tên sách==============*/
-                for(Sach s : listSach)
+               /* for(Sach s : listSach)
                 {
                     MenuItem temp = new MenuItem(s.getTenSach());
                     temp.setId(s.getTenTacGia());
@@ -308,9 +327,9 @@ public class AdminAppController implements Initializable {
                         menubtn.setText(s.getText());
                         txtTenTacGia.setText(s.getId());
                     });
-                }
+                }*/
                 /*===============MENU BTN Tên Độc Giả==========*/
-                    KhachHangDAO kh = new KhachHangDAO();
+                  /*  KhachHangDAO kh = new KhachHangDAO();
                     List<Khachhang> listKh = kh.readAllKhachHang();
                     for(Khachhang s : listKh)
                     {
@@ -325,9 +344,9 @@ public class AdminAppController implements Initializable {
                             menubtnTenDocGiaPM.setText(s.getText());
                           
                         });
-                    }
+                    }*/
                     /*===============MENU BTN Tên NV==========*/
-                        NhanVienDAO nv = new NhanVienDAO();
+                       /* NhanVienDAO nv = new NhanVienDAO();
                         List<Nhanvien> listNV = nv.readAllNV();
                         for(Nhanvien s : listNV)
                         {
@@ -341,7 +360,7 @@ public class AdminAppController implements Initializable {
                                 menubtnNVPM.setText(s.getText());
                                
                             });
-                        }
+                        }*/
                        /*======================Date picker*=================*/
                         StringConverter<LocalDate> converter = new StringConverter<LocalDate>() 
                         {
@@ -473,13 +492,10 @@ public class AdminAppController implements Initializable {
     {
         txtMaPhieuMuon.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaPhieuMuon()));
         txtMaDocGiaPM.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaDocGia()));
-        //txtTenSachPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenSach());
        txtTienBoiThuong.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTienBoiThuong());
        txtTienPhat.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTienPhat());
-        menubtn.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenSach());
         txtMaSachPM.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getMaSach()));
-        menubtnTenDocGiaPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenKh());
-        menubtnNVPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenNV());
+        /*menubtnTenDocGiaPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenKh());*/
         
         txtNgayMuonPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNgayMuon().toString());
         txtSoLuongMuonPM.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getSoLuongMuon()));
@@ -489,6 +505,24 @@ public class AdminAppController implements Initializable {
         datePickerNgayTraPM.setValue(dateTraPM.toLocalDate());
         ckMatSach.setSelected(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).isMatSach());
         txtTenTacGia.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenTacGia());
+        for(Nhanvien s : cbNhanVienPM.getItems())
+        {
+            if(s.getTenNv().trim().equalsIgnoreCase(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenNV().trim()))
+            {
+                cbNhanVienPM.setValue(s);
+            }
+        }
+        for(Sach s : cbSachPM.getItems())
+        {
+            if(s.getTenSach().trim().equalsIgnoreCase(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenSach().trim()))
+            {
+                 cbSachPM.setValue(s);
+            }
+        }
+        for(Khachhang s : cbKhachHangPM.getItems())
+        {
+            if(s.getTenKh().trim().equalsIgnoreCase(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTenKh()));
+        }
     }
     public void eventOnClickDGItem()
     {
@@ -679,10 +713,10 @@ public class AdminAppController implements Initializable {
              Sach sachPM = null;
              Khachhang khPM = null;
              Nhanvien nvPM = null;
-
-                 sachPM = sachPMDAO.readISach(menubtn.getText(),txtTenTacGia.getText());
-                  khPM = khDAO.readIdKH(menubtnTenDocGiaPM.getText());
-                  nvPM = nvDAO.readIdNV(menubtnNVPM.getText());
+                    
+                 sachPM = /*sachPMDAO.readISach(menubtn.getText(),txtTenTacGia.getText());*/ cbSachPM.getSelectionModel().getSelectedItem();
+                  khPM = /*khDAO.readIdKH(menubtnTenDocGiaPM.getText());*/ cbKhachHangPM.getSelectionModel().getSelectedItem();
+                  nvPM = /*nvDAO.readIdNV(menubtnNVPM.getText());*/cbNhanVienPM.getSelectionModel().getSelectedItem();
 
              // check if not null set Data for model
              if(khPM != null && nvPM != null && sachPM!= null)
@@ -747,9 +781,9 @@ public class AdminAppController implements Initializable {
         // set data for model
         
         
-           sach = sachDao.readIdSach(menubtn.getText());
-            kh = khDao.readIdKH(menubtnTenDocGiaPM.getText());
-             nv = nvDao.readIdNV(menubtnNVPM.getText());
+           sach = /*sachDao.readIdSach(menubtn.getText());*/cbSachPM.getSelectionModel().getSelectedItem();
+            kh =/* khDao.readIdKH(menubtnTenDocGiaPM.getText());*/ cbKhachHangPM.getSelectionModel().getSelectedItem();
+             nv = /*nvDao.readIdNV(menubtnNVPM.getText());*/ cbNhanVienPM.getSelectionModel().getSelectedItem();
             
         LocalDate NgayTravalue = datePickerNgayTraPM.getValue();
         LocalDate HanTravalue = datePickerNgayHenTraPM.getValue();
@@ -843,17 +877,15 @@ public class AdminAppController implements Initializable {
         txtSoLuongMuonPM.clear();
         txtTienBoiThuong.clear();
         txtTienPhat.clear();
+        txtTenTacGia.clear();
         ckMatSach.setSelected(false);
         datePickerNgayHenTraPM.setValue(null);
         datePickerNgayTraPM.setValue(null);
         datePickerNgayTraPM.setPromptText("dd-MM-yyyy");
         datePickerNgayHenTraPM.setPromptText("dd-MM-yyyy");
-        menubtn.setText(TENSACHDEFAULT_MENUBTN);
-        menubtnNVPM.setText(TENNVDEFAULT_MENUBTN);
-        menubtnTenDocGiaPM.setText(TENDGDEFAULT_MENUBTN);
-        menubtn.getItems().clear();
-        menubtnNVPM.getItems().clear();
-        menubtnTenDocGiaPM.getItems().clear();
+        cbSachPM.getItems().clear();
+        cbNhanVienPM.getItems().clear();
+        cbKhachHangPM.getItems().clear();
         tableViewPhieuMuon.getItems().clear();
         List<PhieumuonTableView> listPMTBV = new ArrayList<>();
         List<Object[]> result = pmDAO.readAllPM();
@@ -865,23 +897,19 @@ public class AdminAppController implements Initializable {
         tableViewPhieuMuon.setOnMouseClicked(e -> {
             eventOnClickPMItem();
         });
-        SachDAO sach = new SachDAO();
-        List<Sach> listSach =  sach.readAllSach();
-        for(Sach s : listSach)
-          {
-                    MenuItem temp = new MenuItem(s.getTenSach());
-                    menubtn.getItems().addAll(temp);
-          }
-        for(MenuItem s : menubtn.getItems())
+        SachDAO sachDao = new SachDAO();
+        List<Sach> listSach =  sachDao.readAllSach();
+        cbSachPM.getItems().addAll(listSach);
+        cbSachPM.setOnAction(event ->
         {
-            s.setOnAction( e-> {
-                menubtn.setText(s.getText());
-              
-            });
-        }
-        KhachHangDAO kh = new KhachHangDAO();
+            if (cbSachPM.getSelectionModel().getSelectedItem() != null) 
+            {
+                txtTenTacGia.setText(cbSachPM.getSelectionModel().getSelectedItem().getTenTacGia());
+            }
+        });
+                    KhachHangDAO kh = new KhachHangDAO();
                     List<Khachhang> listKh = kh.readAllKhachHang();
-                    for(Khachhang s : listKh)
+                    /*for(Khachhang s : listKh)
                     {
                         MenuItem temp = new MenuItem(s.getTenKh());
                         menubtnTenDocGiaPM.getItems().addAll(temp);
@@ -890,25 +918,12 @@ public class AdminAppController implements Initializable {
                         {
                             s.setOnAction( e-> {
                                 menubtnTenDocGiaPM.setText(s.getText());
-                                /*selectTenDocGiaPMItem= "";
-                                selectTenDocGiaPMItem = s.getText();*/
                             });
-                        }
-                    NhanVienDAO nv = new NhanVienDAO();
-                        List<Nhanvien> listNV = nv.readAllNV();
-                        for(Nhanvien s : listNV)
-                        {
-                            MenuItem temp = new MenuItem(s.getTenNv());
-                            menubtnNVPM.getItems().addAll(temp);
-                        }
-                        for(MenuItem s : menubtnNVPM.getItems())
-                            {
-                                s.setOnAction( e-> {
-                                    menubtnNVPM.setText(s.getText());
-                                    /*selectTenNVPMItem = "";
-                                    selectTenNVPMItem = s.getText();*/
-                                });
-                            }
+                        }*/
+                    cbKhachHangPM.getItems().addAll(listKh);
+                    NhanVienDAO nvDao = new NhanVienDAO();
+                        List<Nhanvien> listNV = nvDao.readAllNV();
+                        cbNhanVienPM.getItems().addAll(listNV);
     }
      private String rdTimKiemPMStatus()
     {
@@ -942,14 +957,14 @@ public class AdminAppController implements Initializable {
        KhachHangDAO khDao = new KhachHangDAO();
        if(khDao.checkDuplicateKH(txtAccountDG.getText()) != true)
        {
-           Khachhang kh  = new Khachhang();
-        kh.setAccountKh(txtAccountDG.getText());
-        kh.setDiaChi(txtDiaChiDG.getText());
-        kh.setPasswordKh(txtMatKhauDG.getText());
-        kh.setSdtkh(txtSDTDG.getText());
-        kh.setTenKh(txtTenDocGiaDG.getText());
-        khDao.addKhachHang(kh);
-        reloadTabQLDG(khDao);
+           Khachhang kh = new Khachhang();
+           kh.setAccountKh(txtAccountDG.getText());
+           kh.setDiaChi(txtDiaChiDG.getText());
+           kh.setPasswordKh(txtMatKhauDG.getText());
+           kh.setSdtkh(txtSDTDG.getText());
+           kh.setTenKh(txtTenDocGiaDG.getText());
+           khDao.addKhachHang(kh);
+           reloadTabQLDG(khDao);
        }
        else
        {
@@ -1477,17 +1492,17 @@ public class AdminAppController implements Initializable {
         }
         if(temp.equalsIgnoreCase("tabPM"))
         {
-            if(menubtnTenDocGiaPM.getText().trim().equalsIgnoreCase(TENDGDEFAULT_MENUBTN))
+            if(cbKhachHangPM.getSelectionModel().getSelectedItem() == null)
             {
                 Utils.AlertMessageError("Error", "Tên Độc giả trống!");
                     status = true;
             }
-            else if(menubtn.getText().trim().equalsIgnoreCase(TENSACHDEFAULT_MENUBTN))
+            else if(/*menubtn.getText().trim().equalsIgnoreCase(TENSACHDEFAULT_MENUBTN)*/cbSachPM.getSelectionModel().getSelectedItem() == null)
             {
                 Utils.AlertMessageError("Error", "Tên Sách trống!");
                     status = true;
             }
-            else if(menubtnNVPM.getText().trim().equalsIgnoreCase(TENNVDEFAULT_MENUBTN))
+            else if(cbNhanVienPM.getSelectionModel().getSelectedItem() == null)
             {
                 Utils.AlertMessageError("Error", "Nhân viên trống!");
                     status = true;

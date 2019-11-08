@@ -5,10 +5,12 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
@@ -474,7 +476,6 @@
                                     <Font name="Tahoma Bold" size="15.0" />
                                  </font>
                               </Label>
-                              <MenuButton fx:id="menubtnTenDocGiaPM" mnemonicParsing="false" prefHeight="31.0" prefWidth="257.0" text="MenuButton" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label prefHeight="21.0" prefWidth="124.0" text="Mã sách:" textFill="#1a07eb" GridPane.rowIndex="2">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
@@ -486,13 +487,11 @@
                                     <Font name="Tahoma Bold" size="15.0" />
                                  </font>
                               </Label>
-                              <MenuButton fx:id="menubtn" mnemonicParsing="false" prefHeight="31.0" prefWidth="257.0" text="MenuButton" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Label prefHeight="21.0" prefWidth="106.0" text="Nhân viên:" textFill="#1a07eb" GridPane.rowIndex="4">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
                                  </font>
                               </Label>
-                              <MenuButton fx:id="menubtnNVPM" mnemonicParsing="false" prefHeight="31.0" prefWidth="257.0" text="MenuButton" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <Label prefHeight="119.0" prefWidth="198.0" text="Mã phiếu mượn:" textFill="#1a07eb" GridPane.rowIndex="5">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
@@ -585,13 +584,18 @@
                               </VBox>
                               <TextField fx:id="txtTenTacGia" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                               <Label styleClass="labelChu" text="Tên tác giả: " GridPane.rowIndex="6" />
+                              <ComboBox fx:id="cbNhanVienPM" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <ComboBox fx:id="cbSachPM" prefHeight="25.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="cbKhachHangPM" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </center>
                      <bottom>
-                        <TableView fx:id="tableViewPhieuMuon" prefHeight="304.0" prefWidth="1209.0" BorderPane.alignment="CENTER">
-                                
-                              </TableView>
+                        <ScrollPane prefHeight="200.0" prefWidth="1111.0" BorderPane.alignment="CENTER">
+                           <content>
+                              <TableView fx:id="tableViewPhieuMuon" minHeight="-Infinity" minWidth="-Infinity" prefHeight="609.0" prefWidth="1177.0" />
+                           </content>
+                        </ScrollPane>
                      </bottom>
                   </BorderPane>
                </content>

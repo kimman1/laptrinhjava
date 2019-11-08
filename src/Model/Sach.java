@@ -88,6 +88,11 @@ public class Sach  implements java.io.Serializable {
         this.phieumuons = phieumuons;
     }
 
+    @Override
+    public String toString() {
+        return this.tenSach;
+    }
+
 
 
 

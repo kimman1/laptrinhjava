@@ -97,7 +97,11 @@ public class Nhanvien  implements java.io.Serializable {
         this.phieumuons = phieumuons;
     }
 
-
+    @Override
+    public String toString()
+    {
+        return this.tenNv;
+    }
 
 
 }
