@@ -1,0 +1,130 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 21, 2019, 11:01:01 AM
+    Author     : KimMan
+*/
+GridPane.gridLogin
+{
+     -fx-background-color: #253968;
+     -fx-font-family: tahoma;
+     -fx-font-size : 20;
+     -fx-font-weight : bold;
+     -fx-padding : 10px;
+}
+GridPane.gridLogin > .labelSignIn
+{
+    -fx-text-fill : #0CF9BF;
+}
+BorderPane.borderPM{
+    -fx-font-family: tahoma;
+    -fx-font-weight: bold;
+}
+GridPane.gridPM{
+    -fx-font-size: 13;
+    -fx-hgap: 20;
+    -fx-background-color: linear-gradient(to bottom left, #4DA0B0, #D39D38);
+}
+Button.btnPM{
+    -fx-pref-width: 100px;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-width: 2;
+}
+
+Pane.paneADSach {
+   -fx-background-color: linear-gradient(to bottom right, #E56DE7, #0CF9BF);
+}
+   
+Label.labelChu{
+     -fx-font-family: tahoma;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-font-size: 15;
+    -fx-arc-width: 150px;
+}
+Button.btnTimKiem{
+     -fx-pref-width: 130px;
+    -fx-background-radius: 10;
+    -fx-border-radius: 20;
+    -fx-border-width: 2;
+    -fx-background-color: #40C6B8;
+    -fx-text-fill: Black;
+    }
+VBox.VBoxAdminTK{
+    -fx-alignment: CENTER;
+    -fx-spacing: 10;
+}
+VBox.VBoxAdminTK > HBox
+{
+    -fx-alignment: center;
+    -fx-spacing: 10;
+    -fx-pref-height : 50px;
+    -fx-font-weight : bold;
+    -fx-font-size : 14px;
+    -fx-font-family : tahoma;
+}
+VBox.VBoxAdminTK > Label
+{
+    -fx-alignment: CENTER_RIGHT;
+    
+}
+BoderPane.borderPaneAdminNV
+{
+    -fx-font-weight : bold;
+    -fx-font-family : tahoma;
+    -fx-background-color: red;
+    -fx-hgap: 10;
+}
+BorderPane.borderPaneAdminNV > GridPane
+{
+       -fx-background-color: linear-gradient(to bottom right, #E56DE7, #0CF9BF);
+       -fx-hgap: 10;
+       -fx-padding: 5;
+}
+BorderPane.borderPaneAdminNV > GridPane > VBox
+{
+      /* -fx-background-color: linear-gradient(to bottom right, #E56DE7, #0CF9BF);*/
+       -fx-alignment: center;
+       -fx-spacing: 20;
+
+}
+BorderPane.borderPaneAdminNV > GridPane > FlowPane
+{
+      /* -fx-background-color: linear-gradient(to bottom right, #E56DE7, #0CF9BF);*/
+       
+      -fx-hgap: 50;
+
+}
+BorderPane.borderPaneAdminNV > GridPane > Label
+{
+   
+   -fx-hgap: 10;
+   -fx-padding: 5;
+   -fx-pref-width : 150;
+   -fx-text-fill: black;
+  
+}
+BorderPane.borderPaneAdminNV > VBox
+{
+    -fx-alignment: center;
+    -fx-spacing: 10;
+   -fx-background-color: linear-gradient(to bottom left, #E56DE7, #0CF9BF); 
+    
+}
+BorderPane.borderPaneAdminNV > VBox > FlowPane
+{
+    -fx-alignment: center;
+    -fx-hgap: 10;
+}
+BorderPane.borderPaneAdminNV > GridPane > Label.labelPaddingFix
+{
+   -fx-hgap: 10;
+   -fx-padding: 40;
+   -fx-pref-width : 230;
+   -fx-text-fill: black;
+  
+}
