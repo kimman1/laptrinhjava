@@ -17,9 +17,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="741.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="laptrinhjavaanotation.StaffAppController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="741.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="laptrinhjavaanotation.StaffAppController">
    <children>
-      <TabPane prefHeight="538.0" prefWidth="741.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPaneContainter" prefHeight="538.0" prefWidth="741.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Phiếu Mượn ">
                <content>
@@ -123,8 +123,6 @@
                      </bottom>
                   </BorderPane>
                </content></Tab>
-            <Tab text="Untitled Tab" />
-            <Tab text="Untitled Tab" />
         </tabs>
       </TabPane>
    </children>

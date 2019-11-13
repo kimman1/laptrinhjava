@@ -223,6 +223,9 @@ public class AdminAppController implements Initializable {
     /*=============================Main process================================*/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //init tab pane 
+        tabPaneContainer.prefWidthProperty().bind(pane.widthProperty());
+        tabPaneContainer.prefHeightProperty().bind(pane.heightProperty());
         // Tab Quản Lý Sách
         TableColumn idSach = new TableColumn("Mã Sách");
         TableColumn tenSach = new TableColumn("Tên Sách");

@@ -32,10 +32,12 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
 
 /**
@@ -94,8 +96,16 @@ public class StaffAppController implements Initializable {
       private RadioButton rdTimKiemTenDG;
     @FXML
       private TextField txtTimKiemDG;
+    // Tab pane 
+    @FXML 
+    private TabPane tabPaneContainter;
+    @FXML 
+    private Pane pane;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // init 
+        tabPaneContainter.prefHeightProperty().bind(pane.heightProperty());
+        tabPaneContainter.prefWidthProperty().bind(pane.widthProperty());
         /*=======================================Tab Phiếu Mượn Init=======================*/
         TableColumn idPM = new TableColumn("Mã Phiếu Mượn");
         TableColumn idDocGiaPM = new TableColumn("Mã Độc Giả");

@@ -25,7 +25,7 @@ BorderPane.borderPM{
 }
 GridPane.gridPM{
     -fx-font-size: 13;
-    -fx-hgap: 20;
+  
     -fx-background-color: linear-gradient(to bottom left, #4DA0B0, #D39D38);
 }
 Button.btnPM{
@@ -87,15 +87,12 @@ BorderPane.borderPaneAdminNV > GridPane
 }
 BorderPane.borderPaneAdminNV > GridPane > VBox
 {
-      /* -fx-background-color: linear-gradient(to bottom right, #E56DE7, #0CF9BF);*/
        -fx-alignment: center;
        -fx-spacing: 20;
 
 }
 BorderPane.borderPaneAdminNV > GridPane > FlowPane
 {
-      /* -fx-background-color: linear-gradient(to bottom right, #E56DE7, #0CF9BF);*/
-       
       -fx-hgap: 50;
 
 }
