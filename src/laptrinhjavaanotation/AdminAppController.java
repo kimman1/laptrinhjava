@@ -139,9 +139,6 @@ public class AdminAppController implements Initializable {
     private DatePicker datePickerNgayTraPM;
     @FXML
     private TextField btnNhapLaiPM;
-    private final String TENSACHDEFAULT_MENUBTN = "Chọn Sách...";
-    private final String TENNVDEFAULT_MENUBTN = "Chọn tên NV...";
-    private final String TENDGDEFAULT_MENUBTN = "Chọn tên độc giả...";
     @FXML
     private TextField txtTienBoiThuong;
     @FXML
@@ -510,25 +507,30 @@ public class AdminAppController implements Initializable {
     @FXML
     private void suaSach(ActionEvent event)
     {
-        SachDAO sachDao = new SachDAO();
-       if(sachDao.checkDuplicate(txtTenSach.getText().trim(),txtTacGia.getText().trim(), Integer.parseInt(txtIdSach.getText())) != true)
-       {
-           Sach sach = new Sach();
-           sach.setMaSach(Integer.valueOf(txtIdSach.getText()));
-           sach.setGiaSach(txtGiaSach.getText());
-           sach.setNxb(txtNXB.getText());
-           sach.setSoLuong(Integer.valueOf(txtSoLuong.getText()));
-           sach.setTenSach(txtTenSach.getText());
-           sach.setTenTacGia(txtTacGia.getText());
-           sachDao.modifedSach(sach);
-           tableView.getItems().clear();
-           List<Sach> listReload = sachDao.readAllSach();
-           tableView.getItems().addAll(listReload);
-       }
+        if(tableView.getSelectionModel().getSelectedItem() != null)
+        {
+            SachDAO sachDao = new SachDAO();
+            if (sachDao.checkDuplicate(txtTenSach.getText().trim(), txtTacGia.getText().trim(), Integer.parseInt(txtIdSach.getText())) != true) {
+                Sach sach = new Sach();
+                sach.setMaSach(Integer.valueOf(txtIdSach.getText()));
+                sach.setGiaSach(txtGiaSach.getText());
+                sach.setNxb(txtNXB.getText());
+                sach.setSoLuong(Integer.valueOf(txtSoLuong.getText()));
+                sach.setTenSach(txtTenSach.getText());
+                sach.setTenTacGia(txtTacGia.getText());
+                sachDao.modifedSach(sach);
+                tableView.getItems().clear();
+                List<Sach> listReload = sachDao.readAllSach();
+                tableView.getItems().addAll(listReload);
+            } else {
+                Utils.AlertMessageError("Error", "Đã tồn tại Tên Sách có cùng tác giả !");
+            }
+
+        }
         else
-       {
-           Utils.AlertMessageError("Error", "Đã tồn tại Tên Sách có cùng tác giả !");
-       }
+        {
+            Utils.AlertMessageError("Error","Hãy chọn sách muốn sửa !!!");
+        }
         
     }
     @FXML
@@ -557,27 +559,29 @@ public class AdminAppController implements Initializable {
     @FXML
     private void xoaSach(ActionEvent event)
     {
-        SachDAO sachDao = new SachDAO();
-        int result = sachDao.deleteSach(Integer.parseInt(txtIdSach.getText()));
-        if(result != 0)
+        if(tableView.getSelectionModel().getSelectedItem() != null)
         {
-            txtGiaSach.clear();
-            txtIdSach.clear();
-            txtNXB.clear();
-            txtSoLuong.clear();
-            txtTacGia.clear();
-            txtTenSach.clear();
-            tableView.getItems().clear();
-            List<Sach> listSachReload =  sachDao.readAllSach();
-                    for(Sach s : listSachReload)
-                    {
-                        tableView.getItems().add(s);
-                    }  
+            SachDAO sachDao = new SachDAO();
+            int result = sachDao.deleteSach(Integer.parseInt(txtIdSach.getText()));
+            if (result != 0) {
+                txtGiaSach.clear();
+                txtIdSach.clear();
+                txtNXB.clear();
+                txtSoLuong.clear();
+                txtTacGia.clear();
+                txtTenSach.clear();
+                tableView.getItems().clear();
+                List<Sach> listSachReload = sachDao.readAllSach();
+                tableView.getItems().addAll(listSachReload);
+            } else {
+                Utils.AlertMessageError("Error", "Xoá lỗi. Contact Administrator");
+            }
         }
         else
         {
-            Utils.AlertMessageError("Error", "Xoá lỗi. Contact Administrator");
+            Utils.AlertMessageError("Error","Hãy chọn sách trước khi xóa !!!");
         }
+        
     }
     @FXML
     private void nhapLai(ActionEvent event)
@@ -711,59 +715,69 @@ public class AdminAppController implements Initializable {
     @FXML
     private void suaPM(ActionEvent event)
     {
-        //Create model
-        PhieuMuonDAO pmDao = new PhieuMuonDAO();
-        Phieumuon pm = new Phieumuon();
-        Sach sach = null;
-        Khachhang kh = null;
-        Nhanvien nv = null;
-        
-        // set data for model
-        
+        if(tableViewPhieuMuon.getSelectionModel().getSelectedItem() != null)
+        {
+            //Create model
+            PhieuMuonDAO pmDao = new PhieuMuonDAO();
+            Phieumuon pm = new Phieumuon();
+            Sach sach = null;
+            Khachhang kh = null;
+            Nhanvien nv = null;
+
+            // set data for model
             pm = tableViewPhieuMuon.getSelectionModel().getSelectedItem();
-           sach = pm.getSach();
-           if(sach != cbSachPM.getSelectionModel().getSelectedItem())
-           {
-               sach = cbSachPM.getSelectionModel().getSelectedItem();
-           }
+            sach = pm.getSach();
+            if (sach != cbSachPM.getSelectionModel().getSelectedItem()) {
+                sach = cbSachPM.getSelectionModel().getSelectedItem();
+            }
             kh = pm.getKh();
             nv = pm.getNv();
-            if(nv != cbNhanVienPM.getSelectionModel().getSelectedItem())
-            {
+            if (nv != cbNhanVienPM.getSelectionModel().getSelectedItem()) {
                 nv = cbNhanVienPM.getSelectionModel().getSelectedItem();
             }
-        LocalDate NgayTravalue = datePickerNgayTraPM.getValue();
-        LocalDate HanTravalue = datePickerNgayHenTraPM.getValue();
-        Date hanTraDate = Date.valueOf(HanTravalue);
-        Date ngayTraDate = Date.valueOf(NgayTravalue);
-            if(ckMatSach.isSelected() == true)
-             {
-                 txtTienBoiThuong.setText(sach.getGiaSach());
-                 pm.setTienBoiThuong(sach.getGiaSach());
-                 pm.setMatSach(true);
-             }
-             if(ckMatSach.isSelected() == false)
-             {
-                 txtTienBoiThuong.setText("");
-                 pm.setTienBoiThuong("");
-                 pm.setMatSach(false);
-             }
-             pm.setSach(sach);
-             pm.setNv(nv);
-        pmDao.modifiedPM(pm);
-        reloadTabPM(pmDao);
+            LocalDate NgayTravalue = datePickerNgayTraPM.getValue();
+            LocalDate HanTravalue = datePickerNgayHenTraPM.getValue();
+            Date hanTraDate = Date.valueOf(HanTravalue);
+            Date ngayTraDate = Date.valueOf(NgayTravalue);
+            if (ckMatSach.isSelected() == true) {
+                txtTienBoiThuong.setText(sach.getGiaSach());
+                pm.setTienBoiThuong(sach.getGiaSach());
+                pm.setMatSach(true);
+            }
+            if (ckMatSach.isSelected() == false) {
+                txtTienBoiThuong.setText("");
+                pm.setTienBoiThuong("");
+                pm.setMatSach(false);
+            }
+            pm.setSach(sach);
+            pm.setNv(nv);
+            pmDao.modifiedPM(pm);
+            reloadTabPM(pmDao);
+        }
+        else
+        {
+            Utils.AlertMessageError("Error", "Hãy chọn phiếu mượn để chỉnh sửa !!!");
+        }
+      
     }
     @FXML
     private void xoaPM(ActionEvent e)
     {
-        
-        Sach sach = tableViewPhieuMuon.getSelectionModel().getSelectedItem().getSach();
-        sach.setSoLuong(tableViewPhieuMuon.getSelectionModel().getSelectedItem().getSoLuongMuon());
-        PhieuMuonDAO pmDao = new PhieuMuonDAO();
-        pmDao.deletePM(sach.getMaSach());
-        SachDAO sachDao = new SachDAO();
-        sachDao.updateStockSach(sach,"plus");
-        reloadTabPM(pmDao);
+        if(tableViewPhieuMuon.getSelectionModel().getSelectedItem() != null)
+        {
+            Sach sach = tableViewPhieuMuon.getSelectionModel().getSelectedItem().getSach();
+            sach.setSoLuong(tableViewPhieuMuon.getSelectionModel().getSelectedItem().getSoLuongMuon());
+            PhieuMuonDAO pmDao = new PhieuMuonDAO();
+            pmDao.deletePM(sach.getMaSach());
+            SachDAO sachDao = new SachDAO();
+            sachDao.updateStockSach(sach, "plus");
+            reloadTabPM(pmDao);
+        }
+        else
+        {
+            Utils.AlertMessageError("Error","Hãy chọn phiếu mượn để xóa !!!");
+        }
+      
     }
     @FXML
     private void timKiemPM(ActionEvent e)
@@ -874,51 +888,66 @@ public class AdminAppController implements Initializable {
     @FXML
     private void themDG(ActionEvent e)
     {
-       KhachHangDAO khDao = new KhachHangDAO();
-       if(khDao.checkDuplicateKH(txtAccountDG.getText()) != true)
-       {
-           Khachhang kh = new Khachhang();
-           kh.setAccountKh(txtAccountDG.getText());
-           kh.setDiaChi(txtDiaChiDG.getText());
-           kh.setPasswordKh(txtMatKhauDG.getText());
-           kh.setSdtKh(txtSDTDG.getText());
-           kh.setTenKh(txtTenDocGiaDG.getText());
-           khDao.addKhachHang(kh);
-           reloadTabQLDG(khDao);
-       }
-       else
-       {
-           Utils.AlertMessageError("Error", "Account name đã tồn tại. Vui lòng chọn account khác!");
-       }
+        if(checkEmptyTextField("tabDG") != true)
+        {
+            KhachHangDAO khDao = new KhachHangDAO();
+            if (khDao.checkDuplicateKH(txtAccountDG.getText()) != true) {
+                Khachhang kh = new Khachhang();
+                kh.setAccountKh(txtAccountDG.getText());
+                kh.setDiaChi(txtDiaChiDG.getText());
+                kh.setPasswordKh(txtMatKhauDG.getText());
+                kh.setSdtKh(txtSDTDG.getText());
+                kh.setTenKh(txtTenDocGiaDG.getText());
+                khDao.addKhachHang(kh);
+                reloadTabQLDG(khDao);
+            } else {
+                Utils.AlertMessageError("Error", "Account name đã tồn tại. Vui lòng chọn account khác!");
+            }
+        }
+       
+        
+     
     }
     @FXML
     private void suaDG(ActionEvent e)
     {
-        KhachHangDAO khDao = new KhachHangDAO();
-        if(khDao.checkDuplicateKH(txtAccountDG.getText(),Integer.parseInt( txtMaDocGiaDG.getText())) != true)
+        if(tableViewDocGia.getSelectionModel().getSelectedItem() != null)
         {
-            Khachhang kh  = new Khachhang();
-            kh.setAccountKh(txtAccountDG.getText());
-            kh.setDiaChi(txtDiaChiDG.getText());
-            kh.setPasswordKh(txtMatKhauDG.getText());
-            kh.setSdtKh(txtSDTDG.getText());
-            kh.setTenKh(txtTenDocGiaDG.getText());
-            kh.setMaKh(Integer.parseInt(txtMaDocGiaDG.getText()));
-            khDao.modifedKH(kh);
-            reloadTabQLDG(khDao);
+            KhachHangDAO khDao = new KhachHangDAO();
+            if (khDao.checkDuplicateKH(txtAccountDG.getText(), Integer.parseInt(txtMaDocGiaDG.getText())) != true) {
+                Khachhang kh = new Khachhang();
+                kh.setAccountKh(txtAccountDG.getText());
+                kh.setDiaChi(txtDiaChiDG.getText());
+                kh.setPasswordKh(txtMatKhauDG.getText());
+                kh.setSdtKh(txtSDTDG.getText());
+                kh.setTenKh(txtTenDocGiaDG.getText());
+                kh.setMaKh(Integer.parseInt(txtMaDocGiaDG.getText()));
+                khDao.modifedKH(kh);
+                reloadTabQLDG(khDao);
+            } else {
+                Utils.AlertMessageError("Error", "Account name đã tồn tại. Vui lòng chọn account name khác!");
+            }
         }
         else
         {
-            Utils.AlertMessageError("Error", "Account name đã tồn tại. Vui lòng chọn account name khác!");
+             Utils.AlertMessageError("Error","Hãy chọn độc giả để sửa !!!");
         }
-        
+    
     }
     @FXML
     private void xoaDG(ActionEvent e)
     {
-        KhachHangDAO khDao = new KhachHangDAO();
-        khDao.deleteKH(tableViewDocGia.getSelectionModel().getSelectedItems().get(0).getMaKh());
-        reloadTabQLDG(khDao);
+        if(tableViewDocGia.getSelectionModel().getSelectedItem() != null)
+        {
+            KhachHangDAO khDao = new KhachHangDAO();
+            khDao.deleteKH(tableViewDocGia.getSelectionModel().getSelectedItems().get(0).getMaKh());
+            reloadTabQLDG(khDao);
+        }
+        else
+        {
+            Utils.AlertMessageError("Error", "Hãy chọn độc giả muốn xóa !!!");
+        }
+        
     }
     @FXML
     private void timKiemDG(ActionEvent e)
@@ -999,32 +1028,45 @@ public class AdminAppController implements Initializable {
     @FXML
     private void xoaNV(ActionEvent e)
     {
-        NhanVienDAO nvDao = new NhanVienDAO();
-        nvDao.deleteNV(tableViewNhanVien.getSelectionModel().getSelectedItem());
-        reloadTabNV(nvDao);
-        
+        if(tableViewNhanVien.getSelectionModel().getSelectedItem() != null)
+        {
+            NhanVienDAO nvDao = new NhanVienDAO();
+            nvDao.deleteNV(tableViewNhanVien.getSelectionModel().getSelectedItem());
+            reloadTabNV(nvDao);
+
+        }
+        else
+        {
+            Utils.AlertMessageError("Error", "Hãy chọn nhân viên muốn xóa !!!");
+        }
+                
     }
     @FXML
     private void suaNV(ActionEvent e)
     {
-        NhanVienDAO nvDao = new NhanVienDAO();
-        if(nvDao.checkDuplicateNV(txtAccountNV.getText(), Integer.parseInt(txtMaNVNV.getText())) != true)
+        if(tableViewNhanVien.getSelectionModel().getSelectedItem() != null)
         {
-            Nhanvien nv = new Nhanvien();
-            nv.setAccountNV(txtAccountNV.getText());
-            nv.setMaNV(tableViewNhanVien.getSelectionModel().getSelectedItems().get(0).getMaNV());
-            nv.setPasswordNV(txtMKNV.getText());
-            nv.setSdtNV(txtSDTNV.getText());
-            nv.setStatusNV(menubtnStatusNV.getText());
-            nv.setTenNV(txttenNVNV.getText());
-            nv.setNgaySinhNV(txtngaySinhNV.getText());
-            nvDao.modifedNV(nv);
-            reloadTabNV(nvDao);
+            NhanVienDAO nvDao = new NhanVienDAO();
+            if (nvDao.checkDuplicateNV(txtAccountNV.getText(), Integer.parseInt(txtMaNVNV.getText())) != true) {
+                Nhanvien nv = new Nhanvien();
+                nv.setAccountNV(txtAccountNV.getText());
+                nv.setMaNV(tableViewNhanVien.getSelectionModel().getSelectedItems().get(0).getMaNV());
+                nv.setPasswordNV(txtMKNV.getText());
+                nv.setSdtNV(txtSDTNV.getText());
+                nv.setStatusNV(menubtnStatusNV.getText());
+                nv.setTenNV(txttenNVNV.getText());
+                nv.setNgaySinhNV(txtngaySinhNV.getText());
+                nvDao.modifedNV(nv);
+                reloadTabNV(nvDao);
+            } else {
+                Utils.AlertMessageError("Error", "Account name bị trùng. Chọn Account name khác!");
+            }
         }
         else
         {
-            Utils.AlertMessageError("Error", "Account name bị trùng. Chọn Account name khác!");
+            Utils.AlertMessageError("Error","Hãy chọn nhân viên muốn sửa đổi !!!");
         }
+        
     }
     @FXML
     private void nhapLaiActionNV(ActionEvent e)
@@ -1369,9 +1411,12 @@ public class AdminAppController implements Initializable {
             }
             else
             {
-                Utils.AlertMessageError("Error", "SDT độc giả trống!");
-                txtSDTDG.requestFocus();
-                status = true;
+                if(txtSDTDG.getText().isEmpty())
+                {
+                    Utils.AlertMessageError("Error", "SDT độc giả trống!");
+                    txtSDTDG.requestFocus();
+                    status = true;
+                }
             }
         }
         if(temp.equalsIgnoreCase("tabSach"))

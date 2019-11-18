@@ -4,18 +4,18 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/thuvienanotation</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/thuvien</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password"/>
     <property name="hibernate.current_session_context_class">thread</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
-        <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.connection.characterEncoding">utf8</property> 
-        <mapping class ="model.Administrator"/>
-        <mapping class="model.Nhanvien"/>
-        <mapping class="model.Phieumuon" />
-        <mapping class="model.Sach" />
-        <mapping class="model.Thongke"/>
-        <mapping class="model.Khachhang"/>
+    <property name="hibernate.hbm2ddl.auto">update</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.connection.characterEncoding">utf8</property>
+    <mapping class="model.Administrator"/>
+    <mapping class="model.Nhanvien"/>
+    <mapping class="model.Phieumuon"/>
+    <mapping class="model.Sach"/>
+    <mapping class="model.Thongke"/>
+    <mapping class="model.Khachhang"/>
   </session-factory>
 </hibernate-configuration>
