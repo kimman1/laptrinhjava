@@ -223,6 +223,13 @@ public class AdminAppController implements Initializable {
         //init tab pane 
         tabPaneContainer.prefWidthProperty().bind(pane.widthProperty());
         tabPaneContainer.prefHeightProperty().bind(pane.heightProperty());
+        tableViewThongKe.prefHeightProperty().bind(tabPaneContainer.heightProperty().divide(3));
+        tableViewNhanVien.prefHeightProperty().bind(tabPaneContainer.heightProperty().divide(2.5));
+        tableView.prefHeightProperty().bind(tabPaneContainer.heightProperty().divide(2));
+        tableViewPhieuMuon.prefHeightProperty().bind(tabPaneContainer.heightProperty().divide(2));
+        tableViewPhieuMuon.prefWidthProperty().bind(tabPaneContainer.widthProperty().divide(10));
+        tableViewDocGia.prefHeightProperty().bind(tabPaneContainer.heightProperty().divide(2.5));
+       
         // Tab Quản Lý Sách
         TableColumn idSach = new TableColumn("Mã Sách");
         TableColumn tenSach = new TableColumn("Tên Sách");
@@ -790,29 +797,8 @@ public class AdminAppController implements Initializable {
         {
                 PhieuMuonDAO pmDAO = new PhieuMuonDAO();
                tableViewPhieuMuon.getItems().clear();
-                List<PhieumuonTableView> listPMTBV = new ArrayList<>();
-                List<Object[]> result = pmDAO.searchPM(txtTimKiemPhieuMuon.getText().trim(),rdTimKiemPMStatus());
-                int indexResultPM = 0;
-                for(Object[] s : result)
-                {
-                     Object[] row = result.get(indexResultPM);
-                   PhieumuonTableView temp = new PhieumuonTableView();
-                     temp.setMaNV((Integer)row[0]);
-                     temp.setMaPhieuMuon((Integer)row[1]);
-                     temp.setMaDocGia((Integer)row[2]);
-                     temp.setMaSach((Integer)row[3]);
-                     temp.setTenSach((String)row[4]);
-                     temp.setTenKh((String)row[5]);
-                     temp.setNgayMuon((Date)row[6]);
-                     temp.setNgayHenTra((Date)row[7]);
-                     temp.setNgayTra((Date)row[8]);
-                     temp.setSoLuongMuon((Integer)row[9]);
-                     temp.setTienBoiThuong((String)row[10]);
-                     temp.setTienPhat((String)row[11]);
-                     temp.setTenNV((String)row[12]);
-                     listPMTBV.add(temp);
-                     indexResultPM++;
-                    }
+                List<Phieumuon> result = pmDAO.searchPM(txtTimKiemPhieuMuon.getText().trim(),rdTimKiemPMStatus());
+                tableViewPhieuMuon.getItems().addAll(result);
                  
         }
         
@@ -915,15 +901,19 @@ public class AdminAppController implements Initializable {
         {
             KhachHangDAO khDao = new KhachHangDAO();
             if (khDao.checkDuplicateKH(txtAccountDG.getText(), Integer.parseInt(txtMaDocGiaDG.getText())) != true) {
-                Khachhang kh = new Khachhang();
-                kh.setAccountKh(txtAccountDG.getText());
-                kh.setDiaChi(txtDiaChiDG.getText());
-                kh.setPasswordKh(txtMatKhauDG.getText());
-                kh.setSdtKh(txtSDTDG.getText());
-                kh.setTenKh(txtTenDocGiaDG.getText());
-                kh.setMaKh(Integer.parseInt(txtMaDocGiaDG.getText()));
-                khDao.modifedKH(kh);
-                reloadTabQLDG(khDao);
+                if(checkEmptyTextField("tabDG") != true)
+                {
+                    Khachhang kh = new Khachhang();
+                    kh.setAccountKh(txtAccountDG.getText());
+                    kh.setDiaChi(txtDiaChiDG.getText());
+                    kh.setPasswordKh(txtMatKhauDG.getText());
+                    kh.setSdtKh(txtSDTDG.getText());
+                    kh.setTenKh(txtTenDocGiaDG.getText());
+                    kh.setMaKh(Integer.parseInt(txtMaDocGiaDG.getText()));
+                    khDao.modifedKH(kh);
+                    reloadTabQLDG(khDao);
+                }
+               
             } else {
                 Utils.AlertMessageError("Error", "Account name đã tồn tại. Vui lòng chọn account name khác!");
             }
@@ -1048,16 +1038,20 @@ public class AdminAppController implements Initializable {
         {
             NhanVienDAO nvDao = new NhanVienDAO();
             if (nvDao.checkDuplicateNV(txtAccountNV.getText(), Integer.parseInt(txtMaNVNV.getText())) != true) {
-                Nhanvien nv = new Nhanvien();
-                nv.setAccountNV(txtAccountNV.getText());
-                nv.setMaNV(tableViewNhanVien.getSelectionModel().getSelectedItems().get(0).getMaNV());
-                nv.setPasswordNV(txtMKNV.getText());
-                nv.setSdtNV(txtSDTNV.getText());
-                nv.setStatusNV(menubtnStatusNV.getText());
-                nv.setTenNV(txttenNVNV.getText());
-                nv.setNgaySinhNV(txtngaySinhNV.getText());
-                nvDao.modifedNV(nv);
-                reloadTabNV(nvDao);
+                if(checkEmptyTextField("tabNV") != true )
+                {
+                    Nhanvien nv = new Nhanvien();
+                    nv.setAccountNV(txtAccountNV.getText());
+                    nv.setMaNV(tableViewNhanVien.getSelectionModel().getSelectedItems().get(0).getMaNV());
+                    nv.setPasswordNV(txtMKNV.getText());
+                    nv.setSdtNV(txtSDTNV.getText());
+                    nv.setStatusNV(menubtnStatusNV.getText());
+                    nv.setTenNV(txttenNVNV.getText());
+                    nv.setNgaySinhNV(txtngaySinhNV.getText());
+                    nvDao.modifedNV(nv);
+                    reloadTabNV(nvDao);
+                }
+                
             } else {
                 Utils.AlertMessageError("Error", "Account name bị trùng. Chọn Account name khác!");
             }

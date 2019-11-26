@@ -7,11 +7,13 @@ package DAO;
 
 import model.Phieumuon;
 import java.util.List;
+import model.Khachhang;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -80,20 +82,21 @@ public class PhieuMuonDAO {
      {
          String hql = "";
          Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
+         
         if(SearchType.trim().equalsIgnoreCase("namesach"))
         {
-             hql = "select nhanvien.maNv,maPhieuMuon ,khachhang.maKh, sach.maSach, sach.tenSach, khachhang.tenKh, ngayMuon, hanTra, ngayTra, soLuongMuon,tienBoiThuong,tienPhat, nhanvien.tenNv from Phieumuon where sach.tenSach like :searchString";
-             //select nhanvien.maNv,maPhieuMuon ,khachhang.maKh, sach.maSach, sach.tenSach, khachhang.tenKh, ngayMuon, hanTra, ngayTra, soLuongMuon,tienBoiThuong,tienPhat, nhanvien.tenNv from Phieumuon
+             hql = "from Phieumuon where sach.tenSach like :searchString";
+           
               
         }
         if(SearchType.trim().equalsIgnoreCase("namedocgia"))
         {
-            hql = "select nhanvien.maNv,maPhieuMuon ,khachhang.maKh, sach.maSach, sach.tenSach, khachhang.tenKh, ngayMuon, hanTra, ngayTra, soLuongMuon,tienBoiThuong,tienPhat, nhanvien.tenNv from Phieumuon where khachhang.tenKh like :searchString";
+            hql = "from Phieumuon where kh.tenKh like :searchString";
+           
         }
               Query query = session.createQuery(hql);
               query.setParameter("searchString","%"+SearchString+"%");
-               List<Object[]> result = query.list();
+               List<Phieumuon> result = query.list();
                session.close();
                return result;
         

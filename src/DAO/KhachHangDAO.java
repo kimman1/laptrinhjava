@@ -86,7 +86,6 @@ public class KhachHangDAO {
         String hql = "";
         List<Khachhang> listResultKH;
         Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
         if(searchType.trim().equalsIgnoreCase("name"))
         {
              hql = "from Khachhang where tenKh like :searchString";
