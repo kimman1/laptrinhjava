@@ -225,9 +225,9 @@ public class AdminAppController implements Initializable {
         tabPaneContainer.prefHeightProperty().bind(pane.heightProperty());
         tableViewThongKe.prefHeightProperty().bind(tabPaneContainer.heightProperty().divide(3));
         tableViewNhanVien.prefHeightProperty().bind(tabPaneContainer.heightProperty().divide(2.5));
-        tableView.prefHeightProperty().bind(tabPaneContainer.heightProperty().divide(2));
-        tableViewPhieuMuon.prefHeightProperty().bind(tabPaneContainer.heightProperty().divide(2));
-        tableViewPhieuMuon.prefWidthProperty().bind(tabPaneContainer.widthProperty().divide(10));
+        tableView.prefHeightProperty().bind(tabPaneContainer.heightProperty().divide(2.5));
+        tableViewPhieuMuon.prefHeightProperty().bind(tabPaneContainer.heightProperty().divide(3));
+        tableViewPhieuMuon.prefWidthProperty().bind(tabPaneContainer.widthProperty());
         tableViewDocGia.prefHeightProperty().bind(tabPaneContainer.heightProperty().divide(2.5));
        
         // Tab Quản Lý Sách
@@ -516,7 +516,9 @@ public class AdminAppController implements Initializable {
     {
         if(tableView.getSelectionModel().getSelectedItem() != null)
         {
-            SachDAO sachDao = new SachDAO();
+            if(checkEmptyTextField("tabSach") != true)
+            {
+                 SachDAO sachDao = new SachDAO();
             if (sachDao.checkDuplicate(txtTenSach.getText().trim(), txtTacGia.getText().trim(), Integer.parseInt(txtIdSach.getText())) != true) {
                 Sach sach = new Sach();
                 sach.setMaSach(Integer.valueOf(txtIdSach.getText()));
@@ -532,6 +534,8 @@ public class AdminAppController implements Initializable {
             } else {
                 Utils.AlertMessageError("Error", "Đã tồn tại Tên Sách có cùng tác giả !");
             }
+            }
+           
 
         }
         else
@@ -744,22 +748,30 @@ public class AdminAppController implements Initializable {
             }
             LocalDate NgayTravalue = datePickerNgayTraPM.getValue();
             LocalDate HanTravalue = datePickerNgayHenTraPM.getValue();
-            Date hanTraDate = Date.valueOf(HanTravalue);
-            Date ngayTraDate = Date.valueOf(NgayTravalue);
-            if (ckMatSach.isSelected() == true) {
-                txtTienBoiThuong.setText(sach.getGiaSach());
-                pm.setTienBoiThuong(sach.getGiaSach());
-                pm.setMatSach(true);
-            }
-            if (ckMatSach.isSelected() == false) {
-                txtTienBoiThuong.setText("");
-                pm.setTienBoiThuong("");
-                pm.setMatSach(false);
-            }
-            pm.setSach(sach);
-            pm.setNv(nv);
-            pmDao.modifiedPM(pm);
-            reloadTabPM(pmDao);
+            LocalDate NgayMuonvalue = datePickerNgayMuonPM.getValue();
+             if (NgayMuonvalue.compareTo(NgayTravalue) < 0) {
+                Date hanTraDate = Date.valueOf(HanTravalue);
+                Date ngayTraDate = Date.valueOf(NgayTravalue);
+                if (ckMatSach.isSelected() == true) {
+                    txtTienBoiThuong.setText(sach.getGiaSach());
+                    pm.setTienBoiThuong(sach.getGiaSach());
+                    pm.setMatSach(true);
+                }
+                if (ckMatSach.isSelected() == false) {
+                    txtTienBoiThuong.setText("");
+                    pm.setTienBoiThuong("");
+                    pm.setMatSach(false);
+                }
+                pm.setSach(sach);
+                pm.setNv(nv);
+                pmDao.modifiedPM(pm);
+                reloadTabPM(pmDao);
+             }
+             else
+             {
+               Utils.AlertMessageError("Error", "Kiểm tra thời gian trả");
+             }
+            
         }
         else
         {
@@ -1441,9 +1453,13 @@ public class AdminAppController implements Initializable {
             }
             else
             {
-                Utils.AlertMessageError("Error", "Số lượng trống!. Nếu đang hết sách xin vui lòng điền số 0");
-                 txtSoLuong.requestFocus();
+                if(txtSoLuong.getText().isEmpty())
+                {
+                    Utils.AlertMessageError("Error", "Số lượng trống!. Nếu đang hết sách xin vui lòng điền số 0");
+                    txtSoLuong.requestFocus();
                     status = true;
+                }
+                
             }
         }
         if(temp.equalsIgnoreCase("tabPM"))

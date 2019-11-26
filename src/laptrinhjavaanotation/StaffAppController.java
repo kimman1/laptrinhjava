@@ -338,47 +338,61 @@ public class StaffAppController implements Initializable {
     {
         //Create model
          //Create model
-        PhieuMuonDAO pmDao = new PhieuMuonDAO();
-        Phieumuon pm = new Phieumuon();
-        Sach sach = null;
-        Khachhang kh = null;
-        Nhanvien nv = null;
-        
+        if(tableViewPM.getSelectionModel().getSelectedItem() != null)
+        {
+            PhieuMuonDAO pmDao = new PhieuMuonDAO();
+            Phieumuon pm = new Phieumuon();
+            Sach sach = null;
+            Khachhang kh = null;
+            Nhanvien nv = null;
+
         // set data for model
-        
             pm = tableViewPM.getSelectionModel().getSelectedItem();
-           sach = pm.getSach();
-           if(sach != cbSachPM.getSelectionModel().getSelectedItem())
-           {
-               sach = cbSachPM.getSelectionModel().getSelectedItem();
-           }
+            sach = pm.getSach();
+            if (sach != cbSachPM.getSelectionModel().getSelectedItem()) {
+                sach = cbSachPM.getSelectionModel().getSelectedItem();
+            }
             kh = pm.getKh();
             nv = pm.getNv();
-            if(nv != cbNhanVienPM.getSelectionModel().getSelectedItem())
-            {
+            if (nv != cbNhanVienPM.getSelectionModel().getSelectedItem()) {
                 nv = cbNhanVienPM.getSelectionModel().getSelectedItem();
             }
-        LocalDate NgayTravalue = datePickerNgayTraPM.getValue();
-        LocalDate HanTravalue = datePickerNgayHenTraPM.getValue();
-        Date hanTraDate = Date.valueOf(HanTravalue);
-        Date ngayTraDate = Date.valueOf(NgayTravalue);
-            if(ckMatSach.isSelected() == true)
-             {
-                 txtTienBoiThuongPM.setText(sach.getGiaSach());
-                 pm.setTienBoiThuong(sach.getGiaSach());
-                 pm.setMatSach(true);
-             }
-             if(ckMatSach.isSelected() == false)
-             {
-                 txtTienBoiThuongPM.setText("");
-                 pm.setTienBoiThuong("");
-                 pm.setMatSach(false);
-             }
-             pm.setSach(sach);
-             pm.setNv(nv);
-             pm.setNgayTra(ngayTraDate);
-        pmDao.modifiedPM(pm);
-        reloadTabPM(pmDao);
+            LocalDate NgayTravalue = datePickerNgayTraPM.getValue();
+            LocalDate HanTravalue = datePickerNgayHenTraPM.getValue();
+            LocalDate NgayMuonvalue = datePickerNgayMuonPM.getValue();
+            if (NgayMuonvalue.compareTo(NgayTravalue) < 0) {
+                Date hanTraDate = Date.valueOf(HanTravalue);
+                Date ngayTraDate = Date.valueOf(NgayTravalue);
+                if (ckMatSach.isSelected() == true) {
+                    txtTienBoiThuongPM.setText(sach.getGiaSach());
+                    pm.setTienBoiThuong(sach.getGiaSach());
+                    pm.setMatSach(true);
+                    SachDAO sachDao = new SachDAO();
+                    sachDao.updateStockSach(sach, "minus", 1);
+                }
+                if (ckMatSach.isSelected() == false) {
+                    txtTienBoiThuongPM.setText("");
+                    pm.setTienBoiThuong("");
+                    pm.setMatSach(false);
+                    SachDAO sachDao = new SachDAO();
+                    sachDao.updateStockSach(sach, "plus", 1);
+                }
+                pm.setSach(sach);
+                pm.setNv(nv);
+                pm.setSoLuongMuon(Integer.parseInt(txtSoLuongMuonPM.getText()));
+                pm.setNgayTra(ngayTraDate);
+                pmDao.modifiedPM(pm);
+                reloadTabPM(pmDao);
+            } else {
+                Utils.AlertMessageError("Error", "Kiểm tra thời gian trả");
+            }
+        }
+        else
+        {
+             Utils.AlertMessageError("Error", "Hãy chọn phiếu mượn để chỉnh sửa !!!");
+        }
+       
+        
     }
    
     @FXML
@@ -473,15 +487,19 @@ public class StaffAppController implements Initializable {
         KhachHangDAO khDao = new KhachHangDAO();
         if(khDao.checkDuplicateKH(txtAccountDG.getText(),Integer.parseInt( txtMaDocGiaDG.getText())) != true)
         {
-            Khachhang kh  = new Khachhang();
-            kh.setAccountKh(txtAccountDG.getText());
-            kh.setDiaChi(txtDiaChiDG.getText());
-            kh.setPasswordKh(txtMatKhauDG.getText());
-            kh.setSdtKh(txtSDTDG.getText());
-            kh.setTenKh(txtTenDocGiaDG.getText());
-            kh.setMaKh(Integer.parseInt(txtMaDocGiaDG.getText()));
-            khDao.modifedKH(kh);
-            reloadTabQLDG(khDao);
+            if(checkEmptyTextField("tabDG") != true)
+            {
+                Khachhang kh = new Khachhang();
+                kh.setAccountKh(txtAccountDG.getText());
+                kh.setDiaChi(txtDiaChiDG.getText());
+                kh.setPasswordKh(txtMatKhauDG.getText());
+                kh.setSdtKh(txtSDTDG.getText());
+                kh.setTenKh(txtTenDocGiaDG.getText());
+                kh.setMaKh(Integer.parseInt(txtMaDocGiaDG.getText()));
+                khDao.modifedKH(kh);
+                reloadTabQLDG(khDao);
+            }
+           
         }
         else
         {

@@ -38,7 +38,6 @@ public class SachDAO {
         session.save(sach);
         session.getTransaction().commit();
         session.close();
-        //String hql = "INSERT INTO Sach(maSach,tenSach,tenTacGia,nxb,soLuong,giaSach)" + ;
     }
     public boolean checkDuplicate(String tenSach)
     {
@@ -79,7 +78,7 @@ public class SachDAO {
         boolean result = false;
         for(Sach s : rs)
         {
-           if( s.getTenSach().trim().equalsIgnoreCase(tenSach.trim()) && s.getTenTacGia().trim().equalsIgnoreCase(tenTacGia.trim()))
+           if( s.getTenSach().trim().equalsIgnoreCase(tenSach.trim()) && s.getTenTacGia().trim().equalsIgnoreCase(tenTacGia.trim()) && s.getMaSach() != idSach)
            {
                result = true;
               
@@ -119,7 +118,6 @@ public class SachDAO {
         String hql = "";
         List<Sach> listResultSach;
         Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
         if(searchType.trim().equalsIgnoreCase("name"))
         {
              hql = "from Sach where tenSach like :searchString";
@@ -149,6 +147,28 @@ public class SachDAO {
         
         Query query = session.createQuery(hql);
         query.setParameter("SoLuongUpdate", sach.getSoLuong());
+        query.setParameter("MaSachUpdate", sach.getMaSach());
+        query.executeUpdate();
+        tx.commit();
+        session.close();
+        
+    }
+    public void updateStockSach(Sach sach, String updateMethod, int soLuong)
+    {
+        Session session = sessionFactory.openSession();
+        Transaction tx =  session.beginTransaction();
+        String hql = "";
+        if(updateMethod.trim().equalsIgnoreCase("plus"))
+        {
+            hql = "update Sach set soLuong= soLuong + :SoLuongUpdate where maSach = :MaSachUpdate";
+        }
+        if(updateMethod.trim().equalsIgnoreCase("minus"))
+        {
+             hql = "update Sach set soLuong= soLuong - :SoLuongUpdate where maSach = :MaSachUpdate";
+        }
+        
+        Query query = session.createQuery(hql);
+        query.setParameter("SoLuongUpdate", soLuong);
         query.setParameter("MaSachUpdate", sach.getMaSach());
         query.executeUpdate();
         tx.commit();
