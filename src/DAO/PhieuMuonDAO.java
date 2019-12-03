@@ -62,6 +62,7 @@ public class PhieuMuonDAO {
         pmSession.setTienBoiThuong(phieumuon.getTienBoiThuong());
         pmSession.setTienPhat(phieumuon.getTienPhat());
         pmSession.setMatSach(phieumuon.isMatSach());
+        pmSession.setSoLuongMat(phieumuon.getSoLuongMat());
         session.update(pmSession);
         tx.commit();
         session.close();

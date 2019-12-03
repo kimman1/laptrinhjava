@@ -40,7 +40,16 @@ public class Phieumuon implements Serializable {
      private String tienPhat;
     @Column(name = "MatSach")
      private boolean matSach;
+    @Column(name = "SoLuongMat")
+    private int soLuongMat;
 
+    public int getSoLuongMat() {
+        return soLuongMat;
+    }
+
+    public void setSoLuongMat(int soLuongMat) {
+        this.soLuongMat = soLuongMat;
+    }
     public int getMaPhieuMuon() {
         return maPhieuMuon;
     }

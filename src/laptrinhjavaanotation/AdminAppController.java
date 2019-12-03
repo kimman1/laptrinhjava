@@ -125,8 +125,8 @@ public class AdminAppController implements Initializable {
     private TextField txtMaSachPM;
     @FXML
     private TextField txtTenSachPM;
-    @FXML
-    private TextField txtNgayMuonPM;
+   @FXML
+   private TextField txtSlMat;
    @FXML
     private TextField txtSoLuongMuonPM;
     @FXML
@@ -267,6 +267,7 @@ public class AdminAppController implements Initializable {
         TableColumn SLMuonPM = new TableColumn("Số Lượng Mượn");
         TableColumn TienBTPM = new TableColumn("Tiền Bồi Thường");
         TableColumn TienPhatPM = new TableColumn("Tiền Phạt");
+        TableColumn SoLuongMatPM = new TableColumn("Số Lượng Sách Mất");
         idPM.setCellValueFactory(new PropertyValueFactory<>("maPhieuMuon"));
         idDocGiaPM.setCellValueFactory(new PropertyValueFactory<>("maDGTB"));
         idSachPM.setCellValueFactory(new PropertyValueFactory<>("maSachTB"));
@@ -280,7 +281,9 @@ public class AdminAppController implements Initializable {
         SLMuonPM.setCellValueFactory(new PropertyValueFactory<>("soLuongMuon"));
         TienBTPM.setCellValueFactory(new PropertyValueFactory<>("tienBoiThuong"));
         TienPhatPM.setCellValueFactory(new PropertyValueFactory<>("tienPhat"));
-        tableViewPhieuMuon.getColumns().addAll(idNVPM,idPM,idDocGiaPM,idSachPM,tenSachPM,tenKhPM,tenNVPM,ngayMuonPM,ngayHenTraPM,ngayTraPM,SLMuonPM,TienBTPM,TienPhatPM);
+        SoLuongMatPM.setCellValueFactory(new PropertyValueFactory<>("soLuongMat"));
+        
+        tableViewPhieuMuon.getColumns().addAll(idNVPM,idPM,idDocGiaPM,idSachPM,tenSachPM,tenKhPM,tenNVPM,ngayMuonPM,ngayHenTraPM,ngayTraPM,SLMuonPM,TienBTPM,TienPhatPM,SoLuongMatPM);
         PhieuMuonDAO PM = new PhieuMuonDAO();
         List<Phieumuon> listPMrs = PM.readAllPM();
         for(Phieumuon s : listPMrs)
@@ -338,6 +341,8 @@ public class AdminAppController implements Initializable {
                         datePickerNgayTraPM.setPromptText("dd-MM-yyyy");
                         datePickerNgayHenTraPM.setConverter(converter);
                         datePickerNgayHenTraPM.setPromptText("dd-MM-yyyy");
+                        datePickerNgayMuonPM.setConverter(converter);
+                        datePickerNgayMuonPM.setPromptText("dd-MM-yyyy");
             /*========================Tab Quản Lý Độc Giả ============================*/
                         TableColumn idDG = new TableColumn("Mã Độc Giả");
                         TableColumn TenDG = new TableColumn("Tên Độc Giả");
@@ -428,15 +433,17 @@ public class AdminAppController implements Initializable {
        txtTienBoiThuong.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTienBoiThuong());
        txtTienPhat.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getTienPhat());
         txtMaSachPM.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getSach().getMaSach()));
-        txtNgayMuonPM.clear();
-        if(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNgayMuon().toString() != null)
+        //txtNgayMuonPM.clear();
+        /*if(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNgayMuon().toString() != null)
         {
             txtNgayMuonPM.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNgayMuon().toString());
         }
-        
+        */
         txtSoLuongMuonPM.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getSoLuongMuon()));
         Date dateHenTraPM =   tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getHanTra();
         Date dateTraPM =   tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNgayTra();
+        Date dateMuonPM = tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNgayMuon();
+        datePickerNgayMuonPM.setValue(dateMuonPM.toLocalDate());
         datePickerNgayHenTraPM.setValue(dateHenTraPM.toLocalDate());
         datePickerNgayTraPM.setValue(dateTraPM.toLocalDate());
         ckMatSach.setSelected(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).isMatSach());
@@ -753,17 +760,33 @@ public class AdminAppController implements Initializable {
                 Date hanTraDate = Date.valueOf(HanTravalue);
                 Date ngayTraDate = Date.valueOf(NgayTravalue);
                 if (ckMatSach.isSelected() == true) {
-                    txtTienBoiThuong.setText(sach.getGiaSach());
-                    pm.setTienBoiThuong(sach.getGiaSach());
-                    pm.setMatSach(true);
+                    if(txtSlMat.getText().isEmpty())
+                    {
+                        Utils.AlertMessageError("Error","Vui lòng điền số lượng sách bị mất");
+                    }
+                    else
+                    {
+                        int priceTemp = Integer.parseInt(sach.getGiaSach()) * Integer.parseInt(txtSlMat.getText());
+                        txtTienBoiThuong.setText(String.valueOf(priceTemp));
+                        pm.setTienBoiThuong(String.valueOf(priceTemp));
+                        pm.setSoLuongMat(Integer.parseInt(txtSlMat.getText()));
+                        pm.setMatSach(true);
+                        SachDAO sachDao = new SachDAO();
+                        sachDao.updateStockSach(sach, "minus", Integer.parseInt(txtSlMat.getText()));
+                    }
+                   
                 }
                 if (ckMatSach.isSelected() == false) {
                     txtTienBoiThuong.setText("");
                     pm.setTienBoiThuong("");
                     pm.setMatSach(false);
+                    pm.setSoLuongMat(0);
+                    SachDAO sachDao = new SachDAO();
+                    sachDao.updateStockSach(sach, "plus", Integer.parseInt(txtSlMat.getText()));
                 }
                 pm.setSach(sach);
                 pm.setNv(nv);
+                pm.setNgayTra(ngayTraDate);
                 pmDao.modifiedPM(pm);
                 reloadTabPM(pmDao);
              }
@@ -820,7 +843,7 @@ public class AdminAppController implements Initializable {
         txtMaPhieuMuon.clear();
         txtMaDocGiaPM.clear();
         txtMaSachPM.clear();
-        txtNgayMuonPM.clear();
+//        txtNgayMuonPM.clear();
         txtSoLuongMuonPM.clear();
         txtTienBoiThuong.clear();
         txtTienPhat.clear();
@@ -828,8 +851,10 @@ public class AdminAppController implements Initializable {
         ckMatSach.setSelected(false);
         datePickerNgayHenTraPM.setValue(null);
         datePickerNgayTraPM.setValue(null);
+        datePickerNgayMuonPM.setValue(null);
         datePickerNgayTraPM.setPromptText("dd-MM-yyyy");
         datePickerNgayHenTraPM.setPromptText("dd-MM-yyyy");
+        datePickerNgayMuonPM.setPromptText("dd-MM-yyyy");
         cbSachPM.getItems().clear();
         cbNhanVienPM.getItems().clear();
         cbKhachHangPM.getItems().clear();
@@ -897,7 +922,6 @@ public class AdminAppController implements Initializable {
                 kh.setSdtKh(txtSDTDG.getText());
                 kh.setTenKh(txtTenDocGiaDG.getText());
                 khDao.addKhachHang(kh);
-                reloadTabQLDG(khDao);
             } else {
                 Utils.AlertMessageError("Error", "Account name đã tồn tại. Vui lòng chọn account khác!");
             }

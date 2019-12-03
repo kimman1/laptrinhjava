@@ -71,6 +71,8 @@ public class StaffAppController implements Initializable {
     private CheckBox ckMatSach;
     @FXML
     private TextField txtTenTacGia;
+    @FXML
+    private TextField txtSlMatSach;
     // Local Varible 
     private final String TENSACHDEFAULT_MENUBTN = "Chọn Sách...";
     private final String TENNVDEFAULT_MENUBTN = "Chọn tên NV...";
@@ -120,6 +122,7 @@ public class StaffAppController implements Initializable {
         TableColumn SLMuonPM = new TableColumn("Số Lượng Mượn");
         TableColumn TienBTPM = new TableColumn("Tiền Bồi Thường");
         TableColumn TienPhatPM = new TableColumn("Tiền Phạt");
+        TableColumn SoLuongMatPM = new TableColumn("Số Lượng Sách Mất");
         idPM.setCellValueFactory(new PropertyValueFactory<>("maPhieuMuon"));
         idDocGiaPM.setCellValueFactory(new PropertyValueFactory<>("maDGTB"));
         idSachPM.setCellValueFactory(new PropertyValueFactory<>("maSachTB"));
@@ -133,7 +136,8 @@ public class StaffAppController implements Initializable {
         SLMuonPM.setCellValueFactory(new PropertyValueFactory<>("soLuongMuon"));
         TienBTPM.setCellValueFactory(new PropertyValueFactory<>("tienBoiThuong"));
         TienPhatPM.setCellValueFactory(new PropertyValueFactory<>("tienPhat"));
-        tableViewPM.getColumns().addAll(idNVPM,idPM,idDocGiaPM,idSachPM,tenSachPM,tenKhPM,tenNVPM,ngayMuonPM,ngayHenTraPM,ngayTraPM,SLMuonPM,TienBTPM,TienPhatPM);
+        SoLuongMatPM.setCellValueFactory(new PropertyValueFactory<>("soLuongMat"));
+        tableViewPM.getColumns().addAll(idNVPM,idPM,idDocGiaPM,idSachPM,tenSachPM,tenKhPM,tenNVPM,ngayMuonPM,ngayHenTraPM,ngayTraPM,SLMuonPM,TienBTPM,TienPhatPM,SoLuongMatPM);
         PhieuMuonDAO PM = new PhieuMuonDAO();
         List<Phieumuon> listPMrs = PM.readAllPM();
         for(Phieumuon s : listPMrs)
@@ -237,6 +241,7 @@ public class StaffAppController implements Initializable {
         datePickerNgayMuonPM.setValue(dateMuonPM.toLocalDate());
         ckMatSach.setSelected(tableViewPM.getSelectionModel().getSelectedItems().get(0).isMatSach());
         txtTenTacGia.setText(tableViewPM.getSelectionModel().getSelectedItems().get(0).getSach().getTenTacGia());
+        txtSlMatSach.setText(String.valueOf(tableViewPM.getSelectionModel().getSelectedItems().get(0).getSoLuongMat()));
         for(Nhanvien s : cbNhanVienPM.getItems())
         {
             if(s.getTenNV().trim().equalsIgnoreCase(tableViewPM.getSelectionModel().getSelectedItems().get(0).getNv().getTenNV().trim()))
@@ -364,18 +369,29 @@ public class StaffAppController implements Initializable {
                 Date hanTraDate = Date.valueOf(HanTravalue);
                 Date ngayTraDate = Date.valueOf(NgayTravalue);
                 if (ckMatSach.isSelected() == true) {
-                    txtTienBoiThuongPM.setText(sach.getGiaSach());
-                    pm.setTienBoiThuong(sach.getGiaSach());
-                    pm.setMatSach(true);
-                    SachDAO sachDao = new SachDAO();
-                    sachDao.updateStockSach(sach, "minus", 1);
+                    if(txtSlMatSach.getText().isEmpty() || txtSlMatSach.getText().trim().equalsIgnoreCase("0"))
+                    {
+                    Utils.AlertMessageError("Error","Vui lòng điền số lượng sách bị mất");
+                    }
+                    else
+                    {
+                        int priceTemp = Integer.parseInt(sach.getGiaSach()) * Integer.parseInt(txtSlMatSach.getText());
+                        txtTienBoiThuongPM.setText(String.valueOf(priceTemp));
+                        pm.setTienBoiThuong(String.valueOf(priceTemp));
+                        pm.setMatSach(true);
+                        pm.setSoLuongMat(Integer.parseInt(txtSlMatSach.getText()));
+                        SachDAO sachDao = new SachDAO();
+                        sachDao.updateStockSach(sach, "minus", Integer.parseInt(txtSlMatSach.getText()));
+                    }
+                   
                 }
                 if (ckMatSach.isSelected() == false) {
                     txtTienBoiThuongPM.setText("");
                     pm.setTienBoiThuong("");
                     pm.setMatSach(false);
+                    pm.setSoLuongMat(0);
                     SachDAO sachDao = new SachDAO();
-                    sachDao.updateStockSach(sach, "plus", 1);
+                    sachDao.updateStockSach(sach, "plus", Integer.parseInt(txtSlMatSach.getText()));
                 }
                 pm.setSach(sach);
                 pm.setNv(nv);
@@ -428,6 +444,7 @@ public class StaffAppController implements Initializable {
         txtTienBoiThuongPM.clear();
         txtTienPhatPM.clear();
         txtTenTacGia.clear();
+        txtSlMatSach.clear();
         ckMatSach.setSelected(false);
         datePickerNgayHenTraPM.setValue(null);
         datePickerNgayTraPM.setValue(null);

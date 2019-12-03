@@ -27,7 +27,7 @@
 
 <Pane fx:id="pane" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="laptrinhjavaanotation.AdminAppController">
    <children>
-      <TabPane fx:id="tabPaneContainer" prefHeight="796.0" prefWidth="1111.0" stylesheets="@../css/style.css" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPaneContainer" prefHeight="839.0" prefWidth="1190.0" stylesheets="@../css/style.css" tabClosingPolicy="UNAVAILABLE">
         <tabs>
              <Tab text="Thống kê">
                <content>
@@ -508,7 +508,6 @@
                                     <Font name="Tahoma Bold" size="15.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txtNgayMuonPM" disable="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                               <Label prefHeight="21.0" prefWidth="106.0" styleClass="labelPaddingFix" text="Ngày hẹn trả:" textFill="#1a07eb" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
@@ -539,7 +538,7 @@
                                  </font>
                               </Button>
                               <TextField fx:id="txtTimKiemPhieuMuon" prefHeight="31.0" prefWidth="326.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
-                              <CheckBox fx:id="ckMatSach" mnemonicParsing="false" text="Mất sách " GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                              <CheckBox fx:id="ckMatSach" mnemonicParsing="false" text="Mất sách " GridPane.columnIndex="4" GridPane.rowIndex="6" />
                               <FlowPane alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="7">
                                  <children>
                                     <RadioButton fx:id="rdTimKiemPMMaDocGia" mnemonicParsing="false" text="Theo độc giả">
@@ -586,6 +585,13 @@
                               <ComboBox fx:id="cbNhanVienPM" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <ComboBox fx:id="cbSachPM" prefHeight="25.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <ComboBox fx:id="cbKhachHangPM" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="txtSlMat" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                              <Label styleClass="labelPaddingFix" text="số lượng sách mất:" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker fx:id="datePickerNgayMuonPM" disable="true" editable="false" prefHeight="32.0" prefWidth="224.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </center>

@@ -63,11 +63,13 @@
                               <Button mnemonicParsing="false" onAction="#themPM" styleClass="btnPM" text="Thêm" GridPane.columnIndex="4" />
                               <Button mnemonicParsing="false" onAction="#suaPM" styleClass="btnPM" text="Sửa" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                               <Button mnemonicParsing="false" onAction="#nhapLai" styleClass="btnPM" text="Nhập Lại" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                              <CheckBox fx:id="ckMatSach" mnemonicParsing="false" text="Mất Sách" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                              <CheckBox fx:id="ckMatSach" mnemonicParsing="false" text="Mất Sách" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                               <ComboBox fx:id="cbKhachHangPM" prefWidth="150.0" GridPane.columnIndex="1" />
                               <ComboBox fx:id="cbSachPM" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <ComboBox fx:id="cbNhanVienPM" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <TextField fx:id="txtTenTacGia" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Label text="SL Sách Mất:" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                              <TextField fx:id="txtSlMatSach" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </center></BorderPane>
