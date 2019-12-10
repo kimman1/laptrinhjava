@@ -448,6 +448,7 @@ public class AdminAppController implements Initializable {
         datePickerNgayTraPM.setValue(dateTraPM.toLocalDate());
         ckMatSach.setSelected(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).isMatSach());
         txtTenTacGia.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getSach().getTenTacGia());
+        txtSlMat.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getSoLuongMat()));
         for(Nhanvien s : cbNhanVienPM.getItems())
         {
             if(s.getTenNV().trim().equalsIgnoreCase(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNv().getTenNV().trim()))
@@ -848,6 +849,7 @@ public class AdminAppController implements Initializable {
         txtTienBoiThuong.clear();
         txtTienPhat.clear();
         txtTenTacGia.clear();
+        txtSlMat.clear();
         ckMatSach.setSelected(false);
         datePickerNgayHenTraPM.setValue(null);
         datePickerNgayTraPM.setValue(null);
