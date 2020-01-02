@@ -1163,174 +1163,175 @@ public class AdminAppController implements Initializable {
     @FXML
     private void thongKe(ActionEvent e)
     {
-        int namTK = Integer.parseInt(txtNamThongKe.getText());
-        int tongTienPhat = 0;
-        int tongPhieuMuon = 0;
-        int tongSoPhieuQH = 0;
-        Boolean isHaveYear = false;
-        Boolean checkDupTK = false;
-        Thongke tkRead = null;
-        ThongKeDAO tkDao = new ThongKeDAO();
-        List<Phieumuon> listTK = null;
-        if(rdThongKeStatus().equalsIgnoreCase("quy"))
+        if(checkEmptyTextField("tabTK") == false)
         {
-            if(menubtnQuy() == 1)
-            {
-                listTK = tkDao.readThongKeQuy(1,3,namTK);
+            int namTK = Integer.parseInt(txtNamThongKe.getText());
+            int tongTienPhat = 0;
+            int tongPhieuMuon = 0;
+            int tongSoPhieuQH = 0;
+            Boolean isHaveYear = false;
+            Boolean checkDupTK = false;
+            Thongke tkRead = null;
+            ThongKeDAO tkDao = new ThongKeDAO();
+            List<Phieumuon> listTK = null;
+            if (rdThongKeStatus().equalsIgnoreCase("quy")) {
+                if (menubtnQuy() == 1) {
+                    listTK = tkDao.readThongKeQuy(1, 3, namTK);
 
+                }
+                if (menubtnQuy() == 2) {
+                    listTK = tkDao.readThongKeQuy(4, 6, namTK);
+                }
+                if (menubtnQuy() == 3) {
+                    listTK = tkDao.readThongKeQuy(7, 9, namTK);
+                }
+                if (menubtnQuy() == 4) {
+                    listTK = tkDao.readThongKeQuy(10, 12, namTK);
+                }
             }
-            if(menubtnQuy() == 2)
-            {
-                listTK = tkDao.readThongKeQuy(4,6,namTK);
+            if (rdThongKeStatus().equalsIgnoreCase("nam")) {
+                listTK = tkDao.readThongKeNam(namTK);
             }
-            if(menubtnQuy() == 3)
-            {
-               listTK = tkDao.readThongKeQuy(7,9,namTK);
-            }
-            if(menubtnQuy() == 4)
-            {
-                listTK =tkDao.readThongKeQuy(10,12,namTK);
-            }
-        }
-        if(rdThongKeStatus().equalsIgnoreCase("nam"))
-        {
-            listTK = tkDao.readThongKeNam(namTK);
-        }
-        tableViewThongKe.getItems().clear();
-        tableViewThongKe.getColumns().clear();
-        ///////
-         TableColumn idPhieuTK = new TableColumn("Mã Phiếu TK");
-                        TableColumn SoPhieuQuaHanTK = new TableColumn("Số Phiếu Quá Hạn");
-                        TableColumn SoPhieuMuonTK = new TableColumn("Số Phiếu Mượn");
-                        TableColumn TongTienPhatTK = new TableColumn("Tổng Tiền Phạt");
-                        TableColumn NgayThongKeTK = new TableColumn("Ngày Thống Kê");
-                        idPhieuTK.setCellValueFactory(new PropertyValueFactory<>("maPhieuTk"));
-                        SoPhieuQuaHanTK.setCellValueFactory(new PropertyValueFactory<>("soPhieuQuaHan"));
-                        SoPhieuMuonTK.setCellValueFactory(new PropertyValueFactory<>("soPhieuMuon"));
-                        TongTienPhatTK.setCellValueFactory(new PropertyValueFactory<>("tongTienPhat"));
-                        NgayThongKeTK.setCellValueFactory(new PropertyValueFactory<>("ngayThongKe"));
-                      tableViewThongKe.getColumns().addAll(idPhieuTK,SoPhieuQuaHanTK,SoPhieuMuonTK,TongTienPhatTK,NgayThongKeTK);
-                      
-                        // check Database for TK
-                        PhieuMuonDAO pmDao = new PhieuMuonDAO();
-                        List<Phieumuon> result = pmDao.readAllPM();
-                        List<Integer> year = new ArrayList<>();
-                        for(Phieumuon s : result)
-                        {
-                            Date newDate = s.getHanTra();
-                            Calendar calHanTra = Calendar.getInstance();
-                            calHanTra.setTime(newDate);
-                            if(calHanTra.get(Calendar.YEAR) != 0)
-                            {
-                                year.add(calHanTra.get(Calendar.YEAR));
-                            } 
-                        }
-                        for(int s : year)
-                        {
-                            if(s == namTK)
-                            {
-                                isHaveYear = true;
-                            }
-                        }
-                        if(isHaveYear == true)
-                        {
-                              
-                          for(Phieumuon s : listTK)
-                            {
+            tableViewThongKe.getItems().clear();
+            tableViewThongKe.getColumns().clear();
+            ///////
+            TableColumn idPhieuTK = new TableColumn("Mã Phiếu TK");
+            TableColumn SoPhieuQuaHanTK = new TableColumn("Số Phiếu Quá Hạn");
+            TableColumn SoPhieuMuonTK = new TableColumn("Số Phiếu Mượn");
+            TableColumn TongTienPhatTK = new TableColumn("Tổng Tiền Phạt");
+            TableColumn NgayThongKeTK = new TableColumn("Ngày Thống Kê");
+            idPhieuTK.setCellValueFactory(new PropertyValueFactory<>("maPhieuTk"));
+            SoPhieuQuaHanTK.setCellValueFactory(new PropertyValueFactory<>("soPhieuQuaHan"));
+            SoPhieuMuonTK.setCellValueFactory(new PropertyValueFactory<>("soPhieuMuon"));
+            TongTienPhatTK.setCellValueFactory(new PropertyValueFactory<>("tongTienPhat"));
+            NgayThongKeTK.setCellValueFactory(new PropertyValueFactory<>("ngayThongKe"));
+            tableViewThongKe.getColumns().addAll(idPhieuTK, SoPhieuQuaHanTK, SoPhieuMuonTK, TongTienPhatTK, NgayThongKeTK);
 
-                                // get Hạn Trả set to Cal Hạn Trả
-                                java.util.Date dateHanTra= s.getHanTra();
-                                Calendar calHanTra = Calendar.getInstance();
-                                calHanTra.setTime(dateHanTra);
+            // check Database for TK
+            PhieuMuonDAO pmDao = new PhieuMuonDAO();
+            List<Phieumuon> result = pmDao.readAllPM();
+            List<Integer> year = new ArrayList<>();
+            for (Phieumuon s : result) {
+                Date newDate = s.getHanTra();
+                Calendar calHanTra = Calendar.getInstance();
+                calHanTra.setTime(newDate);
+                if (calHanTra.get(Calendar.YEAR) != 0) {
+                    year.add(calHanTra.get(Calendar.YEAR));
+                }
+            }
+            for (int s : year) {
+                if (s == namTK) {
+                    isHaveYear = true;
+                }
+            }
+            if (isHaveYear == true) {
 
-                                //   get Ngày Trả set to Cal Ngày Trả                          
-                                java.util.Date dateNgayTra= s.getNgayTra();
-                                Calendar calNgayTra = Calendar.getInstance();
-                                calNgayTra.setTime(dateNgayTra);
-                                // Calculate day between 2 date
-                                long diff = calNgayTra.getTimeInMillis() - calHanTra.getTimeInMillis();
+                for (Phieumuon s : listTK) {
+
+                    // get Hạn Trả set to Cal Hạn Trả
+                    java.util.Date dateHanTra = s.getHanTra();
+                    Calendar calHanTra = Calendar.getInstance();
+                    calHanTra.setTime(dateHanTra);
+
+                    //   get Ngày Trả set to Cal Ngày Trả                          
+                    java.util.Date dateNgayTra = s.getNgayTra();
+                    Calendar calNgayTra = Calendar.getInstance();
+                    calNgayTra.setTime(dateNgayTra);
+                    // Calculate day between 2 date
+                    long diff = calNgayTra.getTimeInMillis() - calHanTra.getTimeInMillis();
                                 // 24 hours per day, 60 minutes per hour, 60 seconds per hour
-                                // 1000ms per second
-                                float dayCount = (float) diff / (24 * 60 * 60 * 1000);
-                                    if(dayCount > 0.0)
-                                    {
-                                        tongSoPhieuQH++;
-                                        tongTienPhat += dayCount*5000;
-                                    }    
-                                tongPhieuMuon++;
-                            }
-                            
-                            List<Thongke> readAllTK = tkDao.readAllTK();
-                            for(Thongke s : readAllTK)
-                            {
-                                if(rdThongKeStatus().equalsIgnoreCase("quy"))
-                                {
-                                    if(s.getNgayThongKe().equalsIgnoreCase(menubtnThongKe.getText() + "-"+ txtNamThongKe.getText()))
-                                    {
-                                        checkDupTK = true;
-                                        tkRead = s;
-                                    }
-                                }
-                                if(rdThongKeStatus().equalsIgnoreCase("nam"))
-                                {
-                                    if(s.getNgayThongKe().equalsIgnoreCase(txtNamThongKe.getText()))
-                                    {
-                                        checkDupTK = true;
-                                        tkRead = s;
-                                    }
-                                }
+                    // 1000ms per second
+                    float dayCount = (float) diff / (24 * 60 * 60 * 1000);
+                    if (dayCount > 0.0) {
+                        tongSoPhieuQH++;
+                        tongTienPhat += dayCount * 5000;
+                    }
+                    tongPhieuMuon++;
+                }
 
-                            }
-                            if(checkDupTK == true)
-                            {
-                                tableViewThongKe.getItems().add(tkRead);
-
-                            }
-                            if(checkDupTK == false)
-                            {
-                                Thongke tkAdd = new Thongke();
-                                tkAdd.setSoPhieuMuon(tongPhieuMuon);
-                                tkAdd.setTongTienPhat(String.valueOf(tongTienPhat));
-                                tkAdd.setSoPhieuQuaHan(tongSoPhieuQH);
-                                if(rdThongKeStatus().equalsIgnoreCase("quy"))
-                                {
-                                    tkAdd.setNgayThongKe(menubtnThongKe.getText() + "-"+ txtNamThongKe.getText());
-                                }
-                                if(rdThongKeStatus().equalsIgnoreCase("nam"))
-                                {
-                                    tkAdd.setNgayThongKe(txtNamThongKe.getText());
-                                }
-
-                                tkDao.addTK(tkAdd);
-                                tableViewThongKe.getItems().add(tkAdd);
-                            }
+                List<Thongke> readAllTK = tkDao.readAllTK();
+                for (Thongke s : readAllTK) {
+                    if (rdThongKeStatus().equalsIgnoreCase("quy")) {
+                        if (s.getNgayThongKe().equalsIgnoreCase(menubtnThongKe.getText() + "-" + txtNamThongKe.getText())) {
+                            checkDupTK = true;
+                            tkRead = s;
                         }
-                        else
-                        {
-                            Utils.AlertMessageError("Error", "Năm bạn chọn không có trong hệ thống");
+                    }
+                    if (rdThongKeStatus().equalsIgnoreCase("nam")) {
+                        if (s.getNgayThongKe().equalsIgnoreCase(txtNamThongKe.getText())) {
+                            checkDupTK = true;
+                            tkRead = s;
                         }
-             
+                    }
+
+                }
+                if (checkDupTK == true) {
+                    tableViewThongKe.getItems().add(tkRead);
+
+                }
+                if (checkDupTK == false) {
+                    Thongke tkAdd = new Thongke();
+                    tkAdd.setSoPhieuMuon(tongPhieuMuon);
+                    tkAdd.setTongTienPhat(String.valueOf(tongTienPhat));
+                    tkAdd.setSoPhieuQuaHan(tongSoPhieuQH);
+                    if (rdThongKeStatus().equalsIgnoreCase("quy")) {
+                        tkAdd.setNgayThongKe(menubtnThongKe.getText() + "-" + txtNamThongKe.getText());
+                    }
+                    if (rdThongKeStatus().equalsIgnoreCase("nam")) {
+                        tkAdd.setNgayThongKe(txtNamThongKe.getText());
+                    }
+
+                    tkDao.addTK(tkAdd);
+                    tableViewThongKe.getItems().add(tkAdd);
+                }
+            } else {
+                Utils.AlertMessageError("Error", "Năm bạn chọn không có trong hệ thống");
+            }
+
             List<Thongke> listTKChart = tkDao.readAllTK();
             barchartThongKe.getData().clear();
-            CategoryAxis xAxis = new CategoryAxis();   
-            NumberAxis yAxis = new NumberAxis(); 
+            CategoryAxis xAxis = new CategoryAxis();
+            NumberAxis yAxis = new NumberAxis();
             barchartThongKe.setTitle("Thống Kê");
             barchartThongKe.setAnimated(false);
-            for(Thongke s : listTKChart)
-            {
-                
-                 XYChart.Series<String, Number> series = new XYChart.Series<>(); 
-                    series.setName(s.getNgayThongKe()); 
-                    series.getData().add(new XYChart.Data<>("Số Phiếu Quá Hạn", s.getSoPhieuQuaHan())); 
-                    series.getData().add(new XYChart.Data<>("Số Phiếu Mượn", s.getSoPhieuMuon())); 
-                    series.getData().add(new XYChart.Data<>("Tổng Tiền Phạt", Double.parseDouble(s.getTongTienPhat())/10000)); 
-                    barchartThongKe.getData().addAll(series);
+            for (Thongke s : listTKChart) {
+
+                XYChart.Series<String, Number> series = new XYChart.Series<>();
+                series.setName(s.getNgayThongKe());
+                series.getData().add(new XYChart.Data<>("Số Phiếu Quá Hạn", s.getSoPhieuQuaHan()));
+                series.getData().add(new XYChart.Data<>("Số Phiếu Mượn", s.getSoPhieuMuon()));
+                series.getData().add(new XYChart.Data<>("Tổng Tiền Phạt", Double.parseDouble(s.getTongTienPhat()) / 10000));
+                barchartThongKe.getData().addAll(series);
             }
+        }
+        else
+        {
+            Utils.AlertMessageError("Error","Vui lòng chọn thông tin !!!");
+        }
+        
     }
-    
-    private void reloadTabThongKe(ThongKeDAO tkDao)
+    @FXML
+    private void nhaplaiTK(ActionEvent e)
     {
-     
+        reloadTabThongKe();
+    }
+    private void reloadTabThongKe()
+    {
+        menubtnThongKe.setText("Chọn Quý...");
+        MenuItem itemQuy1 = new MenuItem("Quý 1");
+        MenuItem itemQuy2 = new MenuItem("Quý 2");
+        MenuItem itemQuy3 = new MenuItem("Quý 3");
+        MenuItem itemQuy4 = new MenuItem("Quý 4");
+        menubtnThongKe.getItems().addAll(itemQuy1, itemQuy2, itemQuy3, itemQuy4);
+        for (MenuItem s : menubtnThongKe.getItems()) {
+            s.setOnAction(e -> {
+                menubtnThongKe.setText(s.getText());
+            });
+
+        }
+        barchartThongKe.getData().clear();
+        tableViewThongKe.getItems().clear();
+        txtNamThongKe.clear();
     }
     private String rdThongKeStatus()
     {
