@@ -448,6 +448,7 @@ public class AdminAppController implements Initializable {
         datePickerNgayTraPM.setValue(dateTraPM.toLocalDate());
         ckMatSach.setSelected(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).isMatSach());
         txtTenTacGia.setText(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getSach().getTenTacGia());
+        txtSlMat.setText(String.valueOf(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getSoLuongMat()));
         for(Nhanvien s : cbNhanVienPM.getItems())
         {
             if(s.getTenNV().trim().equalsIgnoreCase(tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNv().getTenNV().trim()))
@@ -760,7 +761,7 @@ public class AdminAppController implements Initializable {
                 Date hanTraDate = Date.valueOf(HanTravalue);
                 Date ngayTraDate = Date.valueOf(NgayTravalue);
                 if (ckMatSach.isSelected() == true) {
-                    if(txtSlMat.getText().isEmpty())
+                    if(txtSlMat.getText().isEmpty()|| txtSlMat.getText().trim().equalsIgnoreCase("0"))
                     {
                         Utils.AlertMessageError("Error","Vui lòng điền số lượng sách bị mất");
                     }
@@ -783,6 +784,15 @@ public class AdminAppController implements Initializable {
                     pm.setSoLuongMat(0);
                     SachDAO sachDao = new SachDAO();
                     sachDao.updateStockSach(sach, "plus", Integer.parseInt(txtSlMat.getText()));
+                }
+                if(txtTienPhat.getText() == null)
+                {
+                    txtTienPhat.setText("0");
+                    pm.setTienPhat(txtTienPhat.getText());
+                }
+                else
+                {
+                    pm.setTienPhat(txtTienPhat.getText());
                 }
                 pm.setSach(sach);
                 pm.setNv(nv);

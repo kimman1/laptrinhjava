@@ -396,6 +396,15 @@ public class StaffAppController implements Initializable {
                 pm.setSach(sach);
                 pm.setNv(nv);
                 pm.setSoLuongMuon(Integer.parseInt(txtSoLuongMuonPM.getText()));
+                  if(txtTienPhatPM.getText() == null)
+                {
+                    txtTienPhatPM.setText("0");
+                    pm.setTienPhat(txtTienPhatPM.getText());
+                }
+                else
+                {
+                    pm.setTienPhat(txtTienPhatPM.getText());
+                }
                 pm.setNgayTra(ngayTraDate);
                 pmDao.modifiedPM(pm);
                 reloadTabPM(pmDao);
