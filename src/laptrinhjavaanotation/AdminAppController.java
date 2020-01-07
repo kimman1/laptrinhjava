@@ -760,7 +760,7 @@ public class AdminAppController implements Initializable {
              if (NgayMuonvalue.compareTo(NgayTravalue) < 0) {
                 Date hanTraDate = Date.valueOf(HanTravalue);
                 Date ngayTraDate = Date.valueOf(NgayTravalue);
-                if (ckMatSach.isSelected() == true) {
+                if (ckMatSach.isSelected() == true ) {
                     if(txtSlMat.getText().isEmpty()|| txtSlMat.getText().trim().equalsIgnoreCase("0"))
                     {
                         Utils.AlertMessageError("Error","Vui lòng điền số lượng sách bị mất");

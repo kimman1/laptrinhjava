@@ -69,6 +69,11 @@
                                     <TextField fx:id="txtNamThongKe" prefHeight="28.0" prefWidth="188.0" />
                                  </children>
                               </HBox>
+                              <Button layoutX="123.0" layoutY="176.0" mnemonicParsing="false" onAction="#nhaplaiTK" text="Nhập Lại" textFill="RED">
+                                 <font>
+                                    <Font name="Tahoma Bold" size="17.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </VBox>
                      </right>
