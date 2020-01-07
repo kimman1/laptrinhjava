@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 10, 2019 at 05:03 PM
+-- Generation Time: Jan 07, 2020 at 06:20 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `nhanvien` (
 
 INSERT INTO `nhanvien` (`MaNV`, `AccountNV`, `PasswordNV`, `TenNV`, `SDTNV`, `StatusNV`, `NgaySinhNV`) VALUES
 (1, 'quangdeptrai', 'quang123', 'Quảng', '1234567890', 'Đang Làm', '12/11/1997'),
-(2, 'quandeptrai', 'quang123', 'Quân', '0123456789', 'Đang Làm', NULL),
+(2, 'quandeptrai', 'quan123', 'Quân', '0123456789', 'Đang Làm', NULL),
 (3, 'tudeptrai', 'tu123', 'Tú', '098746543', 'Đang Làm', NULL),
 (4, 'ds', 'ds', 'ds', '012', 'Đã Nghỉ', NULL);
 
@@ -133,15 +133,15 @@ CREATE TABLE IF NOT EXISTS `phieumuon` (
 --
 
 INSERT INTO `phieumuon` (`MaPhieuMuon`, `MaKH`, `MaSach`, `MaNV`, `NgayMuon`, `HanTra`, `NgayTra`, `SoLuongMuon`, `TienBoiThuong`, `TienPhat`, `MatSach`, `SoLuongMat`) VALUES
-(2, 1, 4, 2, '2019-09-23', '2019-10-26', '2019-10-17', 2, '', NULL, b'0', 0),
-(20, 3, 1, 1, '2019-10-15', '2019-10-22', '2019-10-23', 6, '50', NULL, b'1', 0),
-(22, 2, 12, 1, '2019-10-17', '2019-10-22', '2019-10-23', 3, '', NULL, b'0', 0),
-(24, 3, 3, 2, '2019-10-17', '2019-10-22', '2019-10-23', 3, '', NULL, b'0', 0),
-(25, 3, 15, 2, '2019-11-08', '2019-11-15', '2019-11-14', 1, '120', NULL, b'1', 0),
-(26, 2, 3, 3, '2019-11-11', '2019-11-12', '2019-11-20', 0, '60', NULL, b'1', 5),
-(27, 3, 15, 2, '2019-11-11', '2019-11-14', '2019-11-27', 10, '120', NULL, b'1', 0),
-(28, 2, 2, 1, '2019-11-11', '2019-11-12', '2019-11-13', 0, '', NULL, b'0', 0),
-(29, 3, 4, 3, '2019-11-11', '2019-11-13', '2019-11-12', 6, '60', NULL, b'1', 0);
+(2, 1, 4, 3, '2019-09-23', '2019-10-26', '2019-10-17', 2, '120', '10000', b'1', 2),
+(20, 3, 1, 1, '2019-10-15', '2019-10-22', '2019-10-23', 6, '', '0', b'0', 0),
+(22, 2, 12, 1, '2019-10-17', '2019-10-22', '2019-10-23', 3, '200', '12', b'1', 1),
+(24, 3, 3, 2, '2019-10-17', '2019-10-22', '2019-10-23', 3, '', '0', b'0', 0),
+(25, 3, 15, 2, '2019-11-08', '2019-11-15', '2019-11-14', 1, '', '0', b'0', 0),
+(26, 2, 3, 3, '2019-11-11', '2019-11-12', '2019-11-20', 0, '60', '0', b'1', 5),
+(27, 3, 15, 2, '2019-11-11', '2019-11-14', '2019-11-27', 10, '', '0', b'0', 0),
+(28, 2, 2, 1, '2019-11-11', '2019-11-12', '2019-11-13', 0, '70', '0', b'1', 1),
+(29, 3, 4, 3, '2019-11-11', '2019-11-13', '2019-11-12', 6, '', '0', b'0', 0);
 
 -- --------------------------------------------------------
 
@@ -166,10 +166,10 @@ CREATE TABLE IF NOT EXISTS `sach` (
 
 INSERT INTO `sach` (`MaSach`, `TenSach`, `TenTacGia`, `NXB`, `SoLuong`, `GiaSach`) VALUES
 (1, 'Lập trình hướng đối tượng', 'Tô Oai Hùng ', '371 Nguyễn Kiệm', 2, '50'),
-(2, 'Lập Trình Java', 'Dương Hữu Thành', '371 Nguyễn Kiệm', 30, '70'),
-(3, 'Lập Trình Mạng', 'Lưu Quang Phương', '371 Nguyễn Kiệm', 3, '12'),
-(4, 'Quản Trị Hệ CSDL', 'Hồ Quang Khải', '371 Nguyễn Kiệm', 4, '60'),
-(12, 'Quản Trị Mạng', 'Lưu Quang Phương', '371 Nguyễn Kiệm', 94, '200'),
+(2, 'Lập Trình Java', 'Dương Hữu Thành', '371 Nguyễn Kiệm', 28, '70'),
+(3, 'Lập Trình Mạng', 'Lưu Quang Phương', '371 Nguyễn Kiệm', -2, '12'),
+(4, 'Quản Trị Hệ CSDL', 'Hồ Quang Khải', '371 Nguyễn Kiệm', -6, '60'),
+(12, 'Quản Trị Mạng', 'Lưu Quang Phương', '371 Nguyễn Kiệm', 87, '200'),
 (13, 'Kiến Trúc Máy Tính', 'Tô Oai Hùng', '371 Nguyễn Kiệm', 100, '300'),
 (14, 'Xử Lý Ảnh', 'Lê Viết Tuấn', '371 Nguyễn Kiệm', 90, '400'),
 (15, 'Xử Lý Ảnh', 'Lê Công Vinh', '371 Nguyễn Kiệm', 88, '120');
