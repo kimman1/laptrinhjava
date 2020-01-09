@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Table(name = "thongke")
 public class Thongke {
     @Id
+     @GeneratedValue
     @Column(name = "MaPhieuTK")
     private Integer maPhieuTk;
     @Column(name = "SoPhieuQuaHan")

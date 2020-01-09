@@ -42,7 +42,7 @@
                               </Button>
                               <HBox prefHeight="71.0" prefWidth="267.0">
                                  <children>
-                                    <RadioButton fx:id="rdThongKeNam" mnemonicParsing="false" text="Theo Năm">
+                                    <RadioButton fx:id="rdThongKeNam" mnemonicParsing="false" selected="true" text="Theo Năm">
                                        <font>
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>
@@ -485,7 +485,7 @@
                                     <Font name="Tahoma Bold" size="15.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txtMaSachPM" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="txtMaSachPM" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label prefHeight="21.0" prefWidth="78.0" text="Tên sách:" textFill="#1a07eb" GridPane.rowIndex="3">
                                  <font>
                                     <Font name="Tahoma Bold" size="15.0" />
@@ -501,7 +501,7 @@
                                     <Font name="Tahoma Bold" size="15.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="txtMaPhieuMuon" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="txtMaPhieuMuon" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <TextField fx:id="txtSoLuongMuonPM" prefHeight="31.0" prefWidth="191.0" GridPane.columnIndex="3" />
                               <Label prefHeight="59.0" prefWidth="182.0" styleClass="labelPaddingFix" text="Số Lượng mượn:" textFill="#1a07eb" GridPane.columnIndex="2">
                                  <font>
@@ -585,11 +585,11 @@
                                     </Button>
                                  </children>
                               </VBox>
-                              <TextField fx:id="txtTenTacGia" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <TextField fx:id="txtTenTacGia" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                               <Label styleClass="labelChu" text="Tên tác giả: " GridPane.rowIndex="6" />
-                              <ComboBox fx:id="cbNhanVienPM" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <ComboBox fx:id="cbNhanVienPM" prefHeight="25.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <ComboBox fx:id="cbSachPM" prefHeight="25.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <ComboBox fx:id="cbKhachHangPM" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="cbKhachHangPM" prefHeight="25.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <TextField fx:id="txtSlMat" GridPane.columnIndex="3" GridPane.rowIndex="6" />
                               <Label styleClass="labelPaddingFix" text="số lượng sách mất:" GridPane.columnIndex="2" GridPane.rowIndex="6">
                                  <font>

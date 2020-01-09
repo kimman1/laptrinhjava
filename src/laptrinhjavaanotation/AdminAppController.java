@@ -785,15 +785,29 @@ public class AdminAppController implements Initializable {
                     SachDAO sachDao = new SachDAO();
                     sachDao.updateStockSach(sach, "plus", Integer.parseInt(txtSlMat.getText()));
                 }
-                if(txtTienPhat.getText() == null)
-                {
-                    txtTienPhat.setText("0");
-                    pm.setTienPhat(txtTienPhat.getText());
-                }
-                else
-                {
-                    pm.setTienPhat(txtTienPhat.getText());
-                }
+               
+                 java.util.Date dateHanTra= tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getHanTra();
+                                Calendar calHanTra = Calendar.getInstance();
+                                calHanTra.setTime(dateHanTra);
+
+                                //   get Ngày Trả set to Cal Ngày Trả                          
+                                java.util.Date dateNgayTra= tableViewPhieuMuon.getSelectionModel().getSelectedItems().get(0).getNgayTra();
+                                Calendar calNgayTra = Calendar.getInstance();
+                                calNgayTra.setTime(dateNgayTra);
+                                // Calculate day between 2 date
+                                long diff = calNgayTra.getTimeInMillis() - calHanTra.getTimeInMillis();
+                                // 24 hours per day, 60 minutes per hour, 60 seconds per hour
+                                // 1000ms per second
+                                float dayCount = (float) diff / (24 * 60 * 60 * 1000);
+                                int tongTienPhat = 0;
+                                    if(dayCount > 0.0)
+                                    {
+                                        tongTienPhat += dayCount*5000;
+                                    }
+                                    txtTienPhat.setText(String.valueOf(tongTienPhat));
+                                    
+                                    /****************/
+                pm.setTienPhat(String.valueOf(tongTienPhat));
                 pm.setSach(sach);
                 pm.setNv(nv);
                 pm.setNgayTra(ngayTraDate);
@@ -1171,7 +1185,9 @@ public class AdminAppController implements Initializable {
     @FXML
     private void thongKe(ActionEvent e)
     {
-        int namTK = Integer.parseInt(txtNamThongKe.getText());
+        if(checkEmptyTextField("tabTK") != true)
+        {
+             int namTK = Integer.parseInt(txtNamThongKe.getText());
         int tongTienPhat = 0;
         int tongPhieuMuon = 0;
         int tongSoPhieuQH = 0;
@@ -1291,8 +1307,24 @@ public class AdminAppController implements Initializable {
                             }
                             if(checkDupTK == true)
                             {
+                                
+                                
+                               Thongke tkUpdate = new Thongke();
+                                tkUpdate.setMaPhieuTk(tkRead.getMaPhieuTk());
+                               tkUpdate.setSoPhieuMuon(tongPhieuMuon);
+                               tkUpdate.setTongTienPhat(String.valueOf(tongTienPhat));
+                               tkUpdate.setSoPhieuQuaHan(tongSoPhieuQH);
+                              
+                                if(rdThongKeStatus().equalsIgnoreCase("quy"))
+                                {
+                                    tkUpdate.setNgayThongKe(menubtnThongKe.getText() + "-"+ txtNamThongKe.getText());
+                                }
+                                if(rdThongKeStatus().equalsIgnoreCase("nam"))
+                                {
+                                    tkUpdate.setNgayThongKe(txtNamThongKe.getText());
+                                }
+                                tkDao.modifedTK(tkUpdate);
                                 tableViewThongKe.getItems().add(tkRead);
-
                             }
                             if(checkDupTK == false)
                             {
@@ -1310,6 +1342,7 @@ public class AdminAppController implements Initializable {
                                 }
 
                                 tkDao.addTK(tkAdd);
+                                tableViewThongKe.getItems().clear();
                                 tableViewThongKe.getItems().add(tkAdd);
                             }
                         }
@@ -1334,11 +1367,37 @@ public class AdminAppController implements Initializable {
                     series.getData().add(new XYChart.Data<>("Tổng Tiền Phạt", Double.parseDouble(s.getTongTienPhat())/10000)); 
                     barchartThongKe.getData().addAll(series);
             }
+        }
+        else
+        {
+            Utils.AlertMessageError("Error","Vui lòng điền năm thống kê");
+        }
+       
     }
-    
-    private void reloadTabThongKe(ThongKeDAO tkDao)
+    @FXML
+    private void nhaplaiTK(ActionEvent e)
     {
-     
+        reloadTabThongKe();
+    }
+    private void reloadTabThongKe()
+    {
+        txtNamThongKe.clear();
+        barchartThongKe.getData().clear();
+        menubtnThongKe.getItems().clear();
+          menubtnThongKe.setText("Chọn Quý...");
+                                    MenuItem itemQuy1 = new MenuItem("Quý 1");
+                                    MenuItem itemQuy2 = new MenuItem("Quý 2");
+                                    MenuItem itemQuy3 = new MenuItem("Quý 3");
+                                    MenuItem itemQuy4 = new MenuItem("Quý 4");
+                                    menubtnThongKe.getItems().addAll(itemQuy1,itemQuy2,itemQuy3,itemQuy4);
+                                    for(MenuItem s : menubtnThongKe.getItems())
+                                    {
+                                        s.setOnAction(e ->{
+                                            menubtnThongKe.setText(s.getText());
+                                        });
+                                        
+                                    }
+         tableViewThongKe.getItems().clear();
     }
     private String rdThongKeStatus()
     {
